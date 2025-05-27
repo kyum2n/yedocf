@@ -43,3 +43,4 @@ const Footer = () => {
 }
 
 export default Footer;
+// 이 컴포넌트는 웹사이트의 푸터 영역을 구성합니다.

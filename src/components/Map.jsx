@@ -24,3 +24,6 @@ export default function Map() {
 
   return <div id="map" className="w-full h-[400px] rounded-lg shadow-md" />;
 }
+// 이 컴포넌트는 카카오 지도를 표시합니다.
+// useEffect 훅을 사용하여 컴포넌트가 마운트될 때 카카오 지도 API를 로드하고, 병원 위치에 마커를 표시합니다.
+// 지도는 고정된 크기(400px 높이)로 설정되어 있으며, 너비는 100%로 설정되어 있습니다.

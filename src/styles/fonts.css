@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'SeoulHangang';
+  src: url('/fonts/hangang/SeoulHangangL.woff2') format('woff2'),
+       url('/fonts/hangang/SeoulHangangL.woff') format('woff');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'SeoulHangang';
+  src: url('/fonts/hangang/SeoulHangangM.woff2') format('woff2'),
+       url('/fonts/hangang/SeoulHangangM.woff') format('woff');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'SeoulHangang';
+  src: url('/fonts/hangang/SeoulHangangB.woff2') format('woff2'),
+       url('/fonts/hangang/SeoulHangangB.woff') format('woff');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'SeoulHangang';
+  src: url('/fonts/hangang/SeoulHangangEB.woff2') format('woff2'),
+       url('/fonts/hangang/SeoulHangangEB.woff') format('woff');
+  font-weight: 800;
+}

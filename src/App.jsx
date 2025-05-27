@@ -1,10 +1,15 @@
 // App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import LoginPage from "./pages/LoginPage";
 import DirectionsMap from "./components/DirectionsMap";
+
+import LoginPage from "./pages/LoginPage";
+import EyePage from "./pages/EyePage";
+import NosePage from "./pages/NosePage";
+import FacePage from "./pages/FacePage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,10 +19,11 @@ function App() {
       <Header isLoggedIn={isLoggedIn} />
       <Routes>
         <Route path="/login" element={<LoginPage onLogin={() => setIsLoggedIn(true)} />} />
-        {/* 다른 페이지들 라우팅 추가 예정 */}
-        <Route path="/" element={<><div >메인 페이지입니다</div>
-          <img src="https://placehold.co/600x2000"></img></>} />
+        <Route path="/" element={<div className="mt-16" >메인 페이지입니다</div>} />
         <Route path="/mypage" element={<DirectionsMap></DirectionsMap>} />
+        <Route path="/eye" element={<EyePage />} />
+        <Route path="/nose" element={<NosePage />} />
+        <Route path="/face" element={<FacePage />} />
       </Routes>
       <Footer />
     </Router>
