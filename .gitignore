@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+
+# production build
+dist/
+.vite/
+
+# local env files
+.env
+.env.*.local
+
+# testing
+coverage/
+
+# IDE & system files
+.DS_Store
+*.log
+*.swo
+*.swp
+*.tmp
+
+# VSCode
+.vscode/
+
+# ESLint cache
+.eslintcache
+
+# lock files (optional, 팀 전략에 따라 선택)
+# yarn.lock
+# pnpm-lock.yaml
