@@ -5,8 +5,10 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    fontFamily: {
-      seoul: ['SeoulHangang', 'sans-serif'],
+    extend: {
+      fontFamily: {
+        sans: ['Pretendard Variable', 'sans-serif'],
+      },
     },
   },
   plugins: [],
