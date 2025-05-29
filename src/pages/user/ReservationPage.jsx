@@ -25,7 +25,6 @@ const ReservationPage = () => {
         <div className="space-y-8">
             <BannerSection image={banner4} title="상담 예약" subtitle="" objectPosition="object-[50%_30%]" />
             <div className="relative z-20 bg-white">
-
                 <Spacer />
                 <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-6 p-6">
                     {/* 날짜/시간 선택 */}
@@ -54,7 +53,7 @@ const ReservationPage = () => {
                             }}
                         />
 
-                        <Button variant="primary" onClick={handleSubmit}>
+                        <Button variant="primary" onClick={handleSubmit} className="mt-4">
                             예약하기
                         </Button>
                     </div>

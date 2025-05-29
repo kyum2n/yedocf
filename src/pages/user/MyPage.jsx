@@ -4,6 +4,7 @@ import Modal from "@/components/common/Modal";
 import Button from "@/components/common/Button";
 import Spacer from "@/components/common/Spacer";
 import { banner2 } from '@/assets/images';
+import GoToReservationButton from "@/components/common/GoToReservationButton";
 
 const MyPage = () => {
     const [showPwdModal, setShowPwdModal] = useState(false);
@@ -105,6 +106,7 @@ const MyPage = () => {
                     </div>
                 </section>
                 <Spacer size="lg" />
+                <GoToReservationButton />
             </div>
             {/* 비밀번호 변경 모달 */}
             <Modal

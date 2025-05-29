@@ -4,6 +4,7 @@ import TabSection from '@/components/features/treatment/TabSection';
 import TreatmentContent from '@/components/features/treatment/TreatmentContent';
 import { faceBanner } from '@/assets/images';
 import Spacer from '@/components/common/Spacer';
+import GoToReservationButton from '@/components/common/GoToReservationButton';
 
 const tabList = [
   { key: '1', label: '광대축소술' },
@@ -33,6 +34,7 @@ const FacePage = () => (
       <Spacer size="lg" />
       <DirectionsMap />
       <Spacer size="lg" />
+      <GoToReservationButton />
     </div>
   </>
 );

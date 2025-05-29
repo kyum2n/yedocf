@@ -1,9 +1,15 @@
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom';
 import Spacer from '@/components/common/Spacer';
 
 const TabSection = ({ tabList }) => {
   const [params, setParams] = useSearchParams();
-  const tab = params.get('tab') || tabList[0]?.key;
+  const currentTab = params.get('tab') || tabList[0]?.key;
+
+  const handleTabClick = (key) => {
+    const newParams = new URLSearchParams(params);
+    newParams.set('tab', key);
+    setParams(newParams);
+  };
 
   return (
     <>
@@ -11,10 +17,9 @@ const TabSection = ({ tabList }) => {
         {tabList.map(({ key, label }) => (
           <li key={key}>
             <button
-              onClick={() => setParams({ tab: key })}
-              className={`h-12 p-4 flex-center hover:bg-gray-100 
-              ${tab === key ? 'font-bold border-b-2 border-black' : ''
-                }`}
+              onClick={() => handleTabClick(key)}
+              className={`h-12 px-6 flex-center transition-colors duration-150 
+              ${currentTab === key ? 'font-bold border-b-2 border-black' : 'hover:bg-gray-100'}`}
             >
               {label}
             </button>
@@ -22,12 +27,12 @@ const TabSection = ({ tabList }) => {
         ))}
       </ul>
       <Spacer size="md" />
-      {/* 여백 삽입 */}
     </>
   );
 };
 
 export default TabSection;
+
 // 이 컴포넌트는 시술 페이지의 탭 메뉴를 표시합니다.
 // useSearchParams 훅을 사용하여 URL의 쿼리 파라미터를 관리합니다.
 // tabList는 탭의 목록을 받아 각 탭에 대한 버튼을 생성합니다.

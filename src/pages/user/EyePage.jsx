@@ -4,6 +4,7 @@ import TabSection from '@/components/features/treatment/TabSection';
 import TreatmentContent from '@/components/features/treatment/TreatmentContent';
 import { eyeBanner } from '@/assets/images';
 import Spacer from '@/components/common/Spacer';
+import GoToReservationButton from '@/components/common/GoToReservationButton';
 
 const tabList = [
   { key: '1', label: '쌍커풀' },
@@ -39,6 +40,7 @@ const EyePage = () => (
       <Spacer size="lg" />
       <DirectionsMap />
       <Spacer size="lg" />
+      <GoToReservationButton />
     </div>
   </>
 );

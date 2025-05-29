@@ -1,9 +1,9 @@
 import Container from '@/components/layout/Container';
 import { useSearchParams } from 'react-router-dom';
 
-const TreatmentContent = ({ renderContent }) => {
+const TreatmentContent = ({ renderContent, defaultTab = '1' }) => {
   const [params] = useSearchParams();
-  const tab = params.get('tab') || '1';
+  const tab = params.get('tab') || defaultTab;
 
   return (
     <Container>

@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
     return (
-        <footer className="bg-gray-100 text-gray-800 py-7 text-sm">
+        <footer id="footer" className="bg-gray-100 text-gray-800 py-7 text-sm">
             <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
 
                 <div>
-                    <h2 className="text-lg font-bold mb-2">연세 BT 미의원</h2>
+                    <h2 className="text-lg font-bold mb-2">연세 BT 미래의원</h2>
                     <ul className="space-y-1">
                         <li>대표자: 박연세</li>
                         <li>사업자등록번호: 123-45-67890</li>
@@ -26,17 +28,18 @@ const Footer = () => {
 
             <div className="mt-8 border-t pt-4">
                 <div className="max-w-6xl mx-auto px-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-                    <a href="#" className="hover:underline">비급여 진료비용 안내</a>
+                    <Link to="/mypage" className="hover:underline">마이페이지</Link>
                     <span className="text-gray-300">|</span>
-                    <a href="#" className="hover:underline">개인정보처리방침</a>
+                    <Link to="/admin" className="hover:underline">개발자 페이지</Link>
                     <span className="text-gray-300">|</span>
-                    <a href="#" className="hover:underline">오시는 길</a>
+                    <Link to="/reservation" className="hover:underline">예약페이지</Link>
                 </div>
             </div>
 
             <div className="mt-4 text-center text-xs text-gray-500">
                 © 2025 BT CLINIC. All Rights Reserved.
             </div>
+            <div className="text-center"><Link to="/adminlogin" className="text-gray-400 text-xs hover:underline">관리자페이지로 가기</Link></div>
         </footer>
 
     )

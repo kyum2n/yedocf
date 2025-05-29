@@ -2,8 +2,9 @@ import { useEffect } from "react";
 
 export default function Map() {
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=d4df265c234a6cb0e0f1fd95b9a82f6a&autoload=false`;
+const script = document.createElement("script");
+script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_API_KEY}&autoload=false`;
+
     script.onload = () => {
       window.kakao.maps.load(() => {
         const container = document.getElementById("map");

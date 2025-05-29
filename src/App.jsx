@@ -1,37 +1,38 @@
-// App.jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import ScrollToTop from './components/common/ScrollToTop';
+import UserLayout from './components/layout/UserLayout';
+import AdminLayout from './pages/admin/AdminLayout';
 
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
-
-import LoginPage from "./pages/user/LoginPage";
-import EyePage from "./pages/user/EyePage";
-import NosePage from "./pages/user/NosePage";
-import FacePage from "./pages/user/FacePage";
-import SignupPage from "./pages/user/SignupPage";
-import FindAccountPage from "./pages/user/FindAccountPage";
-import MyPage from "./pages/user/MyPage";
-import ReservationPage from "./pages/user/ReservationPage";
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import UserManagePage from './pages/admin/UserManagePage';
+import ReservationManagePage from './pages/admin/ReservationManagePage';
+import StaffManagePage from './pages/admin/StaffManagePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <Router>
-      <Header isLoggedIn={isLoggedIn} />
+      <ScrollToTop />
+
       <Routes>
-        <Route path="/login" element={<LoginPage onLogin={() => setIsLoggedIn(true)} />} />
-        <Route path="/" element={<div className="mt-16" >메인 페이지입니다</div>} />
-        <Route path="/eye" element={<EyePage />} />
-        <Route path="/nose" element={<NosePage />} />
-        <Route path="/face" element={<FacePage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/idpwfind" element={<FindAccountPage />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/reservation" element={<ReservationPage />} />
+        {/* 관리자 로그인 */}
+        <Route path="/adminlogin" element={<AdminLoginPage />} />
+
+        {/* 관리자 레이아웃 */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<UserManagePage />} />
+          <Route path="reservations" element={<ReservationManagePage />} />
+          <Route path="staff" element={<StaffManagePage />} />
+        </Route>
+
+        {/* 사용자 레이아웃 */}
+        <Route
+          path="/*"
+          element={<UserLayout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+        />
       </Routes>
-      <Footer />
     </Router>
   );
 }

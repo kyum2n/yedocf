@@ -22,6 +22,7 @@ const FindAccountPage = () => {
                         <InputField
                             name="email"
                             placeholder="이메일을 입력해주세요"
+                            className="mb-3"
                         />
                         <Button variant="primary" className="w-full">
                             아이디 찾기
@@ -34,6 +35,7 @@ const FindAccountPage = () => {
                         <InputField
                             name="userId"
                             placeholder="아이디를 입력해주세요"
+                            className="mb-3"
                         />
                         <Button variant="primary" className="w-full">
                             비밀번호 찾기

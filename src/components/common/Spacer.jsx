@@ -1,13 +1,31 @@
-const Spacer = ({ size = 'md' }) => {
-  const sizeMap = {
-    sm: 'h-4',   // 1rem
-    md: 'h-8',   // 2rem
-    lg: 'h-16',  // 4rem
-    xl: 'h-24',  // 6rem
-  };
+const Spacer = ({
+  size = "md",
+  responsive = {}, // 예: { sm: 'sm', md: 'lg', lg: 'xl' }
+}) => {
+  const baseClass = `h-${getSizeValue(size)}`;
 
-  return <div className={sizeMap[size] || sizeMap.md} />;
+  const responsiveClasses = Object.entries(responsive)
+    .map(([breakpoint, sizeKey]) => `${breakpoint}:h-${getSizeValue(sizeKey)}`)
+    .join(" ");
+
+  return <div className={`${baseClass} ${responsiveClasses}`} />;
 };
+
+// 사이즈 키를 Tailwind 숫자로 매핑 (추후 리팩토링 가능)
+function getSizeValue(key) {
+  const map = {
+    none: 0,      // 0px
+    "0": 0,       // 0px
+    xs: 2,        // 0.5rem = 8px
+    sm: 4,        // 1rem = 16px
+    md: 8,        // 2rem = 32px
+    lg: 16,       // 4rem = 64px
+    xl: 24,       // 6rem = 96px
+    "2xl": 32,    // 8rem = 128px
+    "3xl": 40,    // 10rem = 160px
+  };
+  return map[key] || 8;
+}
 
 export default Spacer;
 // 반응형 디자인을 고려하여 다양한 크기의 여백을 제공하는 Spacer 컴포넌트입니다.

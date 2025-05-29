@@ -22,6 +22,7 @@ const LoginPage = () => {
                         placeholder="아이디를 입력하세요"
                         variant="user"
                         labelHidden={true}
+                        className="mb-2"
                     />
                     <InputField
                         label="비밀번호"
@@ -36,7 +37,7 @@ const LoginPage = () => {
                         <a href="/idpwfind" className=' text-gray-600 mt-0 hover:underline' >아이디/회원번호 찾기</a>
                         <a href="/signup" className=' text-gray-600 mt-0 hover:underline' >회원가입</a>
                     </div>
-                    <Button variant="primary" className='w-full py-3 mt-2 text-lg'>
+                    <Button variant="primary" size='lg' className='w-full mt-2'>
                         로그인
                     </Button>
                     <div className="flex justify-around mt-5">

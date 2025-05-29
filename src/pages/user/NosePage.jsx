@@ -4,6 +4,7 @@ import TabSection from '@/components/features/treatment/TabSection';
 import TreatmentContent from '@/components/features/treatment/TreatmentContent';
 import { noseBanner } from '@/assets/images';
 import Spacer from '@/components/common/Spacer';
+import GoToReservationButton from '@/components/common/GoToReservationButton';
 
 const tabList = [
   { key: '1', label: '콧대 성형' },
@@ -26,13 +27,14 @@ const renderNoseContent = (tab) => {
 
 const NosePage = () => (
   <>
-    <BannerSection image={noseBanner} title="코 성형" subtitle="오롯하게 세우는 자신감"/>
+    <BannerSection image={noseBanner} title="코 성형" subtitle="오롯하게 세우는 자신감" />
     <div className="relative z-20 bg-white">
-    <TabSection tabList={tabList} />
-    <TreatmentContent renderContent={renderNoseContent} />
-    <Spacer size="lg" />
-    <DirectionsMap/>
-    <Spacer size="lg" />
+      <TabSection tabList={tabList} />
+      <TreatmentContent renderContent={renderNoseContent} />
+      <Spacer size="lg" />
+      <DirectionsMap />
+      <Spacer size="lg" />
+      <GoToReservationButton />
     </div>
   </>
 );
