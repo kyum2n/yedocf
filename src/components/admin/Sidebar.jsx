@@ -1,26 +1,26 @@
 import { NavLink } from 'react-router-dom';
+import {
+  ArrowRightStartOnRectangleIcon,
+  UserIcon,
+  UsersIcon,
+  BookmarkSquareIcon,
+} from '@heroicons/react/24/outline';
 
-const Sidebar = ({ isLoggedIn = false, isSuperAdmin = false, adminName = '' }) => {
+const Sidebar = ({ isSuperAdmin = false, adminName = '' }) => {
   return (
-    <aside className="w-60 h-screen bg-orange-950 text-white  fixed left-0 top-0 z-50 shadow-lg">
+    <aside className="w-60 h-screen bg-orange-950 text-white fixed left-0 top-0 z-50 shadow-lg">
       {/* 상단 헤더 */}
       <div className="h-24 px-6 flex flex-col justify-center border-b border-orange-100">
         <span className="text-xl font-bold mb-1">BT관리자페이지</span>
-        {isLoggedIn && (
-          <span className="text-sm font-normal">{adminName}님 안녕하세요!</span>
-        )}
+        <span className="text-sm font-normal">{adminName}님 안녕하세요!</span>
       </div>
 
       {/* 사이드바 메뉴 */}
       <nav className="flex flex-col">
-        {isLoggedIn ? (
-          <>
-            <SidebarLink to="/admin" label="사용자 관리" />
-            <SidebarLink to="/admin/reservations" label="예약 관리" />
-            {isSuperAdmin && <SidebarLink to="/admin/staff" label="직원 관리" />}
-          </>
-        ) : (
-          <SidebarLink to="/adminlogin" label="관리자 로그인" />
+        <SidebarLink to="/admin" label="사용자 관리" icon={UsersIcon} />
+        <SidebarLink to="/admin/reservations" label="예약 관리" icon={BookmarkSquareIcon} />
+        {isSuperAdmin && (
+          <SidebarLink to="/admin/staff" label="직원 관리" icon={UserIcon} />
         )}
       </nav>
 
@@ -28,9 +28,10 @@ const Sidebar = ({ isLoggedIn = false, isSuperAdmin = false, adminName = '' }) =
       <div className="absolute bottom-0 h-16 w-60 border-t border-orange-100 flex-center">
         <button
           onClick={() => (window.location.href = '/')}
-          className="h-16 w-60 text-center gap-2 text-sm hover:underline text-white"
+          className="h-16 w-60 flex items-center justify-center gap-2 text-xl hover:underline text-white"
         >
-          <span>⏎</span> 로그아웃
+          <ArrowRightStartOnRectangleIcon className="w-5 h-5 text-white" />
+          로그아웃
         </button>
       </div>
     </aside>
@@ -38,19 +39,21 @@ const Sidebar = ({ isLoggedIn = false, isSuperAdmin = false, adminName = '' }) =
 };
 
 // NavLink 스타일 분리
-const SidebarLink = ({ to, label }) => (
+const SidebarLink = ({ to, label, icon: Icon }) => (
   <NavLink
     to={to}
     end={to === "/admin"}
     className={({ isActive }) =>
-      `px-4 py-3 text-sm font-medium transition-all ${
-        isActive
-          ? 'text-right font-bold bg-orange-700 hover:bg-orange-800'
-          : 'text-left  hover:bg-orange-800 font-bold'
+      `h-14 text-m font-medium transition-all border-orange-100 border-b-2 
+        w-full gap-2 flex items-center
+       ${isActive
+        ? 'pl-20 text-lg font-bold bg-white/10 hover:bg-white/30'
+        : 'font-bold hover:bg-white/30'
       }`
     }
   >
-    {label}
+    {Icon && <Icon className="w-8 h-8 text-white float-left mx-2" />}
+    <span>{label}</span>
   </NavLink>
 );
 

@@ -8,6 +8,7 @@ import AdminLoginPage from './pages/admin/AdminLoginPage';
 import UserManagePage from './pages/admin/UserManagePage';
 import ReservationManagePage from './pages/admin/ReservationManagePage';
 import StaffManagePage from './pages/admin/StaffManagePage';
+import TestUserList from './pages/test/TestUserList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,6 +18,9 @@ function App() {
       <ScrollToTop />
 
       <Routes>
+        {/* 테스트 페이지 라우트 추가 */}
+        <Route path="/test/users" element={<TestUserList />} />
+
         {/* 관리자 로그인 */}
         <Route path="/adminlogin" element={<AdminLoginPage />} />
 

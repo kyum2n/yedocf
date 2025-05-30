@@ -5,6 +5,7 @@ import TreatmentContent from '@/components/features/treatment/TreatmentContent';
 import { eyeBanner } from '@/assets/images';
 import Spacer from '@/components/common/Spacer';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
+import ScrollToTopOnTabChange from '@/components/common/ScrollToTopOnTabChange';
 
 const tabList = [
   { key: '1', label: '쌍커풀' },
@@ -35,6 +36,7 @@ const EyePage = () => (
   <>
     <BannerSection image={eyeBanner} title="눈 성형" subtitle="맑고 또렷한 눈" />
     <div className="relative z-20 bg-white">
+      <ScrollToTopOnTabChange />
       <TabSection tabList={tabList} />
       <TreatmentContent renderContent={renderEyeContent} />
       <Spacer size="lg" />

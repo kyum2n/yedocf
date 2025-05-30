@@ -4,10 +4,14 @@ import classNames from "classnames";
 const Dropdown = ({
   options = [],
   onSelect,
+  value,
+  name,
+  id,
   placeholder = "항목을 선택하세요",
-  forcePlaceholder = false,               // ✅ 새 prop
+  forcePlaceholder = false,
   className = "",
-  maxHeight = "max-h-60",
+  disabled = false,
+  error = "",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -24,6 +28,14 @@ const Dropdown = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // value 변화 감지
+  useEffect(() => {
+    if (value !== undefined && Array.isArray(options)) {
+      const match = options.find((opt) => opt.value === value);
+      setSelected(match || null);
+    }
+  }, [value, options]);
+
   // 배열 아니면 경고
   useEffect(() => {
     if (!Array.isArray(options)) {
@@ -33,26 +45,39 @@ const Dropdown = ({
 
   const handleSelect = (option) => {
     setSelected(option);
-    onSelect?.({ target: { value: option.value } }); // HTML select 유사
+    onSelect?.({ target: { name, value: option.value } });
     setIsOpen(false);
   };
 
   return (
-    <div className={classNames("relative w-full", className)} ref={dropdownRef}>
+    <div
+      className={classNames("relative", className)}
+      ref={dropdownRef}
+    >
       <button
+        id={id}
+        name={name}
         type="button"
+        disabled={disabled}
         onClick={() => setIsOpen((prev) => !prev)}
-        className="w-full border border-gray-300 rounded-md bg-white px-4 py-2 text-left shadow-sm hover:border-black flex justify-between items-center"
+        className={classNames(
+          "w-full border rounded-md bg-white px-4 py-2 text-left shadow-sm flex justify-between items-center",
+          disabled
+            ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
+            : "hover:border-black border-gray-300 text-black",
+          error && "border-red-500"
+        )}
       >
-        <span>
+        <span className="overflow-clip whitespace-nowrap text-ellipsis">
           {forcePlaceholder
             ? placeholder
             : selected?.label || placeholder}
         </span>
         <svg
-          className={`w-4 h-4 ml-2 text-gray-500 transition-transform duration-200 ${
+          className={classNames(
+            "w-4 h-4 ml-2 text-gray-500 transition-transform duration-200",
             isOpen ? "rotate-180" : "rotate-0"
-          }`}
+          )}
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -64,22 +89,25 @@ const Dropdown = ({
 
       {isOpen && Array.isArray(options) && (
         <ul
-          className={classNames(
-            "absolute z-10 mt-1 w-full border border-gray-300 rounded-md bg-white shadow-lg overflow-y-auto",
-            maxHeight,
-            "scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded"
-          )}
+          className="absolute z-10 mt-1 w-full max-h-48 border border-gray-300 rounded-md bg-white shadow-lg overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded"
         >
           {options.map((option, idx) => (
             <li
               key={idx}
               onClick={() => handleSelect(option)}
-              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              className={classNames(
+                "px-4 py-2 hover:bg-gray-100 cursor-pointer",
+                selected?.value === option.value && "bg-gray-200 font-semibold"
+              )}
             >
               {option.label}
             </li>
           ))}
         </ul>
+      )}
+
+      {error && (
+        <p className="mt-1 text-xs text-red-500">{error}</p>
       )}
     </div>
   );

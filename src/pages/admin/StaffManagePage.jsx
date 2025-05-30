@@ -10,32 +10,31 @@ const StaffManagePage = () => {
     const [searchCategory, setSearchCategory] = useState("");
     const [searchText, setSearchText] = useState("");
 
-    const searchOptions = {
-        name: "이름",
-        username: "아이디",
-        password: "비밀번호",
-    };
+    const searchOptions = [
+        { value: "name", label: "이름" },
+        { value: "username", label: "아이디" },
+        { value: "password", label: "비밀번호" },
+        { value: "email", label: "이메일" },
+    ];
+
+    const selectedLabel = searchOptions.find(opt => opt.value === searchCategory)?.label;
 
     return (
         <div className="flex">
             <Sidebar isLoggedIn={true} isSuperAdmin={true} adminName="최고관리자" />
 
             <main className="w-full min-h-screen p-8 bg-gray-50">
-                {/* 제목 */}
                 <h1 className="text-2xl font-bold mb-6">직원 관리</h1>
 
-                {/* 상단 버튼묶음 */}
+                {/* 검색 & 추가 버튼 */}
                 <div className="flex mb-4 justify-between items-center gap-4">
-                    {/* 검색 영역 */}
-                    <div className="flex items-end gap-2">
-                        <div className="w-1/4">
-                            <ItemSelect
-                                value={searchCategory}
-                                onChange={(e) => setSearchCategory(e.target.value)}
-                                options={searchOptions}
-                                className="h-10"
-                            />
-                        </div>
+                    <div className="flex gap-2">
+                        <ItemSelect
+                            value={searchCategory}
+                            onChange={(e) => setSearchCategory(e.target.value)}
+                            options={searchOptions}
+                            className="h-10"
+                        />
                         <div className="w-1/2">
                             <InputField
                                 name="searchText"
@@ -43,18 +42,17 @@ const StaffManagePage = () => {
                                 onChange={(e) => setSearchText(e.target.value)}
                                 placeholder={
                                     searchCategory
-                                        ? `${searchOptions[searchCategory]}을(를) 입력하세요`
+                                        ? `${selectedLabel}을(를) 입력하세요`
                                         : "검색할 항목을 먼저 선택하세요"
                                 }
                                 variant="admin"
                                 className="h-10"
-                                labelHidden
+                                labelHidden={true}
                             />
                         </div>
                         <Button variant="primary" className="h-10">검색</Button>
                     </div>
 
-                    {/* 직원 추가 버튼 */}
                     <Button
                         variant="primary"
                         className="h-10 bg-green-600"
@@ -72,11 +70,11 @@ const StaffManagePage = () => {
                                 <th className="px-4 py-3 border">이름</th>
                                 <th className="px-4 py-3 border">아이디</th>
                                 <th className="px-4 py-3 border">비밀번호</th>
+                                <th className="px-4 py-3 border">이메일</th>
                                 <th className="py-3 border">삭제</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* 여기에 직원 리스트 map 예정 */}
                             <tr className="text-center">
                                 <td className="px-4 py-2 border">이름</td>
                                 <td className="px-4 py-2 border">아이디</td>
@@ -84,6 +82,7 @@ const StaffManagePage = () => {
                                     <span className="group-hover:hidden text-gray-500">••••••</span>
                                     <span className="hidden group-hover:inline text-black">01user</span>
                                 </td>
+                                <td className="px-4 py-2 border">hong@example.com</td>
                                 <td className="py-2 border text-center">
                                     <Button variant="danger">삭제</Button>
                                 </td>
@@ -103,9 +102,10 @@ const StaffManagePage = () => {
                         setIsModalOpen(false);
                     }}
                 >
-                    <InputField name="name" placeholder="이름" variant="admin" />
-                    <InputField name="username" placeholder="아이디" variant="admin" />
-                    <InputField name="password" placeholder="비밀번호" variant="admin" type="password" />
+                    <InputField name="name" placeholder="이름" variant="admin" className="p-2" />
+                    <InputField name="username" placeholder="아이디" variant="admin" className="p-2" />
+                    <InputField name="password" placeholder="비밀번호" variant="admin" type="password" className="p-2" />
+                    <InputField name="email" placeholder="이메일" variant="admin" className="p-2" />
                 </Modal>
             </main>
         </div>

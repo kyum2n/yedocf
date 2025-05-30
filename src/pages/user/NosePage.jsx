@@ -5,6 +5,7 @@ import TreatmentContent from '@/components/features/treatment/TreatmentContent';
 import { noseBanner } from '@/assets/images';
 import Spacer from '@/components/common/Spacer';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
+import ScrollToTopOnTabChange from '@/components/common/ScrollToTopOnTabChange';
 
 const tabList = [
   { key: '1', label: '콧대 성형' },
@@ -29,6 +30,7 @@ const NosePage = () => (
   <>
     <BannerSection image={noseBanner} title="코 성형" subtitle="오롯하게 세우는 자신감" />
     <div className="relative z-20 bg-white">
+      <ScrollToTopOnTabChange />
       <TabSection tabList={tabList} />
       <TreatmentContent renderContent={renderNoseContent} />
       <Spacer size="lg" />

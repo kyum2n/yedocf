@@ -10,33 +10,33 @@ const UserManagePage = () => {
     const [searchCategory, setSearchCategory] = useState("");
     const [searchText, setSearchText] = useState("");
 
-    const searchOptions = {
-        name: "이름",
-        username: "아이디",
-        password: "비밀번호",
-        email: "이메일",
-        phone: "전화번호",
-    };
+    // ✅ 배열 형태로 리팩토링
+    const searchOptions = [
+        { value: "name", label: "이름" },
+        { value: "username", label: "아이디" },
+        { value: "password", label: "비밀번호" },
+        { value: "email", label: "이메일" },
+        { value: "phone", label: "전화번호" },
+    ];
+
+    const selectedLabel = searchOptions.find(opt => opt.value === searchCategory)?.label;
 
     return (
         <div className="flex">
             <Sidebar isLoggedIn={true} isSuperAdmin={true} adminName="최고관리자" />
 
             <main className="w-full min-h-screen p-8 bg-gray-50">
-                {/* 제목 */}
                 <h1 className="text-2xl font-bold mb-6">회원 관리</h1>
-                {/* 상단 버튼묶음 */}
+
+                {/* 상단 검색 영역 */}
                 <div className="flex mb-4 justify-between items-center gap-4">
-                    {/* 검색 영역 */}
-                    <div className="flex items-end gap-2">
-                        <div className="w-1/4">
-                            <ItemSelect
-                                value={searchCategory}
-                                onChange={(e) => setSearchCategory(e.target.value)}
-                                options={searchOptions}
-                                className="h-10"
-                            />
-                        </div>
+                    <div className="flex gap-2">
+                        <ItemSelect
+                            value={searchCategory}
+                            onChange={(e) => setSearchCategory(e.target.value)}
+                            options={searchOptions}
+                            className="h-10"
+                        />
                         <div className="w-1/2">
                             <InputField
                                 name="searchText"
@@ -44,7 +44,7 @@ const UserManagePage = () => {
                                 onChange={(e) => setSearchText(e.target.value)}
                                 placeholder={
                                     searchCategory
-                                        ? `${searchOptions[searchCategory]}을(를) 입력하세요`
+                                        ? `${selectedLabel}을(를) 입력하세요`
                                         : "검색할 항목을 먼저 선택하세요"
                                 }
                                 variant="admin"
@@ -55,12 +55,10 @@ const UserManagePage = () => {
                         <Button variant="primary" className="h-10">검색</Button>
                     </div>
 
-                    {/* 회원 추가 버튼 */}
                     <Button variant="primary" className="h-10 bg-green-600" onClick={() => setIsModalOpen(true)}>
                         회원 추가
                     </Button>
                 </div>
-
 
                 {/* 회원 목록 테이블 */}
                 <div className="overflow-x-auto">
@@ -76,16 +74,16 @@ const UserManagePage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr className=" text-center">
                                 <td className="px-4 py-2 border">홍길동</td>
                                 <td className="px-4 py-2 border">user01</td>
-                                <td className="px-4 py-2 border text-center group">
+                                <td className="px-4 py-2 border group">
                                     <span className="group-hover:hidden text-gray-500">••••••</span>
                                     <span className="hidden group-hover:inline text-black">01user</span>
                                 </td>
                                 <td className="px-4 py-2 border">hong@example.com</td>
                                 <td className="px-4 py-2 border">010-1111-1111</td>
-                                <td className="py-2 border text-center">
+                                <td className="py-2 border">
                                     <Button variant="danger" className="px-6 py-1">삭제</Button>
                                 </td>
                             </tr>
@@ -104,19 +102,18 @@ const UserManagePage = () => {
                         setIsModalOpen(false);
                     }}
                 >
-                    <InputField name="name" placeholder="이름" variant="admin" />
-                    <InputField name="username" placeholder="아이디" variant="admin" />
+                    <InputField name="name" placeholder="이름" variant="admin" className="w-full p-2 rounded" />
+                    <InputField name="username" placeholder="아이디" variant="admin" className="w-full p-2 rounded" />
                     <InputField
                         name="password"
                         placeholder="비밀번호"
                         type="password"
                         variant="admin"
+                        className="w-full p-2 rounded"
                     />
-                    <InputField name="email" placeholder="이메일" variant="admin" />
-                    <InputField name="phone" placeholder="전화번호" variant="admin" />
+                    <InputField name="email" placeholder="이메일" variant="admin" className="w-full p-2 rounded" />
+                    <InputField name="phone" placeholder="전화번호" variant="admin" className="w-full p-2 rounded" />
                 </Modal>
-
-
             </main>
         </div>
     );

@@ -119,8 +119,8 @@ const MyPage = () => {
                     setShowPwdModal(false);
                 }}
             >
-                <input type="password" placeholder="기존 비밀번호" className="w-full border p-2 rounded" />
-                <input type="password" placeholder="새 비밀번호" className="w-full border p-2 rounded" />
+                <input type="password" placeholder="기존 비밀번호" className="w-full border p-2 rounded mb-3" />
+                <input type="password" placeholder="새 비밀번호" className="w-full border p-2 rounded mb-3" />
                 <input type="password" placeholder="비밀번호 확인" className="w-full border p-2 rounded" />
             </Modal>
 

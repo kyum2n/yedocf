@@ -10,35 +10,40 @@ const ReservationManagePage = () => {
     const [searchCategory, setSearchCategory] = useState("");
     const [searchText, setSearchText] = useState("");
 
-    const searchOptions = {
-        id: "예약 ID",
-        userId: "예약자 아이디",
-        procedure: "시술 항목",
-        date: "예약 날짜",
-        time: "시간대",
-        status: "예약 상태",
-    };
+    const searchOptions = [
+        { value: "id", label: "예약 ID" },
+        { value: "userId", label: "예약자 아이디" },
+        { value: "procedure", label: "시술 항목" },
+        { value: "date", label: "예약 날짜" },
+        { value: "time", label: "시간대" },
+        { value: "status", label: "예약 상태" },
+    ];
+
+    const statusOptions = [
+        { value: "done", label: "예약 완료" },
+        { value: "cancel", label: "예약 취소" },
+        { value: "pending", label: "대기중" },
+    ];
+
+    const selectedLabel = searchOptions.find(opt => opt.value === searchCategory)?.label;
+
 
     return (
         <div className="flex">
             <Sidebar isLoggedIn={true} isSuperAdmin={true} adminName="최고관리자" />
 
             <main className="w-full min-h-screen p-8 bg-gray-50">
-                {/* 제목 */}
                 <h1 className="text-2xl font-bold mb-6">예약 관리</h1>
 
-                {/* 상단 버튼묶음 */}
+                {/* 상단 검색 영역 */}
                 <div className="flex mb-4 justify-between items-center gap-4">
-                    {/* 검색 영역 */}
-                    <div className="flex items-end gap-2">
-                        <div className="w-1/4">
-                            <ItemSelect
-                                value={searchCategory}
-                                onChange={(e) => setSearchCategory(e.target.value)}
-                                options={searchOptions}
-                                className="h-10"
-                            />
-                        </div>
+                    <div className="flex gap-2">
+                        <ItemSelect
+                            value={searchCategory}
+                            onChange={(e) => setSearchCategory(e.target.value)}
+                            options={searchOptions}
+                            className="h-10"
+                        />
                         <div className="w-1/2">
                             <InputField
                                 name="searchText"
@@ -46,7 +51,7 @@ const ReservationManagePage = () => {
                                 onChange={(e) => setSearchText(e.target.value)}
                                 placeholder={
                                     searchCategory
-                                        ? `${searchOptions[searchCategory]}을(를) 입력하세요`
+                                        ? `${selectedLabel}을(를) 입력하세요`
                                         : "검색할 항목을 먼저 선택하세요"
                                 }
                                 variant="admin"
@@ -57,7 +62,6 @@ const ReservationManagePage = () => {
                         <Button variant="primary" className="h-10">검색</Button>
                     </div>
 
-                    {/* 예약 추가 버튼 */}
                     <Button variant="primary" className="h-10 bg-green-600" onClick={() => setIsModalOpen(true)}>
                         예약 추가
                     </Button>
@@ -108,14 +112,15 @@ const ReservationManagePage = () => {
                         setIsModalOpen(false);
                     }}
                 >
-                    <InputField name="userId" placeholder="예약자 아이디" variant="admin" />
-                    <InputField name="procedure" placeholder="시술 항목" variant="admin" />
-                    <InputField name="date" type="date" variant="admin" />
-                    <InputField name="time" placeholder="시간대 (예: 14:30)" variant="admin" />
+                    <InputField name="userId" placeholder="예약자 아이디" variant="admin" className="p-2"/>
+                    <InputField name="procedure" placeholder="시술 항목" variant="admin" className="p-2"/>
+                    <InputField name="date" type="date" variant="admin" className="p-2"/>
+                    <InputField name="time" placeholder="시간대 (예: 14:30)" variant="admin" className="p-2"/>
                     <ItemSelect
                         value={""}
                         onChange={() => { }}
-                        options={{ done: "예약 완료", cancel: "예약 취소", pending: "대기중" }}
+                        options={statusOptions}
+                        className="p-2"
                     />
                 </Modal>
             </main>

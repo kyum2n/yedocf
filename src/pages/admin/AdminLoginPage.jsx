@@ -40,6 +40,7 @@ const AdminLoginPage = () => {
             onChange={handleChange}
             placeholder="관리자 아이디를 입력하세요"
             variant="admin"
+            className="h-12 mb-2"
           />
 
           <InputField
@@ -51,9 +52,10 @@ const AdminLoginPage = () => {
             onChange={handleChange}
             placeholder="관리자 비밀번호를 입력하세요"
             variant="admin"
+            className="h-12"
           />
 
-          <Button type="submit" variant="primary" className="w-full mt-4">
+          <Button type="submit" variant="primary" size="lg" className="w-full mt-4">
             로그인
           </Button>
         </form>

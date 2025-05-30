@@ -24,15 +24,15 @@ const Modal = ({
             >
                 <h2 className="text-xl font-bold mb-4">{title}</h2>
 
-                <div className="space-y-4">{children}</div>
+                {children}
 
                 <div className="mt-6 flex justify-end gap-2">
                     {cancelLabel && (
-                        <Button variant="secondary" onClick={onCancel || onClose}>
+                        <Button variant="secondary" onClick={onCancel || onClose} className="mr-2">
                             {cancelLabel}
                         </Button>
                     )}
-                    <Button variant="success" onClick={onAction}>
+                    <Button variant="success" onClick={onAction} className="mr-2">
                         {actionLabel}
                     </Button>
                 </div>
@@ -40,7 +40,7 @@ const Modal = ({
                 <button
                     onClick={onClose}
                     aria-label="Close modal"
-                    className="absolute top-2 right-3 text-gray-500 text-lg font-bold"
+                    className="absolute top-4 right-5 text-gray-500 text-lg font-bold"
                 >
                     ✕
                 </button>

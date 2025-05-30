@@ -5,6 +5,7 @@ import TreatmentContent from '@/components/features/treatment/TreatmentContent';
 import { faceBanner } from '@/assets/images';
 import Spacer from '@/components/common/Spacer';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
+import ScrollToTopOnTabChange from '@/components/common/ScrollToTopOnTabChange';
 
 const tabList = [
   { key: '1', label: '광대축소술' },
@@ -29,6 +30,7 @@ const FacePage = () => (
   <>
     <BannerSection image={faceBanner} title="윤곽 성형" subtitle="자연스럽게 깎아낸 아름다움" objectPosition="object-[50%_30%]" />
     <div className="relative z-20 bg-white">
+      <ScrollToTopOnTabChange />
       <TabSection tabList={tabList} />
       <TreatmentContent renderContent={renderFaceContent} />
       <Spacer size="lg" />

@@ -1,4 +1,7 @@
 // components/common/Button.jsx
+import React from 'react';
+import classNames from 'classnames';
+
 const VARIANT_STYLES = {
   primary: 'bg-black text-white border border-black hover:bg-gray-800',
   secondary: 'bg-white text-black border border-black hover:bg-gray-100',
@@ -19,6 +22,7 @@ const Button = ({
   variant = 'primary',
   size = 'md',
   className = '',
+  disabled = false,
   ...rest
 }) => {
   const variantClass = VARIANT_STYLES[variant] || VARIANT_STYLES.primary;
@@ -28,7 +32,14 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={`rounded transition font-medium ${variantClass} ${sizeClass} ${className}`}
+      disabled={disabled}
+      className={classNames(
+        'rounded transition font-medium overflow-clip whitespace-nowrap',
+        variantClass,
+        sizeClass,
+        className,
+        disabled && 'opacity-50 cursor-not-allowed'
+      )}
       {...rest}
     >
       {children}

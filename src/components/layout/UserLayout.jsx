@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import { useLocation } from "react-router-dom";
 
 import LoginPage from '@/pages/user/LoginPage';
 import SignupPage from '@/pages/user/SignupPage';
@@ -13,6 +14,11 @@ import FindAccountPage from '@/pages/user/FindAccountPage';
 import ReservationPage from '@/pages/user/ReservationPage';
 
 const UserLayout = ({ isLoggedIn, setIsLoggedIn }) => {
+  const location = useLocation();
+  const hideFooterPaths = ["/"]; // MainPage 등
+
+  const shouldHideFooter = hideFooterPaths.includes(location.pathname);
+
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
@@ -27,7 +33,7 @@ const UserLayout = ({ isLoggedIn, setIsLoggedIn }) => {
         <Route path="/nose" element={<NosePage />} />
         <Route path="/face" element={<FacePage />} />
       </Routes>
-      <Footer />
+      {!shouldHideFooter && <Footer />}
     </>
   );
 };
