@@ -15,23 +15,19 @@ const LoginPage = () => {
             {/* 오른쪽 로그인 폼 영역 */}
             <div className="w-full md:w-1/2 flex-center relative bg-white">
                 <form className="w-[90%] max-w-sm z-10">
-                    <h2 className="text-2xl font-bold text-center mb-5">로그인</h2>
+                    <h2 className="text-2xl font-bold text-center mb-6">로그인</h2>
                     <InputField
                         label="아이디"
                         name="uId"
                         placeholder="아이디를 입력하세요"
-                        variant="user"
-                        labelHidden={true}
-                        className="mb-2"
+                        className="mb-5  h-12"
                     />
                     <InputField
                         label="비밀번호"
                         name="uPwd"
                         type='password'
                         placeholder="비밀번호를 입력하세요"
-                        variant="user"
-                        labelHidden={true}
-                        className="mb-0.5"
+                        className="mb-5  h-12"
                     />
                     <div className="text-sm w-full flex justify-between mb-4">
                         <a href="/idpwfind" className=' text-gray-600 mt-0 hover:underline' >아이디/회원번호 찾기</a>

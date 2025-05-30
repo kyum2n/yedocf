@@ -18,7 +18,12 @@ const ReservationPage = () => {
             return;
         }
         // TODO: 백엔드 연동 로직
-        console.log("예약 정보:", { selectedDate, selectedTime, selectedItem });
+        console.log("검사:", { selectedDate, selectedTime, selectedItem });
+        console.log("typeof 확인:", {
+            selectedDate: typeof selectedDate,
+            selectedTime: typeof selectedTime,
+            selectedItem: typeof selectedItem,
+        });
     };
 
     return (
@@ -46,14 +51,14 @@ const ReservationPage = () => {
                             label="예약 항목"
                             value={selectedItem}
                             onChange={(e) => setSelectedItem(e.target.value)}
-                            options={{
-                                eye: "눈 성형",
-                                nose: "코 성형",
-                                chin: "윤곽",
-                            }}
+                            options={[
+                                { value: "eye", label: "눈 성형" },
+                                { value: "nose", label: "코 성형" },
+                                { value: "chin", label: "윤곽" },
+                            ]}
                         />
 
-                        <Button variant="primary" onClick={handleSubmit} className="mt-4">
+                        <Button variant="primary" onClick={handleSubmit} size='lg' className="mt-4">
                             예약하기
                         </Button>
                     </div>

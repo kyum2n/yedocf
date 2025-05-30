@@ -42,19 +42,21 @@ const SignupPage = () => {
                 objectPosition="object-[50%_20%]"
             />
             <div className="relative z-20 bg-white">
-            <Spacer/>
-                <form onSubmit={handleSubmit} className="max-w-md mx-auto px-4 py-8 space-y-6">
+                <Spacer />
+                <form onSubmit={handleSubmit} className="max-w-md mx-auto px-4 space-y-10">
                     <InputField
                         name="name"
                         placeholder="이름"
                         value={form.name}
                         onChange={handleChange}
+                        className="h-12"
                     />
                     <InputField
                         name="userId"
                         placeholder="아이디"
                         value={form.userId}
                         onChange={handleChange}
+                        className="h-12"
                     />
                     <InputField
                         type="password"
@@ -62,6 +64,7 @@ const SignupPage = () => {
                         placeholder="비밀번호"
                         value={form.password}
                         onChange={handleChange}
+                        className="h-12"
                     />
                     <InputField
                         type="password"
@@ -69,6 +72,7 @@ const SignupPage = () => {
                         placeholder="비밀번호 확인"
                         value={form.confirmPassword}
                         onChange={handleChange}
+                        className="h-12"
                     />
                     <InputField
                         type="email"
@@ -76,6 +80,7 @@ const SignupPage = () => {
                         placeholder="이메일"
                         value={form.email}
                         onChange={handleChange}
+                        className="h-12"
                     />
                     <InputField
                         type="tel"
@@ -83,6 +88,7 @@ const SignupPage = () => {
                         placeholder="전화번호"
                         value={form.phone}
                         onChange={handleChange}
+                        className="h-12"
                     />
 
                     <div className="space-y-2 text-sm">
@@ -124,10 +130,10 @@ const SignupPage = () => {
                         </label>
                     </div>
 
-                    <Button type="submit" variant="primary" className="w-full py-3 mt-2 text-lg">
+                    <Button type="submit" variant="primary" size='lg' className='w-full mt-2'>
                         회원가입
                     </Button>
-                    <Spacer size="lg"/>
+                    <Spacer size="lg" />
                 </form>
             </div>
         </div>

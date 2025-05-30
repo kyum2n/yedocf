@@ -38,7 +38,7 @@ const TimeSelector = ({ selectedDate, selectedTime, onSelect, disabledTimes = []
             key={time}
             onClick={() => !isDisabled && onSelect(time)}
             className={`px-3 py-2 border rounded transition-all
-              ${isDisabled ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "hover:bg-gray-100"}
+              ${isDisabled ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "hover:bg-gray-400"}
               ${isSelected ? "bg-black text-white" : ""}`}
             disabled={isDisabled}
           >

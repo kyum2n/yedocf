@@ -12,10 +12,10 @@ const InputField = ({
   className = "",
 }) => {
   const baseClass =
-    "w-full focus:outline-none placeholder-gray-400 h-auto";
+    "w-full focus:outline-none placeholder-gray-400";
   const styleByVariant = {
-    user: "border-0 border-b-2 border-gray-400 focus:border-black bg-transparent",
-    admin: "border border-gray-300 rounded-md focus:border-blue-500 bg-white",
+    user: "border-0 border-b-2 border-gray-400 focus:border-black bg-transparent pl-2",
+    admin: "border border-gray-300 rounded-md focus:border-blue-500 bg-white pl-2",
   };
   const inputClass = classNames(baseClass, styleByVariant[variant], className);
 
