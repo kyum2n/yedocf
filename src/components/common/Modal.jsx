@@ -1,5 +1,6 @@
 import { createPortal } from "react-dom";
 import Button from "@/components/common/Button";
+import { useEffect, useState } from "react";
 
 const Modal = ({
     isOpen,
@@ -9,8 +10,18 @@ const Modal = ({
     actionLabel,
     onAction,
     cancelLabel,
-    onCancel
+    onCancel,
+    resetOnClose = false,
 }) => {
+
+    const [internalKey, setInternalKey] = useState(0);
+
+    useEffect(() => {
+        if (!isOpen && resetOnClose) {
+            setInternalKey(prev => prev + 1);
+        }
+    }, [isOpen, resetOnClose]);
+
     if (!isOpen) return null;
 
     return createPortal(
@@ -19,6 +30,7 @@ const Modal = ({
             onClick={onClose}
         >
             <div
+                key={internalKey}
                 className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative"
                 onClick={(e) => e.stopPropagation()}
             >

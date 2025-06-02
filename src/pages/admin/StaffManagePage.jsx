@@ -10,6 +10,14 @@ const StaffManagePage = () => {
     const [searchCategory, setSearchCategory] = useState("");
     const [searchText, setSearchText] = useState("");
 
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+    const handleCloseDeleteModal = () => {
+        setSelectedUser(null);
+        setIsDeleteModalOpen(false);
+    };
+
     const searchOptions = [
         { value: "name", label: "이름" },
         { value: "username", label: "아이디" },
@@ -18,6 +26,17 @@ const StaffManagePage = () => {
     ];
 
     const selectedLabel = searchOptions.find(opt => opt.value === searchCategory)?.label;
+
+    // 예시용 더미 데이터 (API 연동 전)
+    const dummyStaffList = [
+        {
+            id: 1,
+            name: "홍길동",
+            username: "staff01",
+            password: "01user", // 실제로는 백엔드에서 해싱된 값만 받아야 함
+            email: "hong@example.com"
+        }
+    ];
 
     return (
         <div className="flex">
@@ -75,18 +94,28 @@ const StaffManagePage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="text-center">
-                                <td className="px-4 py-2 border">이름</td>
-                                <td className="px-4 py-2 border">아이디</td>
-                                <td className="px-4 py-2 border text-center group">
-                                    <span className="group-hover:hidden text-gray-500">••••••</span>
-                                    <span className="hidden group-hover:inline text-black">01user</span>
-                                </td>
-                                <td className="px-4 py-2 border">hong@example.com</td>
-                                <td className="py-2 border text-center">
-                                    <Button variant="danger">삭제</Button>
-                                </td>
-                            </tr>
+                            {dummyStaffList.map((user) => (
+                                <tr key={user.id} className="text-center">
+                                    <td className="px-4 py-2 border">{user.name}</td>
+                                    <td className="px-4 py-2 border">{user.username}</td>
+                                    <td className="px-4 py-2 border text-center group">
+                                        <span className="group-hover:hidden text-gray-500">••••••</span>
+                                        <span className="hidden group-hover:inline text-black">{user.password}</span>
+                                    </td>
+                                    <td className="px-4 py-2 border">{user.email}</td>
+                                    <td className="py-2 border text-center">
+                                        <Button
+                                            variant="danger"
+                                            onClick={() => {
+                                                setSelectedUser(user);
+                                                setIsDeleteModalOpen(true);
+                                            }}
+                                        >
+                                            삭제
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -97,8 +126,9 @@ const StaffManagePage = () => {
                     onClose={() => setIsModalOpen(false)}
                     title="직원 추가"
                     actionLabel="추가"
+                    resetOnClose={true}
                     onAction={() => {
-                        console.log("직원 추가");
+                        console.log("직원 추가 요청");
                         setIsModalOpen(false);
                     }}
                 >
@@ -106,6 +136,24 @@ const StaffManagePage = () => {
                     <InputField name="username" placeholder="아이디" variant="admin" className="p-2" />
                     <InputField name="password" placeholder="비밀번호" variant="admin" type="password" className="p-2" />
                     <InputField name="email" placeholder="이메일" variant="admin" className="p-2" />
+                </Modal>
+
+                {/* 직원 삭제 모달 */}
+                <Modal
+                    isOpen={isDeleteModalOpen}
+                    onClose={handleCloseDeleteModal}
+                    title="직원 삭제"
+                    actionLabel="삭제"
+                    onAction={() => {
+                        console.log("삭제 요청:", selectedUser?.id);
+                        // 💡 API 요청: DELETE /api/staff/:id
+                        handleCloseDeleteModal();
+                    }}
+                >
+                    <p className="text-sm text-gray-700">
+                        직원 <strong>{selectedUser?.name}</strong>
+                        ({selectedUser?.username})을(를) 정말 삭제하시겠습니까?
+                    </p>
                 </Modal>
             </main>
         </div>

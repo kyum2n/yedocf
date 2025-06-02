@@ -13,7 +13,7 @@ import MyPage from '@/pages/user/MyPage';
 import FindAccountPage from '@/pages/user/FindAccountPage';
 import ReservationPage from '@/pages/user/ReservationPage';
 
-const UserLayout = ({ isLoggedIn, setIsLoggedIn }) => {
+const UserLayout = () => {
   const location = useLocation();
   const hideFooterPaths = ["/"]; // MainPage 등
 
@@ -21,10 +21,11 @@ const UserLayout = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      {/* 로그인 여부는 Header 내부에서 localStorage 등으로 판단 */}
+      <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage onLogin={() => setIsLoggedIn(true)} />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/idpwfind" element={<FindAccountPage />} />
         <Route path="/mypage" element={<MyPage />} />

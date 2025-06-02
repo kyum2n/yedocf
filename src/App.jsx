@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import ScrollToTop from './components/common/ScrollToTop';
 import UserLayout from './components/layout/UserLayout';
 import AdminLayout from './pages/admin/AdminLayout';
@@ -12,6 +14,18 @@ import TestUserList from './pages/test/TestUserList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // 🔗 백엔드 연결 확인용 테스트 (React가 Spring Boot랑 통신 잘 되는지 확인)
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/api/hello') // HelloController가 만든 API
+      .then((res) => {
+        console.log('[백엔드 연결 성공]', res.data);
+      })
+      .catch((err) => {
+        console.error('[백엔드 연결 실패]', err);
+      });
+  }, []);
 
   return (
     <Router>

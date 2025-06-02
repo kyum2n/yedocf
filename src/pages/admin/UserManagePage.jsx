@@ -7,10 +7,11 @@ import { useState } from "react";
 
 const UserManagePage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
     const [searchCategory, setSearchCategory] = useState("");
     const [searchText, setSearchText] = useState("");
 
-    // ✅ 배열 형태로 리팩토링
     const searchOptions = [
         { value: "name", label: "이름" },
         { value: "username", label: "아이디" },
@@ -20,6 +21,11 @@ const UserManagePage = () => {
     ];
 
     const selectedLabel = searchOptions.find(opt => opt.value === searchCategory)?.label;
+
+    const handleCloseDeleteModal = () => {
+        setSelectedUser(null);
+        setIsDeleteModalOpen(false);
+    };
 
     return (
         <div className="flex">
@@ -74,7 +80,7 @@ const UserManagePage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className=" text-center">
+                            <tr className="text-center">
                                 <td className="px-4 py-2 border">홍길동</td>
                                 <td className="px-4 py-2 border">user01</td>
                                 <td className="px-4 py-2 border group">
@@ -84,7 +90,20 @@ const UserManagePage = () => {
                                 <td className="px-4 py-2 border">hong@example.com</td>
                                 <td className="px-4 py-2 border">010-1111-1111</td>
                                 <td className="py-2 border">
-                                    <Button variant="danger" className="px-6 py-1">삭제</Button>
+                                    <Button
+                                        variant="danger"
+                                        className="px-6 py-1"
+                                        onClick={() => {
+                                            setSelectedUser({
+                                                name: "홍길동",
+                                                username: "user01",
+                                                id: 1,
+                                            });
+                                            setIsDeleteModalOpen(true);
+                                        }}
+                                    >
+                                        삭제
+                                    </Button>
                                 </td>
                             </tr>
                         </tbody>
@@ -97,6 +116,7 @@ const UserManagePage = () => {
                     onClose={() => setIsModalOpen(false)}
                     title="회원 추가"
                     actionLabel="추가"
+                    resetOnClose={true}
                     onAction={() => {
                         console.log("회원 추가");
                         setIsModalOpen(false);
@@ -113,6 +133,22 @@ const UserManagePage = () => {
                     />
                     <InputField name="email" placeholder="이메일" variant="admin" className="w-full p-2 rounded" />
                     <InputField name="phone" placeholder="전화번호" variant="admin" className="w-full p-2 rounded" />
+                </Modal>
+
+                {/* 회원 삭제 모달 */}
+                <Modal
+                    isOpen={isDeleteModalOpen}
+                    onClose={handleCloseDeleteModal}
+                    title="회원 삭제"
+                    actionLabel="삭제"
+                    onAction={() => {
+                        console.log("삭제 요청:", selectedUser?.id);
+                        handleCloseDeleteModal();
+                    }}
+                >
+                    <p className="text-sm text-gray-700">
+                        회원 <strong>{selectedUser?.name}</strong>({selectedUser?.username})을(를) 정말 삭제하시겠습니까?
+                    </p>
                 </Modal>
             </main>
         </div>
