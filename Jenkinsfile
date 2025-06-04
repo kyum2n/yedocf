@@ -4,8 +4,6 @@ pipeline {
     environment {
         NODE_ENV = 'production'
         DOCKER_IMAGE = 'kyumni/yedoc-frontend:latest'
-        DOCKER_USERNAME = 'kyumni'
-        DOCKER_PASSWORD = credentials('dockerhub')
     }
 
     stages {
@@ -29,7 +27,7 @@ pipeline {
 
         stage('Docker Build & Push') {
             steps {
-                script {
+                withCredentials([usernamePassword(credentialsId: 'yedoc-docker', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh "docker build -t $DOCKER_IMAGE ."
                     sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
                     sh "docker push $DOCKER_IMAGE"
