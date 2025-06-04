@@ -1,6 +1,9 @@
+// LoginPage.jsx
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginside } from '@/assets/images';
+import { useUser } from '@/contexts/UserContext'; // 사용자 상태 업데이트 함수
 
 import InputField from '@/components/common/InputField';
 import Button from '@/components/common/Button';
@@ -13,24 +16,46 @@ const LoginPage = () => {
     const [uPwd, setUPwd] = useState('');
     const navigate = useNavigate();
 
+    const { setUser } = useUser();
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try {
-            await axios.post('/api/user/login', { uId, uPwd });
+            const response = await axios.post("/api/user/login", { uId, uPwd });
 
-            // 로그인 성공: 토큰만 저장
-            localStorage.setItem('token', 'dummy-token'); // 실제로는 response에서 받아야 함
+            const token = response.data.token;
+            const userId = response.data.uId;
 
-            // 필요하다면 uId도 저장 (이름 조회 등에 사용)
-            localStorage.setItem('uId', uId);
+            if (!token) throw new Error("서버에서 토큰을 받지 못했습니다.");
 
-            navigate('/');
+            // ✅ localStorage 저장 (UserProvider 복원용)
+            localStorage.setItem("accessToken", token);
+            localStorage.setItem("uId", userId);
+            localStorage.setItem("role", "USER"); // USER 고정
+
+            // ✅ 로그 확인 (테스트용)
+            console.log("✅ 로그인 성공");
+            console.log("👉 저장된 토큰:", token);
+            console.log("👉 로그인한 ID:", userId);
+
+            // ✅ Context에 유저 상태 저장 (name은 useEffect에서 fetch됨)
+            setUser({
+                id: userId,
+                name: null, // name은 UserProvider에서 가져옴
+                token,
+                role: "USER",
+                type: "user",
+            });
+
+            // ✅ 메인페이지로 이동
+            navigate("/");
         } catch (error) {
-            console.error('로그인 실패:', error);
-            alert('아이디 또는 비밀번호가 잘못되었습니다.');
+            console.error("❌ 로그인 실패:", error);
+            alert("아이디 또는 비밀번호가 잘못되었습니다.");
         }
     };
+
 
     return (
         <div className="flex h-screen">

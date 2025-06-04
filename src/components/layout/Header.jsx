@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { menuItems } from '@/constants/menuItems';
+import { useUser } from '@/contexts/UserContext';
 import axios from 'axios';
 
 const Header = () => {
     const [activeMenu, setActiveMenu] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState('');
     const navigate = useNavigate();
+    const { user } = useUser();
+    const { setUser } = useUser();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
 
         if (token) {
-            setIsLoggedIn(true);
-
             axios.post(
                 '/api/user/info',
                 {}, // POST 본문이 필요 없다면 빈 객체
@@ -24,22 +23,21 @@ const Header = () => {
                     }
                 }
             )
-                .then((res) => {
-                    setUsername(res.data.uName); // ← 백엔드에서 보내는 실제 필드명에 맞춰야 해!
-                })
                 .catch((err) => {
                     console.error('사용자 정보 가져오기 실패:', err);
-                    setIsLoggedIn(false);
                     localStorage.removeItem('token');
                 });
         }
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        setUsername('');
-        navigate('/login');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('uId');
+        localStorage.removeItem('role');
+        localStorage.removeItem('aId');
+
+        setUser(null);
+        navigate('/');
     };
 
     const getMenuLabel = (key) => {
@@ -50,6 +48,17 @@ const Header = () => {
             default: return key;
         }
     };
+
+    const handleReservationClick = () => {
+        if (!user) {
+            alert('로그인이 필요합니다.');
+            navigate('/login');
+        }
+        else {
+            navigate('/reservation');
+        }
+    }
+
 
     return (
         <>
@@ -82,20 +91,21 @@ const Header = () => {
 
                     {/* 로그인 / 예약 */}
                     <div className="flex gap-2 items-center">
-                        {isLoggedIn ? (
+                        {user ? (
                             <>
-                                <span className="h-16 flex items-center p-4">{username}님 안녕하세요</span>
+                                <Link to="/mypage" className="h-16 flex items-center p-4">{user.id}님 안녕하세요</Link>
                                 <button onClick={handleLogout} className="h-16 flex items-center p-4">로그아웃</button>
                             </>
                         ) : (
                             <Link to="/login" className="h-16 flex items-center p-4">로그인</Link>
                         )}
-                        <Link
-                            to={isLoggedIn ? "/reserve" : "/login"}
+                        <button
+                            onClick={handleReservationClick}
+                            type="button"
                             className="h-12 flex items-center px-8 mr-3 border border-black hover:bg-pink-50"
                         >
                             예약하기
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </header>

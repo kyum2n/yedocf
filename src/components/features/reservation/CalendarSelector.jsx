@@ -21,13 +21,21 @@ const CalendarSelector = ({ selectedDate, onChange }) => {
     return date;
   }, []);
 
+  // 내일 날짜 (브라우저 타임존 기준)
+  const tomorrow = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    d.setHours(0, 0, 0, 0); // 시분초 밀리초 0으로 리셋
+    return d;
+  }, []);
+
   return (
     <div className="w-full mx-auto">
       <DatePicker
         selected={selectedDate}
         onChange={onChange}
         locale={ko}
-        minDate={new Date()}
+        minDate={tomorrow}
         maxDate={maxSelectableDate}
         filterDate={isSelectableDay}
         inline

@@ -10,31 +10,15 @@ import AdminLoginPage from './pages/admin/AdminLoginPage';
 import UserManagePage from './pages/admin/UserManagePage';
 import ReservationManagePage from './pages/admin/ReservationManagePage';
 import StaffManagePage from './pages/admin/StaffManagePage';
-import TestUserList from './pages/test/TestUserList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // 🔗 백엔드 연결 확인용 테스트 (React가 Spring Boot랑 통신 잘 되는지 확인)
-  useEffect(() => {
-    axios
-      .get('http://localhost:8080/api/hello') // HelloController가 만든 API
-      .then((res) => {
-        console.log('[백엔드 연결 성공]', res.data);
-      })
-      .catch((err) => {
-        console.error('[백엔드 연결 실패]', err);
-      });
-  }, []);
 
   return (
     <Router>
       <ScrollToTop />
 
       <Routes>
-        {/* 테스트 페이지 라우트 추가 */}
-        <Route path="/test/users" element={<TestUserList />} />
-
         {/* 관리자 로그인 */}
         <Route path="/adminlogin" element={<AdminLoginPage />} />
 
