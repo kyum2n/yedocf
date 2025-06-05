@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginside } from '@/assets/images';
-import { useUser } from '@/contexts/UserContext'; // 사용자 상태 업데이트 함수
+import { useUser } from '@/contexts/UserProvider'; // 사용자 상태 업데이트 함수
 
 import InputField from '@/components/common/InputField';
 import Button from '@/components/common/Button';
@@ -16,7 +16,7 @@ const LoginPage = () => {
     const [uPwd, setUPwd] = useState('');
     const navigate = useNavigate();
 
-    const { setUser } = useUser();
+    const { loginUser } = useUser();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -40,7 +40,7 @@ const LoginPage = () => {
             console.log("👉 로그인한 ID:", userId);
 
             // ✅ Context에 유저 상태 저장 (name은 useEffect에서 fetch됨)
-            setUser({
+            loginUser({
                 id: userId,
                 name: null, // name은 UserProvider에서 가져옴
                 token,

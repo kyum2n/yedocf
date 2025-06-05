@@ -1,6 +1,6 @@
 import Sidebar from "@/components/admin/Sidebar";
 import InputField from "@/components/common/InputField";
-import ItemSelect from "@/components/common/ItemSelect";
+import Dropdown from "@/components/common/Dropdown";
 import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
 import { useState } from "react";
@@ -48,7 +48,7 @@ const StaffManagePage = () => {
                 {/* 검색 & 추가 버튼 */}
                 <div className="flex mb-4 justify-between items-center gap-4">
                     <div className="flex gap-2">
-                        <ItemSelect
+                        <Dropdown
                             value={searchCategory}
                             onChange={(e) => setSearchCategory(e.target.value)}
                             options={searchOptions}
