@@ -6,7 +6,11 @@ import {
   BookmarkSquareIcon,
 } from '@heroicons/react/24/outline';
 
-const Sidebar = ({ isSuperAdmin = false, adminName = '' }) => {
+const Sidebar = () => {
+  const adminName = localStorage.getItem("aId") || "";
+  const role = localStorage.getItem("role");
+  const isSuperAdmin = role === "SUPERADMIN";
+
   return (
     <aside className="w-60 h-screen bg-orange-950 text-white fixed left-0 top-0 z-50 shadow-lg">
       {/* 상단 헤더 */}
@@ -27,7 +31,10 @@ const Sidebar = ({ isSuperAdmin = false, adminName = '' }) => {
       {/* 하단 버튼 */}
       <div className="absolute bottom-0 h-16 w-60 border-t border-orange-100 flex-center">
         <button
-          onClick={() => (window.location.href = '/')}
+          onClick={() => {
+            localStorage.clear();
+            window.location.href = '/';
+          }}
           className="h-16 w-60 flex items-center justify-center gap-2 text-xl hover:underline text-white"
         >
           <ArrowRightStartOnRectangleIcon className="w-5 h-5 text-white" />
