@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
           console.log("[UserProvider] 사용자 이름 가져오기 성공:", res.data.name);
           setUser({
             id: uId,
-            name: res.data.name,
+            name: res.data.uName,
             token,
             role: "USER",
             type: "user",
