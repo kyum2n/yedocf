@@ -45,7 +45,7 @@ export const UserProvider = ({ children }) => {
           },
         })
         .then((res) => {
-          console.log("[UserProvider] 사용자 이름 가져오기 성공:", res.data.name);
+          console.log("[UserProvider] 사용자 이름 가져오기 성공:", res.data.uName);
           setUser({
             id: uId,
             name: res.data.uName,
@@ -77,6 +77,17 @@ export const UserProvider = ({ children }) => {
       role,
       type,
     });
+
+    // 로컬 스토리지에 저장
+    localStorage.setItem("accessToken", token);
+    localStorage.setItem("role", role);
+
+    if ( type === "admin") {
+      localStorage.setItem("aId", id);
+    } else {
+      localStorage.setItem("uId", id);
+    }
+
     setLoading(false);
   };
 
