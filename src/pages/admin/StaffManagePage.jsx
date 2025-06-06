@@ -15,7 +15,7 @@ const StaffManagePage = () => {
     const fetchstaff = async () => {
         try {
             const token = localStorage.getItem("accessToken");
-            const response = await axios.get("/api/admin", {
+            const response = await axios.get("/api/admin/staff", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -120,14 +120,14 @@ const StaffManagePage = () => {
                         </thead>
                         <tbody>
                             {staffList.map((user) => (
-                                <tr key={user.id} className="text-center">
-                                    <td className="px-4 py-2 border">{user.name}</td>
-                                    <td className="px-4 py-2 border">{user.username}</td>
+                                <tr key={user.aId} className="text-center">
+                                    <td className="px-4 py-2 border">{user.aName}</td>
+                                    <td className="px-4 py-2 border">{user.aId}</td>
                                     <td className="px-4 py-2 border text-center group">
                                         <span className="group-hover:hidden text-gray-500">••••••</span>
-                                        <span className="hidden group-hover:inline text-black">{user.password}</span>
+                                        <span className="hidden group-hover:inline text-black">{user.aPwd}</span>
                                     </td>
-                                    <td className="px-4 py-2 border">{user.email}</td>
+                                    <td className="px-4 py-2 border">{user.aEmail}</td>
                                     <td className="py-2 border text-center">
                                         <Button
                                             variant="danger"
@@ -155,7 +155,7 @@ const StaffManagePage = () => {
                     onAction={async () => {
                         try {
                             const token = localStorage.getItem("accessToken");
-                            await axios.post("/api/admin", {
+                            await axios.post("/api/admin/staff", {
                                 aId: form.aId,
                                 aPwd: form.aPwd,
                                 aEmail: form.aEmail,
@@ -201,7 +201,7 @@ const StaffManagePage = () => {
                         className="p-2"
                     />
 
-                    <ItemSelect
+                    <Dropdown
                         name="role"
                         value={form.role}
                         onChange={(e) => setForm((prev) => ({ ...prev, role: e.target.value }))}
@@ -216,6 +216,7 @@ const StaffManagePage = () => {
                         name={"createdBy"}
                         value={form.createdBy}
                         placeholder="SUPERADMIN"
+                        onChange={(e) => setForm((prev) => ({ ...prev, createdBy:e.target.value }))}
                         readOnly
                         variant="admin"
                         className="p-2"
@@ -228,15 +229,26 @@ const StaffManagePage = () => {
                     onClose={handleCloseDeleteModal}
                     title="직원 삭제"
                     actionLabel="삭제"
-                    onAction={() => {
-                        console.log("삭제 요청:", selectedUser?.id);
-                        // 💡 API 요청: DELETE /api/staff/:id
-                        handleCloseDeleteModal();
+                    onAction={ async () => {
+                        try {
+                            const token = localStorage.getItem("accessToken");
+                            await axios.delete(`/api/admin/staff/${selectedUser.aId}`, {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            });
+
+                            alert("직원 삭제가 완료되었습니다.");
+                            handleCloseDeleteModal();
+                            fetchstaff(); // 직원 목록 새로고침
+                        } catch (error){
+                            console.error("삭제 실패:", error);
+                            alert("직원 삭제에 실패했습니다. 다시 시도해주세요.");
+                        }
                     }}
                 >
                     <p className="text-sm text-gray-700">
-                        직원 <strong>{selectedUser?.name}</strong>
-                        ({selectedUser?.username})을(를) 정말 삭제하시겠습니까?
+                        직원 <strong>{selectedUser?.aId}</strong>을(를) 정말 삭제하시겠습니까?
                     </p>
                 </Modal>
             </main>
