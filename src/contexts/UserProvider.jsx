@@ -39,16 +39,17 @@ export const UserProvider = ({ children }) => {
     if (uId) {
       console.log("[UserProvider] 일반 사용자 로그인 복원 시도");
       axios
-        .get(`/api/user/${uId}`, {
+        .get(`/api/user/myinfo`, { // {uId}부분을 myinfo로 변경함 => token 에서 uId 추출해서 "그 사용자 정보"만 반환 -> 보안 상 URL 노출 방지 목적
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
           console.log("[UserProvider] 사용자 이름 가져오기 성공:", res.data.uName);
+          const uName = res.data.uName;
           setUser({
             id: uId,
-            name: res.data.uName,
+            name: uName,
             token,
             role: "USER",
             type: "user",
