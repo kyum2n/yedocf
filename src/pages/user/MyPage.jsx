@@ -5,11 +5,15 @@ import Button from "@/components/common/Button";
 import Spacer from "@/components/common/Spacer";
 import { banner2 } from '@/assets/images';
 import GoToReservationButton from "@/components/common/GoToReservationButton";
+// 전화번호 변경 API 요청을 위해 axios import
+import axios from "axios";
 
 const MyPage = () => {
-    const [showPwdModal, setShowPwdModal] = useState(false);
-    const [showPhoneModal, setShowPhoneModal] = useState(false);
 
+    const [showPwdModal, setShowPwdModal] = useState(false); // [상태 관리] 비밀번호 변경 모달 표시 여부
+    const [showPhoneModal, setShowPhoneModal] = useState(false); // [상태 관리] 전화번호 변경 모달 표시 여부
+    const [newPhone, setNewPhone] = useState(""); // [상태 관리] 전화번호 변경 입력 값
+    
     // 가짜 예약 내역
     const reservations = [
         { id: 1, title: "시술 1", date: "2025.01.01", time: "14:00", status: "상담 완료" },
@@ -125,17 +129,50 @@ const MyPage = () => {
             </Modal>
 
             {/* 전화번호 변경 모달 */}
-            <Modal
-                isOpen={showPhoneModal}
-                onClose={() => setShowPhoneModal(false)}
-                title="전화번호 변경"
-                actionLabel="변경"
-                onAction={() => {
-                    console.log("전화번호 변경 요청");
-                    setShowPhoneModal(false);
-                }}
-            >
-                <input type="tel" placeholder="새 전화번호" className="w-full border p-2 rounded" />
+<Modal
+    isOpen={showPhoneModal}
+    onClose={() => setShowPhoneModal(false)}
+    title="전화번호 변경"
+    actionLabel="변경"
+    onAction={async () => {
+        try {
+            const uId = localStorage.getItem("uId"); // 토큰 검증할 uId 필요
+            const token = localStorage.getItem("accessToken"); // 토큰도 필요
+
+            const response = await axios.post(
+                "http://localhost:8080/api/user/phone",
+                {
+                    uId: uId,
+                    uPhone: newPhone,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            alert("핸드폰 번호가 변경되었습니다.");
+            setShowPhoneModal(false);
+            setNewPhone("");
+        } catch (error) {
+            console.error("전화번호 변경 실패", error);
+            if (error.response && error.response.data) {
+                alert(`변경 실패: ${error.response.data}`);
+            } else {
+                alert("전화번호 변경에 실패했습니다.");
+            }
+        }
+    }}
+    >
+    {/* [변경] 전화번호 입력창에 상태(newPhone) 바인딩 추가 (value, onChange) */}
+    <input
+        type="tel"
+        placeholder="새 전화번호"
+        className="w-full border p-2 rounded"
+        value={newPhone}
+        onChange={(e) => setNewPhone(e.target.value)}
+    /> 
             </Modal>
         </>
     );
