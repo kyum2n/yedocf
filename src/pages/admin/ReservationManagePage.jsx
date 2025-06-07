@@ -70,6 +70,7 @@ const ReservationManagePage = () => {
     });
   };
 
+
   const resetForm = () => {
     setUserId("");
     setProcedure("");
@@ -77,6 +78,7 @@ const ReservationManagePage = () => {
     setSelectedTime("");
     setStatus("");
   };
+
 
   const handleCloseModal = () => {
     resetForm();
@@ -89,6 +91,7 @@ const ReservationManagePage = () => {
 
       <main className="w-full min-h-screen p-8 bg-gray-50">
         <h1 className="text-2xl font-bold mb-6">예약 관리</h1>
+
 
         {/* 상단 검색 영역 */}
         <div className="flex mb-4 justify-between items-center gap-4">
@@ -189,6 +192,7 @@ const ReservationManagePage = () => {
               ))}
             </tbody>
           </table>
+
         </div>
 
         {/* 예약 추가 모달 */}

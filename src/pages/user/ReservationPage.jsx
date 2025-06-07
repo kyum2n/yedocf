@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CalendarSelector from "@/components/features/reservation/CalendarSelector";
 import TimeSelector from "@/components/features/reservation/TimeSelector";
 import axios from "axios";
-import Dropdown from "@/components/common/ItemSelect";
+import Dropdown from "@/components/common/Dropdown";
 import Button from "@/components/common/Button";
 import BannerSection from "@/components/common/BannerSection";
 import Spacer from "@/components/common/Spacer";

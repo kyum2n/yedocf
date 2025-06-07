@@ -45,6 +45,7 @@ const UserManagePage = () => {
     <div className="flex">
       <Sidebar isLoggedIn={true} isSuperAdmin={true} adminName="최고관리자" />
 
+
       <main className="w-full min-h-screen p-8 bg-gray-50">
         <h1 className="text-2xl font-bold mb-6">회원 관리</h1>
 

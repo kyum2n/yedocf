@@ -1,17 +1,53 @@
 import Sidebar from "@/components/admin/Sidebar";
 import InputField from "@/components/common/InputField";
-import ItemSelect from "@/components/common/ItemSelect";
+import Dropdown from "@/components/common/Dropdown";
 import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+
 
 const StaffManagePage = () => {
+    // 직원 목록 불러오기
+    const [staffList, setStaffList] = useState([]);
+    
+    const fetchstaff = async () => {
+        try {
+            const token = localStorage.getItem("accessToken");
+            const response = await axios.get("/api/admin/staff", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            setStaffList(response.data);
+            
+        } catch (error) {
+            console.error("직원 목록 불러오기 실패", error);
+        }
+    };
+
+    // api 호출
+    useEffect(() => {
+        fetchstaff();
+    }, []);
+    
+    const [form, setForm] = useState({
+        aId: "",
+        aPwd: "",
+        aEmail: "",
+        role: "ADMIN", // 기본값은 일반 관리자
+        createdBy: "SUPERADMIN", // 최고 관리자에 의해 생성됨
+    });
+
+    // 모달 상태 관리
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchCategory, setSearchCategory] = useState("");
     const [searchText, setSearchText] = useState("");
 
     const [selectedUser, setSelectedUser] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
 
     const handleCloseDeleteModal = () => {
         setSelectedUser(null);
@@ -27,17 +63,6 @@ const StaffManagePage = () => {
 
     const selectedLabel = searchOptions.find(opt => opt.value === searchCategory)?.label;
 
-    // 예시용 더미 데이터 (API 연동 전)
-    const dummyStaffList = [
-        {
-            id: 1,
-            name: "홍길동",
-            username: "staff01",
-            password: "01user", // 실제로는 백엔드에서 해싱된 값만 받아야 함
-            email: "hong@example.com"
-        }
-    ];
-
     return (
         <div className="flex">
             <Sidebar isLoggedIn={true} isSuperAdmin={true} adminName="최고관리자" />
@@ -48,7 +73,7 @@ const StaffManagePage = () => {
                 {/* 검색 & 추가 버튼 */}
                 <div className="flex mb-4 justify-between items-center gap-4">
                     <div className="flex gap-2">
-                        <ItemSelect
+                        <Dropdown
                             value={searchCategory}
                             onChange={(e) => setSearchCategory(e.target.value)}
                             options={searchOptions}
@@ -94,15 +119,15 @@ const StaffManagePage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {dummyStaffList.map((user) => (
-                                <tr key={user.id} className="text-center">
-                                    <td className="px-4 py-2 border">{user.name}</td>
-                                    <td className="px-4 py-2 border">{user.username}</td>
+                            {staffList.map((user) => (
+                                <tr key={user.aId} className="text-center">
+                                    <td className="px-4 py-2 border">{user.aName}</td>
+                                    <td className="px-4 py-2 border">{user.aId}</td>
                                     <td className="px-4 py-2 border text-center group">
                                         <span className="group-hover:hidden text-gray-500">••••••</span>
-                                        <span className="hidden group-hover:inline text-black">{user.password}</span>
+                                        <span className="hidden group-hover:inline text-black">{user.aPwd}</span>
                                     </td>
-                                    <td className="px-4 py-2 border">{user.email}</td>
+                                    <td className="px-4 py-2 border">{user.aEmail}</td>
                                     <td className="py-2 border text-center">
                                         <Button
                                             variant="danger"
@@ -127,15 +152,75 @@ const StaffManagePage = () => {
                     title="직원 추가"
                     actionLabel="추가"
                     resetOnClose={true}
-                    onAction={() => {
-                        console.log("직원 추가 요청");
-                        setIsModalOpen(false);
+                    onAction={async () => {
+                        try {
+                            const token = localStorage.getItem("accessToken");
+                            await axios.post("/api/admin/staff", {
+                                aId: form.aId,
+                                aPwd: form.aPwd,
+                                aEmail: form.aEmail,
+                                role: form.role,
+                                createdBy: "SUPERADMIN",
+                            }, {
+                                headers: {Authorization: `Bearer ${token}`},
+                            });
+
+                            alert("직원 등록이 완료되었습니다.");
+                            setIsModalOpen(false);
+                            fetchstaff(); // 직원 목록 새로고침
+                            
+                        } catch (error) {
+                            console.log("직원 등록이 실패했습니다.", error);
+                            alert("직원 등록이 실패했습니다. 다시 시도해주세요.");
+                        }
                     }}
                 >
-                    <InputField name="name" placeholder="이름" variant="admin" className="p-2" />
-                    <InputField name="username" placeholder="아이디" variant="admin" className="p-2" />
-                    <InputField name="password" placeholder="비밀번호" variant="admin" type="password" className="p-2" />
-                    <InputField name="email" placeholder="이메일" variant="admin" className="p-2" />
+                    <InputField
+                        name="aId"
+                        value={form.aId}
+                        onChange={(e) => setForm((prev) => ({ ...prev, aId:e.target.value }))}
+                        placeholder="아이디"
+                        variant="admin"
+                        className="p-2"
+                    />
+                    <InputField
+                        name="aPwd"
+                        value={form.aPwd}
+                        onChange={(e) => setForm((prev) => ({ ...prev, aPwd:e.target.value }))}
+                        placeholder="비밀번호"
+                        variant="admin"
+                        type="password"
+                        className="p-2"
+                    />
+                    <InputField
+                        name="aEmail"
+                        value={form.aEmail}
+                        onChange={(e) => setForm((prev) => ({ ...prev, aEmail:e.target.value }))}
+                        placeholder="이메일"
+                        variant="admin"
+                        className="p-2"
+                    />
+
+                    <Dropdown
+                        name="role"
+                        value={form.role}
+                        onChange={(e) => setForm((prev) => ({ ...prev, role: e.target.value }))}
+                        options={[
+                            { value: "ADMIN", label: "일반 관리자" },
+                            { value: "SUPERADMIN", label: "최고 관리자" },
+                        ]}
+                        className="p-2"
+                    />
+
+                    <InputField
+                        name={"createdBy"}
+                        value={form.createdBy}
+                        placeholder="SUPERADMIN"
+                        onChange={(e) => setForm((prev) => ({ ...prev, createdBy:e.target.value }))}
+                        readOnly
+                        variant="admin"
+                        className="p-2"
+                    />
                 </Modal>
 
                 {/* 직원 삭제 모달 */}
@@ -144,15 +229,26 @@ const StaffManagePage = () => {
                     onClose={handleCloseDeleteModal}
                     title="직원 삭제"
                     actionLabel="삭제"
-                    onAction={() => {
-                        console.log("삭제 요청:", selectedUser?.id);
-                        // 💡 API 요청: DELETE /api/staff/:id
-                        handleCloseDeleteModal();
+                    onAction={ async () => {
+                        try {
+                            const token = localStorage.getItem("accessToken");
+                            await axios.delete(`/api/admin/staff/${selectedUser.aId}`, {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            });
+
+                            alert("직원 삭제가 완료되었습니다.");
+                            handleCloseDeleteModal();
+                            fetchstaff(); // 직원 목록 새로고침
+                        } catch (error){
+                            console.error("삭제 실패:", error);
+                            alert("직원 삭제에 실패했습니다. 다시 시도해주세요.");
+                        }
                     }}
                 >
                     <p className="text-sm text-gray-700">
-                        직원 <strong>{selectedUser?.name}</strong>
-                        ({selectedUser?.username})을(를) 정말 삭제하시겠습니까?
+                        직원 <strong>{selectedUser?.aId}</strong>을(를) 정말 삭제하시겠습니까?
                     </p>
                 </Modal>
             </main>

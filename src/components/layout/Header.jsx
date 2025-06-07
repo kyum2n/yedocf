@@ -1,34 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { menuItems } from '@/constants/menuItems';
-import { useUser } from '@/contexts/UserContext';
-import axios from 'axios';
+import { useUser } from '@/contexts/UserProvider';
 
 const Header = () => {
     const [activeMenu, setActiveMenu] = useState(null);
     const navigate = useNavigate();
-    const { user } = useUser();
-    const { setUser } = useUser();
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-
-        if (token) {
-            axios.post(
-                '/api/user/info',
-                {}, // POST 본문이 필요 없다면 빈 객체
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
-                .catch((err) => {
-                    console.error('사용자 정보 가져오기 실패:', err);
-                    localStorage.removeItem('token');
-                });
-        }
-    }, []);
+    const { user, loading, logoutUser } = useUser();
 
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
@@ -36,7 +14,7 @@ const Header = () => {
         localStorage.removeItem('role');
         localStorage.removeItem('aId');
 
-        setUser(null);
+        logoutUser(null);
         navigate('/');
     };
 
@@ -91,13 +69,21 @@ const Header = () => {
 
                     {/* 로그인 / 예약 */}
                     <div className="flex gap-2 items-center">
-                        {user ? (
-                            <>
-                                <Link to="/mypage" className="h-16 flex items-center p-4">{user.id}님 안녕하세요</Link>
-                                <button onClick={handleLogout} className="h-16 flex items-center p-4">로그아웃</button>
-                            </>
-                        ) : (
-                            <Link to="/login" className="h-16 flex items-center p-4">로그인</Link>
+                        {!loading && (
+                            user ? (
+                                <>
+                                    <Link to="/mypage" className="h-16 flex items-center p-4">
+                                        {user.id}님 안녕하세요
+                                    </Link>
+                                    <button onClick={handleLogout} className="h-16 flex items-center p-4">
+                                        로그아웃
+                                    </button>
+                                </>
+                            ) : (
+                                <Link to="/login" className="h-16 flex items-center p-4">
+                                    로그인
+                                </Link>
+                            )
                         )}
                         <button
                             onClick={handleReservationClick}
