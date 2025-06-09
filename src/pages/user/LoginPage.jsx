@@ -29,17 +29,17 @@ const LoginPage = () => {
 
             if (!token) throw new Error("서버에서 토큰을 받지 못했습니다.");
 
-            // ✅ localStorage 저장 (UserProvider 복원용)
+            // localStorage 저장 (UserProvider 복원용)
             localStorage.setItem("accessToken", token);
             localStorage.setItem("uId", userId);
             localStorage.setItem("role", "USER"); // USER 고정
 
-            // ✅ 로그 확인 (테스트용)
-            console.log("✅ 로그인 성공");
-            console.log("👉 저장된 토큰:", token);
-            console.log("👉 로그인한 ID:", userId);
+            // 로그 확인 (테스트용)
+            console.log("로그인 성공");
+            console.log("저장된 토큰:", token);
+            console.log("로그인한 ID:", userId);
 
-            // ✅ Context에 유저 상태 저장 (name은 useEffect에서 fetch됨)
+            // Context에 유저 상태 저장 (name은 useEffect에서 fetch됨)
             loginUser({
                 id: userId,
                 name: null, // name은 UserProvider에서 가져옴
@@ -48,10 +48,10 @@ const LoginPage = () => {
                 type: "user",
             });
 
-            // ✅ 메인페이지로 이동
+            // 메인페이지로 이동
             navigate("/");
         } catch (error) {
-            console.error("❌ 로그인 실패:", error);
+            console.error("로그인 실패:", error);
             alert("아이디 또는 비밀번호가 잘못되었습니다.");
         }
     };

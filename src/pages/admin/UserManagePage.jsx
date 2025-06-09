@@ -7,17 +7,19 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
-// 사용자 목록 상태 정의
-const [users, setUsers] = useState([]);
-
-// 사용자 목록 API 호출
-useEffect(() => {
-  axios.get("/api/admin/users").then((res) => {
-    setUsers(res.data);
-  });
-}, []);
 
 const UserManagePage = () => {
+  // 사용자 목록 상태 정의
+  const [users, setUsers] = useState([]);
+  
+  // 사용자 목록 API 호출
+  useEffect(() => {
+    axios.get("/api/admin/users").then((res) => {
+      setUsers(res.data);
+    });
+  }, []);
+
+  // 모달 및 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
