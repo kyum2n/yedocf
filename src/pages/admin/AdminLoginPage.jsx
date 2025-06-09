@@ -7,12 +7,22 @@ import axios from "axios";
 import SidebarMinimal from "@/components/admin/SidebarMinimal";
 import InputField from "@/components/common/InputField";
 import Button from "@/components/common/Button";
+import Modal from "@/components/common/Modal";
 
 const AdminLoginPage = () => {
+
+  // 모달 및 상태 관리
+  const [showFindModal, setShowFindModal] = useState(false);
+  const [findMode, setFindMode] = useState("id");
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
+  const [email, setEmail] = useState("");
+  const [aId, setAId] = useState("");
+  const [foundId, setFoundId] = useState("");
+  const [foundPwd, setFoundPwd] = useState("");
+  const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -24,7 +34,7 @@ const AdminLoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // 로그인 로직
+    // 로그인
     try {
       const response = await axios.post("/api/admin/login", {
         aId : form.username,
@@ -58,6 +68,34 @@ const AdminLoginPage = () => {
 
     }
 
+  };
+
+  // 아이디 찾기
+  const handleFindId = async () => {
+    try {
+      const response = await axios.post("/api/admin/find_id", null, {
+        params: {aEmail: email},
+      });
+      setFoundId(response.data.aId);
+      setMessage("아이디는 " + response.data.aId + "입니다.");
+    } catch (error){
+      setMessage("아이디를 찾을 수 없습니다.");
+      console.error("아이디 찾기 실패", error);
+    }
+  };
+
+  // 비밀번호 찾기
+  const handleFindPwd = async () => {
+    try {
+      const response = await axios.post("/api/admin/find_password", null, {
+        params: {aId, aEmail: email},
+      });
+      setFoundPwd(response.data.aPwd);
+      setMessage("비밀번호가 이메일로 전송되었습니다.");
+    } catch (error){
+      setMessage("비밀번호를 찾을 수 없습니다.");
+      console.error("비밀번호 찾기 실패", error);
+    }
   };
 
   return (
@@ -96,8 +134,66 @@ const AdminLoginPage = () => {
           <Button type="submit" variant="primary" size="lg" className="w-full mt-4">
             로그인
           </Button>
+
+          <div className="text-sm w-full flex flex-col gap-0.5 mt-4 mb-0">
+            <button
+              type="button"
+              className="text-gray-600 hover:underline"
+              onClick={() => {
+                setFindMode("id");
+                setShowFindModal(true);
+              }}
+            >
+              아이디 찾기
+            </button>
+            <br />
+            <button
+              type="button"
+              className="text-gray-600 hover:underline"
+              onClick={()=>{
+                setFindMode("password");
+                setShowFindModal(true);
+              }}
+            >
+              비밀번호 찾기
+            </button>
+          </div>
         </form>
       </main>
+
+      {/* 모달 영역 */}
+      {showFindModal && (
+        <Modal
+          isOpen={showFindModal}
+          onClose={() => setShowFindModal(false)}
+          title={findMode === "id" ? "아이디 찾기" : "비밀번호 찾기"}
+          actionLabel="찾기"
+          onAction={findMode === "id" ? handleFindId : handleFindPwd}
+          cancelLabel="닫기"
+        >
+          <InputField
+            label="이메일"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="이메일을 입력하세요"
+            className="mb -4"
+          />
+
+          {findMode === "password" && (
+            <InputField
+              label="아이디"
+              name="aId"
+              value={aId}
+              onChange={(e) => setAId(e.target.value)}
+              placeholder="아이디를 입력하세요"
+              className="mb-4"
+            />
+          )}
+
+          {message && <p className="mt-4 text-sm test-gray-700">{message}</p>}
+        </Modal>
+      )}
     </div>
   );
 };

@@ -40,6 +40,15 @@ const Sidebar = () => {
           <ArrowRightStartOnRectangleIcon className="w-5 h-5 text-white" />
           로그아웃
         </button>
+
+        <button
+          onClick={() => {
+            window.location.href = `/`;
+          }}
+          className="h-16 w-60 flex items-center justify-center gap-2 text-base hover:underline text-white"
+        >
+          사용자 페이지로 이동
+        </button>
       </div>
     </aside>
   );
