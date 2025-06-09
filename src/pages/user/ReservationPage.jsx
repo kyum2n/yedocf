@@ -24,7 +24,7 @@ const ReservationPage = () => {
 
         if (!token || !uId || token === "null") {
             alert("로그인이 필요합니다. 다시 로그인해주세요.");
-            console.error("❌ 토큰 또는 uId 없음");
+            console.error("토큰 또는 uId 없음");
             navigate('/login');
             return;
         }
@@ -32,7 +32,7 @@ const ReservationPage = () => {
         if (selectedDate) {
             const dateStr = selectedDate.toISOString().split("T")[0];
 
-            console.log("👉 보내는 토큰:", token);
+            console.log("보내는 토큰:", token);
             axios
                 .get(`/api/reserve/disabled-times`, {
                     params: { consultDate: dateStr },
@@ -53,7 +53,7 @@ const ReservationPage = () => {
     }, [selectedDate, navigate]);
 
     const handleSubmit = async () => {
-        console.log("✅ 예약 버튼 클릭됨");
+        console.log("예약 버튼 클릭됨");
 
         if (!selectedDate || !selectedTime || !selectedItem) {
             alert("모든 항목을 선택해주세요.");
@@ -68,9 +68,9 @@ const ReservationPage = () => {
         const token = localStorage.getItem('accessToken');
         const uId = localStorage.getItem('uId');
 
-        console.log("🔐 accessToken:\n" + token);
+        console.log("accessToken:\n" + token);
 
-        console.log("🔐 로컬스토리지 값:", { token, uId });
+        console.log("로컬스토리지 값:", { token, uId });
 
         const itemMap = {
             eye: "눈 성형",
@@ -86,7 +86,7 @@ const ReservationPage = () => {
             status: "대기",
         };
 
-        console.log("📦 서버로 전송할 예약 데이터:", data);
+        console.log("서버로 전송할 예약 데이터:", data);
 
         try {
             setIsLoading(true);
@@ -100,13 +100,13 @@ const ReservationPage = () => {
                 }
             );
             alert("예약이 완료되었습니다!");
-            console.log("✅ 예약 성공:", response.data);
+            console.log("예약 성공:", response.data);
             setSelectedDate(null);
             setSelectedTime("");
             setSelectedItem("");
         } catch (error) {
-            console.error("❌ 예약 실패:", error);
-            console.log("🧾 error.response:", error.response);
+            console.error("예약 실패:", error);
+            console.log("error.response:", error.response);
             alert("예약에 실패했습니다.");
         } finally {
             setIsLoading(false);
@@ -124,7 +124,7 @@ const ReservationPage = () => {
                         <CalendarSelector
                             selectedDate={selectedDate}
                             onChange={(date) => {
-                                console.log("📅 날짜 선택됨:", date);
+                                console.log("날짜 선택됨:", date);
                                 setSelectedDate(date);
                             }}
                         />
@@ -132,7 +132,7 @@ const ReservationPage = () => {
                             selectedDate={selectedDate}
                             selectedTime={selectedTime}
                             onSelect={(time) => {
-                                console.log("⏰ 시간 선택됨:", time);
+                                console.log("시간 선택됨:", time);
                                 setSelectedTime(time);
                             }}
                             disabledTimes={disabledTimes}
@@ -144,7 +144,7 @@ const ReservationPage = () => {
                         <Dropdown
                             value={selectedItem}
                             onSelect={(e) => {
-                                console.log("📝 항목 선택됨:", e.target.value);
+                                console.log("항목 선택됨:", e.target.value);
                                 setSelectedItem(e.target.value);
                             }}
                             options={[

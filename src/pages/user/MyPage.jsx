@@ -1,26 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BannerSection from "@/components/common/BannerSection";
 import Modal from "@/components/common/Modal";
 import Button from "@/components/common/Button";
 import Spacer from "@/components/common/Spacer";
 import { banner2 } from '@/assets/images';
 import GoToReservationButton from "@/components/common/GoToReservationButton";
-// 전화번호 변경 API 요청을 위해 axios import
 import axios from "axios";
 
 const MyPage = () => {
 
-    const [showPwdModal, setShowPwdModal] = useState(false); // [상태 관리] 비밀번호 변경 모달 표시 여부
-    const [showPhoneModal, setShowPhoneModal] = useState(false); // [상태 관리] 전화번호 변경 모달 표시 여부
-    const [newPhone, setNewPhone] = useState(""); // [상태 관리] 전화번호 변경 입력 값
+    // 모달 및 상태 관리
+    const [userInfo, setUserInfo] = useState({ uName: "", uId: "", uEmail: "", uPhone: ""}); // 사용자 정보
+    const [showPwdModal, setShowPwdModal] = useState(false); // 비밀번호 변경 모달 표시 여부
+    const [oldPwd, setOldPwd] = useState(""); // 기존 비밀번호 입력값
+    const [newPwd, setNewPwd] = useState(""); // 새 비밀번호 입력값
+    const [confirmPwd, setConfirmPwd] = useState(""); // 비밀번호 확인 입력값
+    const [showPhoneModal, setShowPhoneModal] = useState(false); // 전화번호 변경 모달 표시 여부
+    const [newPhone, setNewPhone] = useState(""); // 전화번호 변경 입력 값
+    const [reservations, setReservations] = useState([]); // 예약 내역
     
-    // 가짜 예약 내역
-    const reservations = [
-        { id: 1, title: "시술 1", date: "2025.01.01", time: "14:00", status: "상담 완료" },
-        { id: 2, title: "시술 2", date: "2025.02.02", time: "14:00", status: "확정" },
-        { id: 3, title: "시술 3", date: "2025.03.03", time: "14:00", status: "취소 완료" },
-        { id: 4, title: "시술 4", date: "2025.04.04", time: "14:00", status: "예약됨" },
-    ];
+    useEffect(() => {
+        const uId = localStorage.getItem("uId");
+        const token = localStorage.getItem("accessToken");
+
+        if (!uId || !token){
+            alert("로그인이 필요합니다. 다시 로그인해주세요.");
+            console.error("로그인 정보가 없습니다.");
+            return;
+        }
+
+        // 예약 내역 불러오기
+        axios.get(`/api/reserve/${uId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then((response) => {
+            setReservations(response.data);
+        })
+        .catch((error) => {
+            console.error("예약 내역 조회 실패", error);
+        });
+
+        // 사용자 정보 불러오기
+        axios.get(`/api/user/myinfo`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then((response) => {
+            setUserInfo(response.data);
+        })
+        .catch((error) => {
+            console.error("사용자 정보 조회 실패", error);
+        });
+    }, []);
 
     return (
         <>
@@ -40,12 +74,12 @@ const MyPage = () => {
                             <tbody>
                                 <tr>
                                     <th className="text-left font-medium py-3 w-1/4">이름</th>
-                                    <td className="py-3">최미래</td>
+                                    <td className="py-3">{userInfo.uName}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <th className="text-left font-medium py-3">아이디</th>
-                                    <td className="py-3">future123</td>
+                                    <td className="py-3">{userInfo.uId}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -57,12 +91,12 @@ const MyPage = () => {
                                 </tr>
                                 <tr>
                                     <th className="text-left font-medium py-3">이메일</th>
-                                    <td className="py-3">future321@test.com</td>
+                                    <td className="py-3">{userInfo.uEmail}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <th className="text-left font-medium py-3">전화번호</th>
-                                    <td className="py-3">010-0000-0000</td>
+                                    <td className="py-3">{userInfo.uPhone}</td>
                                     <td className="text-right">
                                         <Button variant="secondary" onClick={() => setShowPhoneModal(true)}>변경</Button>
                                     </td>
@@ -85,26 +119,56 @@ const MyPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {reservations.map((r) => (
-                                    <tr key={r.id}>
-                                        <td className="border p-2">{r.title}</td>
-                                        <td className="border p-2">{r.date}</td>
-                                        <td className="border p-2">{r.time}</td>
-                                        <td className="border p-2">
-                                            {r.status === "예약됨" ? (
-                                                <Button
-                                                    variant="secondary"
-                                                    className="text-sm"
-                                                    onClick={() => console.log("예약 취소", r.id)}
-                                                >
-                                                    취소하기
-                                                </Button>
-                                            ) : (
-                                                r.status
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
+                                {reservations.length === 0 ?
+                                    (
+                                        <tr>
+                                            <td colSpan="4" className="p-4 text-gray-500">예약 내역이 없습니다.</td>
+                                        </tr>
+                                    ) : (
+                                        reservations.map((r) => (
+                                        <tr key={r.rId}>
+                                            <td className="border p-2">{r.tName}</td>
+                                            <td className="border p-2">{r.consultDate?.slice(0, 10)}</td>
+                                            <td className="border p-2">{r.consultTime}</td>
+                                            <td className="border p-2">
+                                                {r.status === "예약됨" ? (
+                                                    // 예약 취소 버튼
+                                                    <Button
+                                                        variant="secondary"
+                                                        className="text-sm"
+                                                        onClick={async () => {
+                                                            const token = localStorage.getItem("accessToken");
+
+                                                            try {
+                                                                await axios.post(`/api/reserve/${r.rId}/cancel`, null, {
+                                                                    headers: {
+                                                                        Authorization: `Bearer ${token}`,
+                                                                    },
+                                                                });
+                                                                alert("예약이 취소되었습니다.");
+
+                                                                // 예약 목록 갱신
+                                                                setReservations((prev) =>
+                                                                    prev.map((response) =>
+                                                                        response.rId === r.rId ? {...response, status: "취소 완료"} : response
+                                                                    )
+                                                                );
+                                                            } catch (error) {
+                                                                console.error("예약 취소 실패", error);
+                                                                alert("예약 취소에 실패했습니다.");
+                                                            }
+                                                        }}
+                                                    >
+                                                        취소하기
+                                                    </Button>
+                                                ) : (
+                                                    r.status
+                                                )}
+                                            </td>
+                                        </tr>
+                                        ))
+                                    )
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -118,64 +182,119 @@ const MyPage = () => {
                 onClose={() => setShowPwdModal(false)}
                 title="비밀번호 변경"
                 actionLabel="변경"
-                onAction={() => {
-                    console.log("비밀번호 변경 요청");
-                    setShowPwdModal(false);
+                onAction={ async () => {
+                    if (!oldPwd || !newPwd || !confirmPwd){
+                        alert("모든 항목을 입력해주세요.");
+                        return;
+                    }
+
+                    if(newPwd !== confirmPwd){
+                        alert("새 비밀번호가 일치하지 않습니다.");
+                        return;
+                    }
+
+                    try {
+                        const token = localStorage.getItem("accessToken");
+                        const uId = localStorage.getItem("uID");
+
+                        await axios.post("/api/user/password", 
+                            {
+                                uId: uId,
+                                uPwd: newPwd,
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            }
+                        );
+
+                        alert("비밀번호가 변경되었습니다.");
+                        setShowPwdModal(false);
+                        setOldPwd("");
+                        setNewPwd("");
+                        setConfirmPwd("");
+                    } catch (error){
+                        console.error("비밀번호 변경 실패", error);
+                        if(error.response && error.reponse.data){
+                            alert(`변경 실패: ${error.response.data}`);
+                        } else {
+                            alert("비밀번호 변경에 실패했습니다.");
+                        }
+                    }
                 }}
             >
-                <input type="password" placeholder="기존 비밀번호" className="w-full border p-2 rounded mb-3" />
-                <input type="password" placeholder="새 비밀번호" className="w-full border p-2 rounded mb-3" />
-                <input type="password" placeholder="비밀번호 확인" className="w-full border p-2 rounded" />
+                <input
+                    type="password"
+                    placeholder="기존 비밀번호"
+                    className="w-full border p-2 rounded mb-3"
+                    value={oldPwd}
+                    onChange={(e) => setOldPwd(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="새 비밀번호"
+                    className="w-full border p-2 rounded mb-3"
+                    value={newPwd}
+                    onChange={(e) => setNewPwd(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="비밀번호 확인"
+                    className="w-full border p-2 rounded"
+                    value={confirmPwd}
+                    onChange={(e) => setConfirmPwd(e.target.value)}
+                />
             </Modal>
 
             {/* 전화번호 변경 모달 */}
-<Modal
-    isOpen={showPhoneModal}
-    onClose={() => setShowPhoneModal(false)}
-    title="전화번호 변경"
-    actionLabel="변경"
-    onAction={async () => {
-        try {
-            const uId = localStorage.getItem("uId"); // 토큰 검증할 uId 필요
-            const token = localStorage.getItem("accessToken"); // 토큰도 필요
+            <Modal
+                isOpen={showPhoneModal}
+                onClose={() => setShowPhoneModal(false)}
+                title="전화번호 변경"
+                actionLabel="변경"
+                onAction={async () => {
+                    try {
+                        const uId = localStorage.getItem("uId");
+                        const token = localStorage.getItem("accessToken");
 
-            const response = await axios.post(
-                "http://localhost:8080/api/user/phone",
-                {
-                    uId: uId,
-                    uPhone: newPhone,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+                        const response = await axios.post(
+                            "/api/user/phone",
+                            {
+                                uId: uId,
+                                uPhone: newPhone,
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            }
+                        );
 
-            alert("핸드폰 번호가 변경되었습니다.");
-            setShowPhoneModal(false);
-            setNewPhone("");
-        } catch (error) {
-            console.error("전화번호 변경 실패", error);
-            if (error.response && error.response.data) {
-                alert(`변경 실패: ${error.response.data}`);
-            } else {
-                alert("전화번호 변경에 실패했습니다.");
-            }
-        }
-    }}
-    >
-    {/* [변경] 전화번호 입력창에 상태(newPhone) 바인딩 추가 (value, onChange) */}
-    <input
-        type="tel"
-        placeholder="새 전화번호"
-        className="w-full border p-2 rounded"
-        value={newPhone}
-        onChange={(e) => setNewPhone(e.target.value)}
-    /> 
-            </Modal>
-        </>
-    );
+                        alert("핸드폰 번호가 변경되었습니다.");
+                        setShowPhoneModal(false);
+                        setNewPhone("");
+                    } catch (error) {
+                        console.error("전화번호 변경 실패", error);
+                        if (error.response && error.response.data) {
+                            alert(`변경 실패: ${error.response.data}`);
+                        } else {
+                            alert("전화번호 변경에 실패했습니다.");
+                        }
+                    }
+                }}
+                >
+                {/* [변경] 전화번호 입력창에 상태(newPhone) 바인딩 추가 (value, onChange) */}
+                <input
+                    type="tel"
+                    placeholder="새 전화번호"
+                    className="w-full border p-2 rounded"
+                    value={newPhone}
+                    onChange={(e) => setNewPhone(e.target.value)}
+                /> 
+                        </Modal>
+                    </>
+                );
 };
 
 export default MyPage;
