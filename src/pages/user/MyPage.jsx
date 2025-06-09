@@ -131,7 +131,9 @@ const MyPage = () => {
                                             <td className="border p-2">{r.consultDate?.slice(0, 10)}</td>
                                             <td className="border p-2">{r.consultTime}</td>
                                             <td className="border p-2">
-                                                {r.status === "예약됨" ? (
+                                                    <div className="flex items-center justify-center space-x-2">
+                                                    <span>{r.status}</span>
+                                                {(r.status === "예약됨" || r.status === "대기") && (
                                                     // 예약 취소 버튼
                                                     <Button
                                                         variant="secondary"
@@ -161,14 +163,12 @@ const MyPage = () => {
                                                     >
                                                         취소하기
                                                     </Button>
-                                                ) : (
-                                                    r.status
                                                 )}
+                                                </div>
                                             </td>
                                         </tr>
-                                        ))
-                                    )
-                                }
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -195,12 +195,13 @@ const MyPage = () => {
 
                     try {
                         const token = localStorage.getItem("accessToken");
-                        const uId = localStorage.getItem("uID");
+                        const uId = localStorage.getItem("uId");
 
                         await axios.post("/api/user/password", 
                             {
                                 uId: uId,
-                                uPwd: newPwd,
+                                oldPwd: oldPwd,
+                                newPwd: newPwd,
                             },
                             {
                                 headers: {
@@ -216,7 +217,7 @@ const MyPage = () => {
                         setConfirmPwd("");
                     } catch (error){
                         console.error("비밀번호 변경 실패", error);
-                        if(error.response && error.reponse.data){
+                        if(error.response && error.response.data){
                             alert(`변경 실패: ${error.response.data}`);
                         } else {
                             alert("비밀번호 변경에 실패했습니다.");
