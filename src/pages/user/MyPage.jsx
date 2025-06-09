@@ -273,6 +273,16 @@ const MyPage = () => {
                         );
 
                         alert("핸드폰 번호가 변경되었습니다.");
+
+                        // 서버에서 최신 userInfo 다시 가져오기 = 실시간 변경
+                        const updatedUserInfo = await axios.get(`/api/user/myinfo`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        });
+
+                        setUserInfo(updatedUserInfo.data);
+
                         setShowPhoneModal(false);
                         setNewPhone("");
                     } catch (error) {
