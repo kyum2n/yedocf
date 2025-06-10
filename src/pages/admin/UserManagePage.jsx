@@ -146,9 +146,28 @@ const UserManagePage = () => {
           title="회원 추가"
           actionLabel="추가"
           resetOnClose={true}
-          onAction={() => {
-            console.log("회원 추가");
-            setIsModalOpen(false);
+          onAction={async () => {
+            try {
+              // 입력 필드 값 상태로 관리 필요 (추가 구현 필요)
+              const name = document.querySelector("input[name='name']").value;
+              const username = document.querySelector("input[name='username']").value;
+              const password = document.querySelector("input[name='password']").value;
+              const email = document.querySelector("input[name='email']").value;
+              const phone = document.querySelector("input[name='phone']").value;
+
+              const response = await axios.post("/api/admin/user", {
+                uName: name,
+                uId: username,
+                uPwd: password,
+                uEmail: email,
+                uPhone: phone,
+              });
+
+              setUsers([...users, response.data]);
+              setIsModalOpen(false);
+            } catch (err) {
+              console.error("회원 추가 실패:", err);
+            }
           }}
         >
           <InputField
