@@ -18,11 +18,22 @@ const ReservationManagePage = () => {
   const [selectedTime, setSelectedTime] = useState("");
   const [status, setStatus] = useState("");
 
+  const procedureOptions = [
+    { value: "눈 성형", label: "눈 성형" },
+    { value: "코 성형", label: "코 성형" },
+    { value: "윤곽", label: "윤곽" },
+  ];
+
+  const statusOptions = [
+    { value: "대기", label: "대기" },
+    { value: "확정", label: "확정" },
+    { value: "취소", label: "취소" },
+  ];
+
+  const [reservations, setReservations] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  const [reservations, setReservations] = useState([]);
 
   const searchOptions = [
     { value: "id", label: "예약 ID" },
@@ -33,15 +44,7 @@ const ReservationManagePage = () => {
     { value: "status", label: "예약 상태" },
   ];
 
-  const statusOptions = [
-    { value: "대기", label: "대기" },
-    { value: "확정", label: "확정" },
-    { value: "취소", label: "취소" },
-  ];
-
-  const selectedLabel = searchOptions.find(
-    (opt) => opt.value === searchCategory
-  )?.label;
+  const selectedLabel = searchOptions.find((opt) => opt.value === searchCategory)?.label;
 
   useEffect(() => {
     axios.get("/api/admin/reserves").then((res) => {
@@ -51,9 +54,7 @@ const ReservationManagePage = () => {
 
   const handleStatusChange = (rId, status) => {
     axios
-      .post(`/api/admin/reserve/${rId}/status`, null, {
-        params: { status },
-      })
+      .post(`/api/admin/reserve/${rId}/status`, null, { params: { status } })
       .then(() => {
         setReservations(
           reservations.map((r) => (r.rId === rId ? { ...r, status } : r))
@@ -62,14 +63,15 @@ const ReservationManagePage = () => {
   };
 
   const handleDeleteReservation = () => {
-    axios.post(`/api/admin/reserve/${selectedReservation.rId}`).then(() => {
-      setReservations(
-        reservations.filter((r) => r.rId !== selectedReservation.rId)
-      );
-      setIsDeleteModalOpen(false);
-    });
+    axios
+      .post(`/api/admin/reserve/delete/${selectedReservation.rId}`)
+      .then(() => {
+        setReservations(
+          reservations.filter((r) => r.rId !== selectedReservation.rId)
+        );
+        setIsDeleteModalOpen(false);
+      });
   };
-
 
   const resetForm = () => {
     setUserId("");
@@ -78,7 +80,6 @@ const ReservationManagePage = () => {
     setSelectedTime("");
     setStatus("");
   };
-
 
   const handleCloseModal = () => {
     resetForm();
@@ -92,8 +93,7 @@ const ReservationManagePage = () => {
       <main className="w-full min-h-screen p-8 bg-gray-50">
         <h1 className="text-2xl font-bold mb-6">예약 관리</h1>
 
-
-        {/* 상단 검색 영역 */}
+        {/* 검색 영역 */}
         <div className="flex mb-4 justify-between items-center gap-4">
           <div className="flex gap-2">
             <Dropdown
@@ -151,7 +151,7 @@ const ReservationManagePage = () => {
                   <td className="px-4 py-2 border">{r.rId}</td>
                   <td className="px-4 py-2 border">{r.uId}</td>
                   <td className="px-4 py-2 border">{r.tName}</td>
-                  <td className="px-4 py-2 border">{r.consultDate}</td>
+                  <td className="px-4 py-2 border">{r.consultDate?.slice(0, 10)}</td>
                   <td className="px-4 py-2 border">{r.consultTime}</td>
                   <td className="px-4 py-2 border">
                     <select
@@ -193,159 +193,205 @@ const ReservationManagePage = () => {
             </tbody>
           </table>
 
-        </div>
+      </div> {/* 예약 테이블 끝 */}
 
-        {/* 예약 추가 모달 */}
-        <Modal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          title="예약 추가"
-          actionLabel="추가"
-          resetOnClose={true}
-          onAction={() => {
-            console.log({
-              userId,
-              procedure,
-              date: selectedDate,
-              time: selectedTime,
-              status,
-            });
+      {/* 예약 추가 모달 */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        title="예약 추가"
+        actionLabel="추가"
+        resetOnClose={true}
+        onAction={async () => {
+          try {
+            const token = localStorage.getItem("token");
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
+
+            const response = await axios.post(
+              "/api/admin/reserve",
+              {
+                uId: userId,
+                tName: procedure,
+                consultDate: selectedDate,
+                consultTime: selectedTime,
+                status: status,
+              },
+              config
+            );
+
+            setReservations([...reservations, response.data]);
             setIsModalOpen(false);
-            handleCloseModal();
+            resetForm();
+          } catch (err) {
+            console.error("예약 추가 실패:", err);
+          }
+        }}
+      >
+        <InputField
+          name="userId"
+          placeholder="예약자 아이디"
+          variant="admin"
+          className="p-2"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
+        />
+        <Dropdown
+          value={procedure}
+          onChange={(e) => setProcedure(e.target.value)}
+          options={[
+            { value: "눈 성형", label: "눈 성형" },
+            { value: "코 성형", label: "코 성형" },
+            { value: "윤곽", label: "윤곽" },
+          ]}
+          className="p-2"
+        />
+        <InputField
+          name="date"
+          type="date"
+          variant="admin"
+          className="p-2"
+          value={selectedDate}
+          onChange={(e) => {
+            setSelectedDate(e.target.value);
+            setSelectedTime("");
           }}
-        >
-          <InputField
-            name="userId"
-            placeholder="예약자 아이디"
-            variant="admin"
-            className="p-2"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-          />
-          <InputField
-            name="procedure"
-            placeholder="시술 항목"
-            variant="admin"
-            className="p-2"
-            value={procedure}
-            onChange={(e) => setProcedure(e.target.value)}
-          />
-          <InputField
-            name="date"
-            type="date"
-            variant="admin"
-            className="p-2"
-            value={selectedDate}
-            onChange={(e) => {
-              setSelectedDate(e.target.value);
-              setSelectedTime("");
-            }}
-          />
-          <TimeSelectorSelect
-            selectedDate={selectedDate}
-            selectedTime={selectedTime}
-            onSelect={setSelectedTime}
-            className="p-2"
-            labelHidden={true}
-          />
-          <Dropdown
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            options={statusOptions}
-            className="p-2"
-          />
-        </Modal>
+        />
+        <TimeSelectorSelect
+          selectedDate={selectedDate}
+          selectedTime={selectedTime}
+          onSelect={setSelectedTime}
+          className="p-2"
+          labelHidden={true}
+        />
+        <Dropdown
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          options={statusOptions}
+          className="p-2"
+        />
+      </Modal>
 
-        {/* 예약 삭제 모달 */}
-        <Modal
-          isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          title="예약 삭제"
-          actionLabel="삭제"
-          onAction={handleDeleteReservation}
-        >
-          <p className="text-sm text-gray-700">
-            예약자 <strong>{selectedReservation?.userId}</strong>의 예약을
-            삭제하시겠습니까?
-          </p>
-        </Modal>
+      {/* 예약 삭제 모달 */}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        title="예약 삭제"
+        actionLabel="삭제"
+        onAction={handleDeleteReservation}
+      >
+        <p className="text-sm text-gray-700">
+          예약자 <strong>{selectedReservation?.userId}</strong>의 예약을
+          삭제하시겠습니까?
+        </p>
+      </Modal>
 
-        {/* 예약 수정 모달 */}
-        <Modal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          title="예약 변경"
-          actionLabel="변경"
-          resetOnClose={true}
-          onAction={() => {
-            console.log("변경된 예약:", selectedReservation);
+      {/* 예약 수정 모달 */}
+      <Modal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        title="예약 변경"
+        actionLabel="변경"
+        resetOnClose={true}
+        onAction={async () => {
+          try {
+            const token = localStorage.getItem("token");
+
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
+        
+            await axios.post(`/api/admin/reserve/${selectedReservation.rId}`, {
+              rId: selectedReservation.rId,
+              uId: selectedReservation.uId,
+              tName: selectedReservation.tName,
+              consultDate: selectedReservation.consultDate,
+              consultTime: selectedReservation.consultTime,
+              status: selectedReservation.status,
+            });
+
+            const updatedList = await axios.get("/api/admin/reserves");
+            setReservations(updatedList.data);
             setIsEditModalOpen(false);
-          }}
-        >
-          <InputField
-            name="userId"
-            placeholder="예약자 아이디"
-            variant="admin"
-            className="p-2"
-            value={selectedReservation?.userId || ""}
-            onChange={(e) =>
-              setSelectedReservation((prev) => ({
-                ...prev,
-                userId: e.target.value,
-              }))
-            }
-          />
-          <InputField
-            name="procedure"
-            placeholder="시술 항목"
-            variant="admin"
-            className="p-2"
-            value={selectedReservation?.procedure || ""}
-            onChange={(e) =>
-              setSelectedReservation((prev) => ({
-                ...prev,
-                procedure: e.target.value,
-              }))
-            }
-          />
-          <InputField
-            name="date"
-            type="date"
-            variant="admin"
-            className="p-2"
-            value={selectedReservation?.date || ""}
-            onChange={(e) =>
-              setSelectedReservation((prev) => ({
-                ...prev,
-                date: e.target.value,
-                time: "",
-              }))
-            }
-          />
-          <TimeSelectorSelect
-            selectedDate={selectedReservation?.date || ""}
-            selectedTime={selectedReservation?.time || ""}
-            onSelect={(newTime) =>
-              setSelectedReservation((prev) => ({ ...prev, time: newTime }))
-            }
-            className="p-2"
-            labelHidden={true}
-          />
-          <Dropdown
-            value={selectedReservation?.status || ""}
-            onChange={(e) =>
-              setSelectedReservation((prev) => ({
-                ...prev,
-                status: e.target.value,
-              }))
-            }
-            options={statusOptions}
-            className="p-2"
-          />
-        </Modal>
-      </main>
-    </div>
-  );
+          } catch (err) {
+            console.error("예약 변경 실패:", err);
+          }
+        }}
+      >
+        <InputField
+          name="userId"
+          placeholder="예약자 아이디"
+          variant="admin"
+          className="p-2"
+          value={selectedReservation?.uId || ""}
+          onChange={(e) =>
+            setSelectedReservation((prev) => ({
+              ...prev,
+              uId: e.target.value,
+            }))
+          }
+        />
+        <Dropdown
+          value={selectedReservation?.tName || ""}
+          onChange={(e) =>
+            setSelectedReservation((prev) => ({
+              ...prev,
+              tName: e.target.value,
+            }))
+          }
+          options={[
+            { value: "눈 성형", label: "눈 성형" },
+            { value: "코 성형", label: "코 성형" },
+            { value: "윤곽", label: "윤곽" },
+          ]}
+          className="p-2"
+        />
+        <InputField
+          name="date"
+          type="date"
+          variant="admin"
+          className="p-2"
+          value={selectedReservation?.consultDate || ""}
+          onChange={(e) =>
+            setSelectedReservation((prev) => ({
+              ...prev,
+              consultDate: e.target.value,
+              consultTime: "",
+            }))
+          }
+        />
+        <TimeSelectorSelect
+          selectedDate={selectedReservation?.consultDate || ""}
+          selectedTime={selectedReservation?.consultTime || ""}
+          onSelect={(newTime) =>
+            setSelectedReservation((prev) => ({
+              ...prev,
+              consultTime: newTime,
+            }))
+          }
+          className="p-2"
+          labelHidden={true}
+        />
+        <Dropdown
+          value={selectedReservation?.status || ""}
+          onChange={(e) =>
+            setSelectedReservation((prev) => ({
+              ...prev,
+              status: e.target.value,
+            }))
+          }
+          options={statusOptions}
+          className="p-2"
+        />
+      </Modal>
+    </main>
+  </div>
+);
 };
 
 export default ReservationManagePage;
