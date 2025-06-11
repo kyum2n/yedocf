@@ -8,13 +8,29 @@ import { useEffect } from "react";
 import axios from "axios";
 
 
+/**
+ * packageName    : src.api.noticeEvent
+ * fileName       : UserManagePage.jsx
+ * author         : lkm
+ * date           : 25.06.11
+ * description    : 403 오류 해결
+ * ===========================================================
+ */
+
 const UserManagePage = () => {
   // 사용자 목록 상태 정의
   const [users, setUsers] = useState([]);
   
   // 사용자 목록 API 호출
   useEffect(() => {
-    axios.get("/api/admin/users").then((res) => {
+    // 토큰 가져오기
+    const token = localStorage.getItem("accessToken");
+
+    axios.get("/api/admin/user/users", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((res) => {
       setUsers(res.data);
     });
   }, []);
@@ -155,12 +171,19 @@ const UserManagePage = () => {
               const email = document.querySelector("input[name='email']").value;
               const phone = document.querySelector("input[name='phone']").value;
 
+              // 토큰 가져오기
+              const token = localStorage.getItem("accessToken");
+
               const response = await axios.post("/api/admin/user", {
                 uName: name,
                 uId: username,
                 uPwd: password,
                 uEmail: email,
                 uPhone: phone,
+              }, {
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
               });
 
               setUsers([...users, response.data]);
@@ -210,7 +233,14 @@ const UserManagePage = () => {
           title="회원 삭제"
           actionLabel="삭제"
           onAction={() => {
-            axios.post(`/api/admin/user/${selectedUser?.id}`).then(() => {
+            // 토큰 가져오기
+            const token = localStorage.getItem("accessToken");
+
+            axios.post(`/api/admin/user/${selectedUser?.id}`, null, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }).then(() => {
               setUsers(users.filter((user) => user.uId !== selectedUser?.id));
               handleCloseDeleteModal();
             });
