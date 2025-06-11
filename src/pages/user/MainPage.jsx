@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import DirectionsMap from '@/components/features/directions/DirectionsMap';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
-import lobbyImg from '@/assets/images/lobby.jpg';
+import { lobbyImg, lobbyVid, wonjang } from '@/assets/images/index';
 import Footer from '@/components/layout/Footer';
 import Spacer from '@/components/common/Spacer';
 import FadeTabs from '@/components/common/FadeTabs';
@@ -18,9 +18,10 @@ const MainPage = () => {
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
   }, [search]);
+
   const tabData = [
-  { label: '탭 1', content: <p>첫 번째 탭입니다</p> },
-  { label: '탭 2', content: <div>두 번째 탭입니다</div> },
+    { label: '탭 1', content: <p>첫 번째 탭입니다</p> },
+    { label: '탭 2', content: <div>두 번째 탭입니다</div> },
   ];
 
   return (
@@ -30,8 +31,10 @@ const MainPage = () => {
         <section
           id="hero"
           className="h-screen snap-start bg-cover bg-center flex items-center justify-center relative"
-          style={{ backgroundImage: `url(${lobbyImg})` }}
+        style={{ backgroundImage: `url(${lobbyImg})`, backgroundPositionY: '50%' }}
         >
+          <video src={lobbyVid} className="absolute inset-0 w-full h-full object-cover"
+            autoPlay loop muted playsInline type="video/webm"></video>
           <div className="absolute bottom-[15%] flex flex-col items-center text-center gap-4">
             <p className="text-white text-lg font-[SeoulHangangM] text-shadow-lg">
               Beauty & Technology
@@ -54,9 +57,7 @@ const MainPage = () => {
           </div>
         </section>
 
-        {/* Directions Section */}
-
-        <section className="h-screen snap-start bg-cover bg-center flex items-center justify-center relative">
+        <section className="h-screen snap-start flex items-center justify-center relative" style={{ backgroundImage: `url(${wonjang})`, backgroundSize: '50%', backgroundPositionY: '100%' , backgroundRepeat: 'no-repeat' }}>
           <FadeTabs
             tabs={tabData}
             tabPosition="top"
@@ -73,7 +74,10 @@ const MainPage = () => {
             )}
           />
         </section>
+
+
         <DirectionsMap />
+
         <Spacer size='lg' />
         <Footer />
       </div>
