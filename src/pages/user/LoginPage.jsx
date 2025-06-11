@@ -1,7 +1,16 @@
 // LoginPage.jsx
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+/**
+ * packageName    : src.page.user.LoginPage.jsx
+ * fileName       : LoginPage.jsx
+ * author         : ysg
+ * date           : 25.06.11
+ * description    : (수정) 소셜 로그인 로직 추가
+ * ===========================================================
+ */
+
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { loginside } from '@/assets/images';
 import { useUser } from '@/contexts/UserProvider'; // 사용자 상태 업데이트 함수
 
@@ -15,6 +24,7 @@ const LoginPage = () => {
     const [uId, setUId] = useState('');
     const [uPwd, setUPwd] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
 
     const { loginUser } = useUser();
 
@@ -55,7 +65,54 @@ const LoginPage = () => {
             alert("아이디 또는 비밀번호가 잘못되었습니다.");
         }
     };
+    const handleGoogleLogin = () => {
+        const redirectUri = "http://localhost:5173/login";
+        const clientId = "127012581616-f2iqmfjad5pijoo9u4g2ld04r0b78bv3.apps.googleusercontent.com";
+        const scope = "https://www.googleapis.com/auth/userinfo.email";
+        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+    
+        window.location.href = authUrl;
+    };
 
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const code = params.get("code");
+
+        if (code){
+
+            axios.post("/api/oauth2/google", null, { params: { code } })
+                .then((res) => {
+                    const token = res.data.accessToken;
+                    const userId = res.data.uId;
+                    if (!token) throw new Error("토큰 없음");
+
+                    // 구글 로그입 시 이메일 기준 유지 생성 -> uId가 DB에서 자동 생성됨
+                    localStorage.setItem("accessToken", token);
+                    localStorage.setItem("uId", userId);
+                    localStorage.setItem("role", "USER");
+
+
+                    loginUser({
+                        id: userId,
+                        name: null,
+                        token,
+                        role: "USER",
+                        type: "user",
+                    });
+
+                        navigate("/");
+                    })
+                    .catch((err) => {
+                        if (err.response?.status === 401) {
+                            // 백엔드에서 받은 메세지 표시
+                            alert(err.response?.data);
+                            navigate("/signup");
+                        } else {
+                            alert("Google 로그인 실패");
+                        }
+                    });
+                }
+            }, [location.search]);
 
     return (
         <div className="flex h-screen">
@@ -104,12 +161,12 @@ const LoginPage = () => {
                         로그인
                     </Button>
 
+                </form>
                     <div className="flex justify-around mt-5">
                         <SocialButton platform="kakao" onClick={() => console.log('카카오')} />
-                        <SocialButton platform="naver" onClick={() => console.log('네이버')} />
-                        <SocialButton platform="google" onClick={() => console.log('구글')} />
+                        {/* <SocialButton platform="naver" onClick={() => console.log('네이버')} /> */}
+                        <SocialButton platform="google" onClick={handleGoogleLogin} />
                     </div>
-                </form>
             </div>
         </div>
     );
