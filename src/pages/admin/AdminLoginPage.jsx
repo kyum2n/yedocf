@@ -9,6 +9,15 @@ import InputField from "@/components/common/InputField";
 import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
 
+/**
+ * packageName    : src.api.noticeEvent
+ * fileName       : noticeEvent.js
+ * author         : lkm
+ * date           : 25.06.11
+ * description    : 관리자 로그인 API 연동 및 아이디/비밀번호 찾기 기능 구현
+ * ===========================================================
+ */
+
 const AdminLoginPage = () => {
 
   // 모달 및 상태 관리

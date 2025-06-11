@@ -4,6 +4,7 @@ import classNames from "classnames";
 const Dropdown = ({
   options = [],
   onSelect,
+  onChange,
   value,
   name,
   id,
@@ -46,6 +47,11 @@ const Dropdown = ({
   const handleSelect = (option) => {
     setSelected(option);
     onSelect?.({ target: { name, value: option.value } });
+
+    if(typeof onChange === "function"){
+      onChange({target: { name, value: option.value}});
+    }
+
     setIsOpen(false);
   };
 
