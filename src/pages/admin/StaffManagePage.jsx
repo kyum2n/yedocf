@@ -6,13 +6,20 @@ import Modal from "@/components/common/Modal";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
+/**
+ * packageName    : src.api.noticeEvent
+ * fileName       : StaffManagePage.jsx
+ * author         : lkm
+ * date           : 25.06.11
+ * description    : API 연동
+ * ===========================================================
+ */
 
 const StaffManagePage = () => {
     // 직원 목록 불러오기
     const [staffList, setStaffList] = useState([]);
     
-    const fetchstaff = async () => {
+    const fetchStaff = async () => {
         try {
             const token = localStorage.getItem("accessToken");
             const response = await axios.get("/api/admin/staff", {
@@ -29,7 +36,7 @@ const StaffManagePage = () => {
 
     // api 호출
     useEffect(() => {
-        fetchstaff();
+        fetchStaff();
     }, []);
     
     const [form, setForm] = useState({
@@ -111,23 +118,25 @@ const StaffManagePage = () => {
                     <table className="min-w-full bg-white border border-gray-300">
                         <thead>
                             <tr className="bg-gray-100 text-center text-sm font-semibold">
-                                <th className="px-4 py-3 border">이름</th>
                                 <th className="px-4 py-3 border">아이디</th>
                                 <th className="px-4 py-3 border">비밀번호</th>
                                 <th className="px-4 py-3 border">이메일</th>
+                                <th className="px-4 py-3 border">권한</th>
+                                <th className="px-4 py-3 border">생성자</th>
                                 <th className="py-3 border">삭제</th>
                             </tr>
                         </thead>
                         <tbody>
                             {staffList.map((user) => (
                                 <tr key={user.aId} className="text-center">
-                                    <td className="px-4 py-2 border">{user.aName}</td>
                                     <td className="px-4 py-2 border">{user.aId}</td>
                                     <td className="px-4 py-2 border text-center group">
                                         <span className="group-hover:hidden text-gray-500">••••••</span>
                                         <span className="hidden group-hover:inline text-black">{user.aPwd}</span>
                                     </td>
                                     <td className="px-4 py-2 border">{user.aEmail}</td>
+                                    <td className="px-4 py-2 border">{user.role}</td>
+                                    <td className="px-4 py-2 border">{user.createdBy}</td>
                                     <td className="py-2 border text-center">
                                         <Button
                                             variant="danger"
@@ -167,7 +176,7 @@ const StaffManagePage = () => {
 
                             alert("직원 등록이 완료되었습니다.");
                             setIsModalOpen(false);
-                            fetchstaff(); // 직원 목록 새로고침
+                            fetchStaff(); // 직원 목록 새로고침
                             
                         } catch (error) {
                             console.log("직원 등록이 실패했습니다.", error);
@@ -240,7 +249,7 @@ const StaffManagePage = () => {
 
                             alert("직원 삭제가 완료되었습니다.");
                             handleCloseDeleteModal();
-                            fetchstaff(); // 직원 목록 새로고침
+                            fetchStaff(); // 직원 목록 새로고침
                         } catch (error){
                             console.error("삭제 실패:", error);
                             alert("직원 삭제에 실패했습니다. 다시 시도해주세요.");

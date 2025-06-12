@@ -3,11 +3,35 @@ import BannerSection from "@/components/common/BannerSection";
 import Modal from "@/components/common/Modal";
 import Button from "@/components/common/Button";
 import Spacer from "@/components/common/Spacer";
-import { banner2 } from '@/assets/images';
+import { banner2 } from '@/assets/cdnImages';
 import GoToReservationButton from "@/components/common/GoToReservationButton";
 import axios from "axios";
+import { useUser } from "@/contexts/UserProvider";
 
 const MyPage = () => {
+    const { logoutUser } = useUser();
+
+        const handleWithdraw = async () => {
+        if (!window.confirm("정말 회원 탈퇴하시겠습니까?")) return;
+
+        try {
+            const token = localStorage.getItem("accessToken");
+            const uId = localStorage.getItem("uId");
+
+            await axios.post(`/api/user/Delete/${uId}`, null , {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            alert("회원 탈퇴가 완료되었습니다.");
+            logoutUser(); // 유저 상태 초기화
+            window.location.href = "/login"; // 로그인 페이지로 보냄
+        } catch (err) {
+            console.error("회원 탈퇴 실패 : ", err);
+            alert("회원 탈퇴 중 오류가 발생하였습니다.");
+        }
+    };
 
     // 모달 및 상태 관리
     const [userInfo, setUserInfo] = useState({ uName: "", uId: "", uEmail: "", uPhone: ""}); // 사용자 정보
@@ -103,6 +127,9 @@ const MyPage = () => {
                                 </tr>
                             </tbody>
                         </table>
+                        <div className="test-right mt-4">
+                            <Button variant="destructive" onClick={handleWithdraw}>회원 탈퇴</Button>
+                        </div>
                     </div>
                     <Spacer />
 
