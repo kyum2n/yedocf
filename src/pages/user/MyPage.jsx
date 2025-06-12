@@ -3,7 +3,7 @@ import BannerSection from "@/components/common/BannerSection";
 import Modal from "@/components/common/Modal";
 import Button from "@/components/common/Button";
 import Spacer from "@/components/common/Spacer";
-import { banner2 } from '@/assets/images';
+import { banner2 } from '@/assets/cdnImages';
 import GoToReservationButton from "@/components/common/GoToReservationButton";
 import axios from "axios";
 import { useUser } from "@/contexts/UserProvider";

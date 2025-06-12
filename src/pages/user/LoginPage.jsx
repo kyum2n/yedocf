@@ -1,5 +1,6 @@
 // LoginPage.jsx
 
+
 /**
  * packageName    : src.page.user.LoginPage.jsx
  * fileName       : LoginPage.jsx
@@ -119,7 +120,7 @@ const LoginPage = () => {
             {/* 왼쪽 이미지 영역 */}
             <div className="w-1/2 hidden md:block">
                 <img
-                    src={loginside}
+                    src={login_side}
                     alt="로그인 이미지"
                     className="w-full h-full object-cover sticky"
                 />

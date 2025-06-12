@@ -2,7 +2,7 @@ import BannerSection from '@/components/common/BannerSection';
 import DirectionsMap from '@/components/features/directions/DirectionsMap';
 import TabSection from '@/components/features/treatment/TabSection';
 import TreatmentContent from '@/components/features/treatment/TreatmentContent';
-import { noseBanner } from '@/assets/images';
+import { nose_hor } from '@/assets/cdnImages';
 import Spacer from '@/components/common/Spacer';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
 import ScrollToTopOnTabChange from '@/components/common/ScrollToTopOnTabChange';
@@ -28,7 +28,7 @@ const renderNoseContent = (tab) => {
 
 const NosePage = () => (
   <>
-    <BannerSection image={noseBanner} title="코 성형" subtitle="오롯하게 세우는 자신감" />
+    <BannerSection image={nose_hor} title="코 성형" subtitle="오롯하게 세우는 자신감" />
     <div className="relative z-20 bg-white">
       <ScrollToTopOnTabChange />
       <TabSection tabList={tabList} />

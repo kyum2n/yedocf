@@ -5,7 +5,7 @@ const Footer = () => {
         <footer id="footer" className="bg-gray-100 text-gray-800 py-7 text-sm">
             <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                <div>
+                <div className='text-right'>
                     <h2 className="text-lg font-bold mb-2">연세 BT 미래의원</h2>
                     <ul className="space-y-1">
                         <li>대표자: 박연세</li>

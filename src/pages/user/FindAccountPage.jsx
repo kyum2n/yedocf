@@ -1,7 +1,7 @@
 import BannerSection from "@/components/common/BannerSection";
 import InputField from "@/components/common/InputField";
 import Button from "@/components/common/Button";
-import { banner3 } from '@/assets/images';
+import { banner3 } from '@/assets/cdnImages';
 import Spacer from "@/components/common/Spacer";
 
 // 추가함 / import useState, Modal, axios

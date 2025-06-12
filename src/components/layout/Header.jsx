@@ -44,14 +44,14 @@ const Header = () => {
                 <div className="flex justify-between items-center">
                     {/* 로고 */}
                     <Link to="/">
-                        <h1 className="text-xl font-bold h-16 px-4 flex items-center">
+                        <h1 className="text-xl font-bold h-16 px-4 flex items-center" title='연세 BT 미래병원'>
                             연세 BT 미래병원
                         </h1>
                     </Link>
 
                     {/* 네비게이션 */}
                     <nav className="absolute-center flex gap-1">
-                        <Link to="/?scrollTo=directions" className="h-16 px-14 text-lg font-bold flex-center">
+                        <Link to="/?scrollTo=directions" className="h-16 px-14 text-lg font-bold flex-center" title='오시는 길'>
                             오시는 길
                         </Link>
                         {Object.keys(menuItems).map((key) => (
@@ -72,15 +72,15 @@ const Header = () => {
                         {!loading && (
                             user ? (
                                 <>
-                                    <Link to="/mypage" className="h-16 flex items-center p-4">
+                                    <Link to="/mypage" className="h-16 flex items-center p-4" title='마이페이지'>
                                         {user.id}님 안녕하세요
                                     </Link>
-                                    <button onClick={handleLogout} className="h-16 flex items-center p-4">
+                                    <button onClick={handleLogout} className="h-16 flex items-center p-4" title='로그아웃'>
                                         로그아웃
                                     </button>
                                 </>
                             ) : (
-                                <Link to="/login" className="h-16 flex items-center p-4">
+                                <Link to="/login" className="h-16 flex items-center p-4" title='로그인'>
                                     로그인
                                 </Link>
                             )
@@ -88,7 +88,7 @@ const Header = () => {
                         <button
                             onClick={handleReservationClick}
                             type="button"
-                            className="h-12 flex items-center px-8 mr-3 border border-black hover:bg-pink-50"
+                            className="h-12 flex items-center px-8 mr-3 border border-black hover:bg-pink-50" title='예약하기'
                         >
                             예약하기
                         </button>
