@@ -23,6 +23,7 @@ const Header = () => {
             case 'eye': return '눈';
             case 'nose': return '코';
             case 'face': return '윤곽';
+            case 'notice': return '공지사항';
             default: return key;
         }
     };
