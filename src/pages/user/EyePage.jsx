@@ -2,7 +2,7 @@ import BannerSection from '@/components/common/BannerSection';
 import DirectionsMap from '@/components/features/directions/DirectionsMap';
 import TabSection from '@/components/features/treatment/TabSection';
 import TreatmentContent from '@/components/features/treatment/TreatmentContent';
-import { eyeBanner } from '@/assets/images';
+import { eye_hor } from '@/assets/cdnImages';
 import Spacer from '@/components/common/Spacer';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
 import ScrollToTopOnTabChange from '@/components/common/ScrollToTopOnTabChange';
@@ -34,7 +34,7 @@ const renderEyeContent = (tab) => {
 
 const EyePage = () => (
   <>
-    <BannerSection image={eyeBanner} title="눈 성형" subtitle="맑고 또렷한 눈" />
+    <BannerSection image={eye_hor} title="눈 성형" subtitle="맑고 또렷한 눈" />
     <div className="relative z-20 bg-white">
       <ScrollToTopOnTabChange />
       <TabSection tabList={tabList} />

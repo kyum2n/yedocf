@@ -2,7 +2,7 @@ import BannerSection from '@/components/common/BannerSection';
 import DirectionsMap from '@/components/features/directions/DirectionsMap';
 import TabSection from '@/components/features/treatment/TabSection';
 import TreatmentContent from '@/components/features/treatment/TreatmentContent';
-import { faceBanner } from '@/assets/images';
+import { chin_hor } from '@/assets/cdnImages';
 import Spacer from '@/components/common/Spacer';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
 import ScrollToTopOnTabChange from '@/components/common/ScrollToTopOnTabChange';
@@ -28,7 +28,7 @@ const renderFaceContent = (tab) => {
 
 const FacePage = () => (
   <>
-    <BannerSection image={faceBanner} title="윤곽 성형" subtitle="자연스럽게 깎아낸 아름다움" objectPosition="object-[50%_30%]" />
+    <BannerSection image={chin_hor} title="윤곽 성형" subtitle="자연스럽게 깎아낸 아름다움" objectPosition="object-[50%_30%]" />
     <div className="relative z-20 bg-white">
       <ScrollToTopOnTabChange />
       <TabSection tabList={tabList} />

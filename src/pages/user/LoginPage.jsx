@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginside } from '@/assets/images';
+import { login_side } from '@/assets/cdnImages';
 import { useUser } from '@/contexts/UserProvider'; // 사용자 상태 업데이트 함수
 
 import InputField from '@/components/common/InputField';
@@ -62,7 +62,7 @@ const LoginPage = () => {
             {/* 왼쪽 이미지 영역 */}
             <div className="w-1/2 hidden md:block">
                 <img
-                    src={loginside}
+                    src={login_side}
                     alt="로그인 이미지"
                     className="w-full h-full object-cover sticky"
                 />

@@ -4,7 +4,7 @@ const DirectionsMap = () => {
   return (
     <section
       id="directions"
-      className="snap-start py-16 bg-white"
+      className="snap-start py-16 bg-white pt-40"
     >
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 px-4">
         <div className="flex-1 min-w-0 font-body">

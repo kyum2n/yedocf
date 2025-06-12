@@ -6,7 +6,7 @@ import Dropdown from "@/components/common/Dropdown";
 import Button from "@/components/common/Button";
 import BannerSection from "@/components/common/BannerSection";
 import Spacer from "@/components/common/Spacer";
-import { banner4 } from '@/assets/images';
+import { banner4 } from '@/assets/cdnImages';
 import { useNavigate } from 'react-router-dom';
 
 const ReservationPage = () => {

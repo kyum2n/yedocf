@@ -2,7 +2,7 @@ import BannerSection from "@/components/common/BannerSection";
 import InputField from "@/components/common/InputField";
 import Button from "@/components/common/Button";
 import Spacer from "@/components/common/Spacer";
-import { banner1 } from '@/assets/images';
+import { banner1 } from '@/assets/cdnImages';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
