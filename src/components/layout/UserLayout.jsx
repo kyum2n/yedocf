@@ -12,6 +12,7 @@ import FacePage from '@/pages/user/FacePage';
 import MyPage from '@/pages/user/MyPage';
 import FindAccountPage from '@/pages/user/FindAccountPage';
 import ReservationPage from '@/pages/user/ReservationPage';
+import NoticeEventPage from '@/pages/user/NoticeEventPage';
 
 const UserLayout = () => {
   const location = useLocation();
@@ -33,6 +34,7 @@ const UserLayout = () => {
         <Route path="/eye" element={<EyePage />} />
         <Route path="/nose" element={<NosePage />} />
         <Route path="/face" element={<FacePage />} />
+        <Route path="/notice" element={<NoticeEventPage />} />
       </Routes>
       {!shouldHideFooter && <Footer />}
     </>

@@ -1,4 +1,15 @@
-import { useEffect } from 'react';
+/**
+ * packageName    : src.pages.user
+ * fileName       : MainPage.jsx
+ * author         : jkw
+ * date           : 25.06.11
+ * description    : 공지사항 및 이벤트 팝업 추가
+ * ===========================================================
+ */
+
+import React from "react";
+import PopupNotice from "../../components/PopupNotice";
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import DirectionsMap from '@/components/features/directions/DirectionsMap';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
@@ -6,12 +17,19 @@ import { background } from '@/assets/cdnImages';
 import { lobby } from '@/assets/images/index';
 import Footer from '@/components/layout/Footer';
 import Spacer from '@/components/common/Spacer';
+
+import FadeTabs from '@/components/common/FadeTabs';
+import { getAllNoticeEvents } from '@/api/noticeEvent'; // axios api 호출 추가 -> 데이터 수신 (이벤트 팝업)
+
 import Container from '@/components/layout/Container';
 import IntroSection from '@/components/mainSection/IntroSection';
 import DoctorSection from '@/components/mainSection/DoctorSection';
 
+
 const MainPage = () => {
   const { search } = useLocation();
+  const [popupList, setPopupList] = useState([]);
+  const [showPopup, setShowPopup] = useState(true);    // 이벤트 팝업 최초 한번만 띄우기
 
   useEffect(() => {
     const params = new URLSearchParams(search);
@@ -22,9 +40,55 @@ const MainPage = () => {
     }
   }, [search]);
 
+
+  // 공지사항 데이터 받아오기 (이벤트 팝업)
+  useEffect(() => {
+    const fetchPopupData = async () => {
+      try {
+        const data = await getAllNoticeEvents();
+        //setPopupList(data.slice(0, 2));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchPopupData();
+  }, []);
+
+  const tabData = [
+    { label: '탭 1', content: <p>첫 번째 탭입니다</p> },
+    { label: '탭 2', content: <div>두 번째 탭입니다</div> },
+  ];
+
   return (
     <>
-      <div className="h-screen overflow-y-scroll scroll-smooth bg-white">
+      <div>
+        <h1>메인페이지</h1>
+        <PopupNotice />  {/* 추가 - 팝업 컴포넌트 */}
+      </div>
+
+      <div className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+
+        {/* 기존 팝업 모달 유지 */}
+        {showPopup && popupList.length > 0 && (
+          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white p-8 rounded shadow-lg relative w-1/2">
+
+              <button onClick={() => setShowPopup(false)} className="absolute top-2 right-2 text-gray-500 font-bold">
+                X
+              </button>
+              {popupList.map((item) => (
+                <div key={item.neId} className="mb-4">
+                  <h3 className="font-bold text-lg">{item.neTitle} ({item.neType})</h3>
+                  <p className="text-gray-700">{item.neContent}</p>
+                  {item.neImageUrl && (
+                    <img src={item.neImageUrl} alt={item.neTitle} className="mt-2 max-h-60 mx-auto" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Hero Section */}
         <section
           id="hero"
@@ -69,6 +133,26 @@ const MainPage = () => {
           </section>
         </Container>
 
+
+        {/* Directions Section */}
+        <section className="h-screen snap-start bg-cover bg-center flex items-center justify-center relative">
+          <FadeTabs
+            tabs={tabData}
+            tabPosition="top"
+            renderTab={(label, isActive) => (
+              <button
+                className={`px-4 py-2 font-bold border-b-2 transition-opacity ${isActive ? 'border-black text-black' : 'border-transparent text-gray-500 hover:text-black'
+                  }`}
+              >
+                {label}
+              </button>
+            )}
+            renderContent={(content) => (
+              <div className="text-center text-lg py-6 text-gray-700">{content}</div>
+            )}
+          />
+        </section>
+
         <DirectionsMap />
 
         <Spacer size='lg' />
@@ -80,3 +164,4 @@ const MainPage = () => {
 };
 
 export default MainPage;
+

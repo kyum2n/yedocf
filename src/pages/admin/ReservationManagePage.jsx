@@ -1,3 +1,12 @@
+/**
+ * packageName    : src.pages.admin
+ * fileName       : ReservationManagePage.jsx
+ * author         : jkw
+ * date           : 25.06.10
+ * description    : 예약 관리 - 관리자 페이지
+ * ===========================================================
+ */
+
 import Sidebar from "@/components/admin/Sidebar";
 import InputField from "@/components/common/InputField";
 import Dropdown from "@/components/common/Dropdown";
