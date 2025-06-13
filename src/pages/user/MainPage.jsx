@@ -54,11 +54,6 @@ const MainPage = () => {
     fetchPopupData();
   }, []);
 
-  const tabData = [
-    { label: '탭 1', content: <p>첫 번째 탭입니다</p> },
-    { label: '탭 2', content: <div>두 번째 탭입니다</div> },
-  ];
-
   return (
     <>
       <div>
@@ -135,23 +130,6 @@ const MainPage = () => {
 
 
         {/* Directions Section */}
-        <section className="h-screen snap-start bg-cover bg-center flex items-center justify-center relative">
-          <FadeTabs
-            tabs={tabData}
-            tabPosition="top"
-            renderTab={(label, isActive) => (
-              <button
-                className={`px-4 py-2 font-bold border-b-2 transition-opacity ${isActive ? 'border-black text-black' : 'border-transparent text-gray-500 hover:text-black'
-                  }`}
-              >
-                {label}
-              </button>
-            )}
-            renderContent={(content) => (
-              <div className="text-center text-lg py-6 text-gray-700">{content}</div>
-            )}
-          />
-        </section>
 
         <DirectionsMap />
 

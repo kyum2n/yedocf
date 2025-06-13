@@ -16,8 +16,7 @@ const DoctorSection = () => {
                 />
                 <div className='absolute bottom-0 left-0 w-full h-40 flex justify-center items-center'
                     style={{
-                        background: "#4f4f4f",
-                        background: "linear-gradient(0deg,rgba(79, 79, 79, 1) 0%, rgba(153, 153, 153, 0.56) 50%, rgba(253, 187, 45, 0) 100%)"
+                        background:"#4f4f4f, linear-gradient(0deg,rgba(79, 79, 79, 1) 0%, rgba(153, 153, 153, 0.56) 50%, rgba(253, 187, 45, 0) 100%)"
                     }}>
                     <div className='w-full text-3xl text-white text-shadow p-10'>
                         <p className='text-left'>“ 아름다움과 기술을 위한 노력을</p>

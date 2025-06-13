@@ -12,12 +12,13 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { loginside } from '@/assets/images';
 import { useUser } from '@/contexts/UserProvider'; // 사용자 상태 업데이트 함수
 
 import InputField from '@/components/common/InputField';
 import Button from '@/components/common/Button';
 import SocialButton from '@/components/common/SocialButton';
+
+import { login_side } from '@/assets/cdnImages';
 
 import axios from 'axios';
 
