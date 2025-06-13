@@ -20,15 +20,15 @@ const tabList = [
 
 const renderEyeContent = (tab) => {
   switch (tab) {
-    case '1': return <div>쌍커풀<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
-    case '2': return <div>비절개 쌍커풀<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
-    case '3': return <div>앞트임<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
-    case '4': return <div>뒤트임<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
-    case '5': return <div>밑트임<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
-    case '6': return <div>눈매 교정<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
-    case '7': return <div>지방 재배치<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
-    case '8': return <div>다크서클 제거<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
-    default: return <div>기본<img src="https://placehold.co/1200x1500/yellow/gray" alt="placeholder" /></div>;
+    case '1': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>쌍커풀</div>;
+    case '2': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>비절개 쌍커풀</div>;
+    case '3': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>앞트임</div>;
+    case '4': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>뒤트임</div>;
+    case '5': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>밑트임</div>;
+    case '6': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>눈매 교정</div>;
+    case '7': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>지방 재배치</div>;
+    case '8': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>다크서클 제거</div>;
+    default: return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>기본</div>;
   }
 };
 

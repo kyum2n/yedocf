@@ -17,12 +17,12 @@ const tabList = [
 
 const renderFaceContent = (tab) => {
   switch (tab) {
-    case '1': return <div>광대축소술<img src="https://placehold.co/1200x1500/green/gray" alt="placeholder" /></div>;
-    case '2': return <div>사각턱 수술<img src="https://placehold.co/1200x1500/green/gray" alt="placeholder" /></div>;
-    case '3': return <div>V라인 턱끝 성형<img src="https://placehold.co/1200x1500/green/gray" alt="placeholder" /></div>;
-    case '4': return <div>양악수술<img src="https://placehold.co/1200x1500/green/gray" alt="placeholder" /></div>;
-    case '5': return <div>이중턱 지방흡입<img src="https://placehold.co/1200x1500/green/gray" alt="placeholder" /></div>;
-    default: return <div>기본 <img src="https://placehold.co/1200x1500/green/gray" alt="placeholder" /></div>;
+    case '1': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>광대축소술</div>;
+    case '2': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>사각턱 수술</div>;
+    case '3': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>V라인 턱끝 성형</div>;
+    case '4': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>양악수술</div>;
+    case '5': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>이중턱 지방흡입</div>;
+    default: return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>기본 </div>;
   }
 };
 

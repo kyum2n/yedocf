@@ -42,7 +42,7 @@ const Header = () => {
     return (
         <>
             <header className="fixed top-0 left-0 w-full bg-white shadow z-50 h-16">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center relative">
                     {/* 로고 */}
                     <Link to="/">
                         <h1 className="text-xl font-bold h-16 px-4 flex items-center" title='연세 BT 미래병원'>
@@ -51,21 +51,26 @@ const Header = () => {
                     </Link>
 
                     {/* 네비게이션 */}
-                    <nav className="absolute-center flex gap-1">
-                        <Link to="/?scrollTo=directions" className="h-16 px-14 text-lg font-bold flex-center" title='오시는 길'>
-                            오시는 길
-                        </Link>
-                        {Object.keys(menuItems).map((key) => (
-                            <Link to={`/${key}`} key={key}>
-                                <button
-                                    type="button"
-                                    className="h-16 px-14 text-lg font-bold flex-center"
-                                    onMouseEnter={() => setActiveMenu(key)}
-                                >
-                                    {getMenuLabel(key)}
-                                </button>
+                    <nav className="absolute-center flex-center w-full ">
+                        <div className="flex gap-1 h-16 w-2/5 justify-between max-w-[1100px]" >
+                            <Link to="/?scrollTo=directions" className="h-16 text-lg font-bold flex-center whitespace-nowrap" title='오시는 길'>
+                                오시는 길
                             </Link>
-                        ))}
+                            {Object.keys(menuItems).map((key) => (
+                                <Link to={`/${key}`} key={key}>
+                                    <button
+                                        type="button"
+                                        className="h-16  text-lg font-bold flex-center whitespace-nowrap"
+                                        onMouseEnter={() => setActiveMenu(key)}
+                                    >
+                                        {getMenuLabel(key)}
+                                    </button>
+                                </Link>
+                            ))}
+                            <Link to="/?scrollTo=directions" className="h-16 text-lg font-bold flex-center whitespace-nowrap" title='1:1 문의'>
+                                1:1 문의
+                            </Link>
+                        </div>
                     </nav>
 
                     {/* 로그인 / 예약 */}

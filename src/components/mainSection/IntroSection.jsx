@@ -9,8 +9,8 @@ const IntroSection = () => {
     { title: "풍부한 경력", desc: "연세대학교 의과대학 출신, 연세서울병원 전임의 출신", image: study, bgPos: "48%" },
     { title: "맞춤형 진료", desc: "개개인에 맞춘 상담과 정밀한 시술 제공", image: consult, bgPos: "80%" },
     { title: "다양한 전문 분야", desc: "눈, 코, 윤곽, 가슴 성형부터 지방이식, 피부 관리까지", image: doctor },
-    { title: "안전한 시술", desc: "최신 레이저 및 검증된 의료 장비 도입", image: surgery },
-    { title: "사후 관리", desc: "만족도를 높이는 철저한 고객 관리 시스템", image: aftercare },
+    { title: "안전한 시술", desc: "최신 레이저 및 검증된 의료 장비 도입", image: surgery, bgPos: "0% 30%" },
+    { title: "사후 관리", desc: "만족도를 높이는 철저한 고객 관리 시스템", image: aftercare, bgPos: "0% 100%" },
   ];
 
   const handleMouseEnter = (idx) => {
@@ -23,7 +23,7 @@ const IntroSection = () => {
   };
 
   return (
-    <section className="h-[85vh] flex items-center justify-center relative">
+    <section className="h-[800px] flex items-center justify-center relative">
       <div className="w-1/2 h-full font-[SeoulHangangM]">
         <h2 className="text-3xl font-bold m-12">연세 BT 미래병원 소개</h2>
         <div className="mt-12 text-xl">

@@ -17,12 +17,12 @@ const tabList = [
 
 const renderNoseContent = (tab) => {
   switch (tab) {
-    case '1': return <div>콧대 성형<img src="https://placehold.co/1200x1500/blue/gray" alt="placeholder" /></div>;
-    case '2': return <div>매부리코 성형<img src="https://placehold.co/1200x1500/blue/gray" alt="placeholder" /></div>;
-    case '3': return <div>복코 교정<img src="https://placehold.co/1200x1500/blue/gray" alt="placeholder" /></div>;
-    case '4': return <div>코끝 성형<img src="https://placehold.co/1200x1500/blue/gray" alt="placeholder" /></div>;
-    case '5': return <div>콧볼 축소<img src="https://placehold.co/1200x1500/blue/gray" alt="placeholder" /></div>;
-    default: return <div>기본 <img src="https://placehold.co/1200x1500/blue/gray" alt="placeholder" /></div>;
+    case '1': return <div className='h-[1500px] w-[1200px] bg-red-100 text-center font-bold'>콧대 성형</div>;
+    case '2': return <div className='h-[1500px] w-[1200px] bg-red-100 text-center font-bold'>매부리코 성형</div>;
+    case '3': return <div className='h-[1500px] w-[1200px] bg-red-100 text-center font-bold'>복코 교정</div>;
+    case '4': return <div className='h-[1500px] w-[1200px] bg-red-100 text-center font-bold'>코끝 성형</div>;
+    case '5': return <div className='h-[1500px] w-[1200px] bg-red-100 text-center font-bold'>콧볼 축소</div>;
+    default: return <div className='h-[1500px] w-[1200px] bg-red-100 text-center font-bold'>기본 </div>;
   }
 };
 

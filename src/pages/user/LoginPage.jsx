@@ -72,7 +72,7 @@ const LoginPage = () => {
         const clientId = "127012581616-f2iqmfjad5pijoo9u4g2ld04r0b78bv3.apps.googleusercontent.com";
         const scope = "https://www.googleapis.com/auth/userinfo.email";
         const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
-    
+
         window.location.href = authUrl;
     };
 
@@ -80,7 +80,7 @@ const LoginPage = () => {
         const params = new URLSearchParams(location.search);
         const code = params.get("code");
 
-        if (code){
+        if (code) {
 
             axios.post("/api/oauth2/google", null, { params: { code } })
                 .then((res) => {
@@ -102,19 +102,19 @@ const LoginPage = () => {
                         type: "user",
                     });
 
-                        navigate("/");
-                    })
-                    .catch((err) => {
-                        if (err.response?.status === 401) {
-                            // 백엔드에서 받은 메세지 표시
-                            alert(err.response?.data);
-                            navigate("/signup");
-                        } else {
-                            alert("Google 로그인 실패");
-                        }
-                    });
-                }
-            }, [location.search]);
+                    navigate("/");
+                })
+                .catch((err) => {
+                    if (err.response?.status === 401) {
+                        // 백엔드에서 받은 메세지 표시
+                        alert(err.response?.data);
+                        navigate("/signup");
+                    } else {
+                        alert("Google 로그인 실패");
+                    }
+                });
+        }
+    }, [location.search]);
 
     return (
         <div className="flex h-screen">
@@ -128,7 +128,7 @@ const LoginPage = () => {
             </div>
 
             {/* 오른쪽 로그인 폼 영역 */}
-            <div className="w-full md:w-1/2 flex-center relative bg-white">
+            <div className="w-full md:w-1/2 flex-center relative bg-white flex-col">
                 <form className="w-[90%] max-w-sm z-10" onSubmit={handleLogin}>
                     <h2 className="text-2xl font-bold text-center mb-6">로그인</h2>
 
@@ -164,11 +164,10 @@ const LoginPage = () => {
                     </Button>
 
                 </form>
-                    <div className="flex justify-around mt-5">
-                        <SocialButton platform="kakao" onClick={() => console.log('카카오')} />
-                        {/* <SocialButton platform="naver" onClick={() => console.log('네이버')} /> */}
-                        <SocialButton platform="google" onClick={handleGoogleLogin} />
-                    </div>
+                <div className="flex justify-around mt-5 flex-col gap-2 w-[90%] max-w-sm">
+                    <SocialButton platform="kakao" onClick={() => console.log('카카오')} />
+                    <SocialButton platform="google" onClick={handleGoogleLogin} />
+                </div>
             </div>
         </div>
     );

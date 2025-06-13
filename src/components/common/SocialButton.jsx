@@ -1,31 +1,31 @@
+import { kakaoLogo, googleLogo } from "@/assets/images";
+
 const SocialButton = ({ platform, onClick }) => {
     const platforms = {
         kakao: {
-            name: "K",
+            logo: kakaoLogo,
+            name: "카카오로 로그인하기",
             bgColor: "bg-[#FEE500]",
             textColor: "text-[#3C1E1E]",
         },
-        naver: {
-            name: "N",
-            bgColor: "bg-[#03C75A]",
-            textColor: "text-white",
-        },
         google: {
-            name: "G",
+            logo: googleLogo,
+            name: "Google로 로그인하기",
             bgColor: "bg-white",
             textColor: "text-[#3C4043]",
             border: "border border-[#DADCE0]",
         },
     };
 
-    const { name, bgColor, textColor, border } = platforms[platform] || {};
+    const { logo, name, bgColor, textColor, border } = platforms[platform] || {};
 
     return (
         <button
             onClick={onClick}
-            className={`w-16 h-16 rounded-full font-semibold flex-center gap-2 shadow-md ${bgColor} ${textColor} ${border ?? ""}`}
+            className={`w-full h-11 rounded-md font-semibold flex-center shadow ${bgColor} ${textColor} ${border ?? ""}`}
         >
-            {name}
+            <img src={logo} alt={`${platform} logo`} className="w-6 h-6 mr-3" />
+            <p>{name}</p>
         </button>
     );
 };

@@ -18,12 +18,13 @@ import { lobby } from '@/assets/images/index';
 import Footer from '@/components/layout/Footer';
 import Spacer from '@/components/common/Spacer';
 
-import FadeTabs from '@/components/common/FadeTabs';
 import { getAllNoticeEvents } from '@/api/noticeEvent'; // axios api 호출 추가 -> 데이터 수신 (이벤트 팝업)
 
 import Container from '@/components/layout/Container';
 import IntroSection from '@/components/mainSection/IntroSection';
 import DoctorSection from '@/components/mainSection/DoctorSection';
+import ProcedureSection from "@/components/mainSection/ProcedureSection";
+import ReviewSection from "@/components/mainSection/ReviewSection";
 
 
 const MainPage = () => {
@@ -117,19 +118,13 @@ const MainPage = () => {
         <Container>
           <IntroSection />
           <Spacer size='lg' />
-            <DoctorSection />
+          <DoctorSection />
           <Spacer size='lg' />
-          <section className="h-[85vh] flex items-center justify-center relative bg-emerald-300">
-            <h2>연세 BT 미래병원은 환자에게 맞춘 시술을 합니다.</h2>
-          </section>
+          <ProcedureSection />
           <Spacer size='lg' />
-          <section className="h-[85vh] flex justify-center relative bg-violet-300">
-            <h2>연세 BT 미래병원의 고객님들이 남기신 후기</h2>
-          </section>
+          <ReviewSection />
         </Container>
 
-
-        {/* Directions Section */}
 
         <DirectionsMap />
 

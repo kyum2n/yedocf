@@ -1,21 +1,26 @@
-// 자동 생성된 CDN 이미지 목록
 
-export const banner1
+export const banner1 //회원가입 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner1.webp";
-export const banner2
+export const banner2 //마이페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner2.webp";
-export const banner3
+export const banner3 //아이디/비밀번호 찾기 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner3.webp";
-export const banner4
+export const banner4 //예약 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner4.webp";
-export const chin_hor
+export const banner5
+ = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner5.webp";
+export const banner6
+ = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner6.webp";
+export const banner7
+ = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner7.webp";
+export const chin_hor //윤곽 시술 설명 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/chin-hor.webp";
-export const eye_hor
+export const eye_hor //눈 시술 설명 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/eye-hor.webp";
-export const nose_hor
+export const nose_hor //코 시술 설명 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/nose-hor.webp";
 
-export const login_side
+export const login_side //로그인 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/login/login-side.webp";
 
 export const background
