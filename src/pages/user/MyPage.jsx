@@ -35,13 +35,20 @@ const MyPage = () => {
 
     // 모달 및 상태 관리
     const [userInfo, setUserInfo] = useState({ uName: "", uId: "", uEmail: "", uPhone: ""}); // 사용자 정보
+
     const [showPwdModal, setShowPwdModal] = useState(false); // 비밀번호 변경 모달 표시 여부
     const [oldPwd, setOldPwd] = useState(""); // 기존 비밀번호 입력값
     const [newPwd, setNewPwd] = useState(""); // 새 비밀번호 입력값
     const [confirmPwd, setConfirmPwd] = useState(""); // 비밀번호 확인 입력값
+
     const [showPhoneModal, setShowPhoneModal] = useState(false); // 전화번호 변경 모달 표시 여부
     const [newPhone, setNewPhone] = useState(""); // 전화번호 변경 입력 값
+
     const [reservations, setReservations] = useState([]); // 예약 내역
+
+    const [inquiries, setInquiries] = useState([]); // 문의 내역
+    const [selectedInquiry, setSelectedInquiry] = useState([]); // 선택된 문의
+    const [showInquiryModal, setShowInquiryModal] = useState(false); // 문의 내용 상세보기 모달 표시 여부
     
     useEffect(() => {
         const uId = localStorage.getItem("uId");
@@ -78,6 +85,20 @@ const MyPage = () => {
         .catch((error) => {
             console.error("사용자 정보 조회 실패", error);
         });
+
+        // 문의 내역 불러오기
+        axios.get('/api/inquiry', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then((response) => {
+            setInquiries(response.data);
+        })
+        .catch((error) => {
+            console.error("문의 내역 조회 실패", error);
+        });
+
     }, []);
 
     return (
@@ -199,6 +220,46 @@ const MyPage = () => {
                             </tbody>
                         </table>
                     </div>
+
+                    {/* 문의 내역 */}
+                    <div>
+                        <h2 className="text-xl font-bold mb-4">문의 내역</h2>
+                        <table className="w-full border border-gray-300 text-center text-sm">
+                            <thead className="bg-blue-100 text-gray-800">
+                                <tr>
+                                    <th className="p-2 border">문의 내용</th>
+                                    <th className="p-2 border">작성일</th>
+                                    <th className="p-2 border">처리 상태</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    inquiries.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="4" className="p-4 text-gray-500">문의 내역이 없습니다.</td>
+                                        </tr>
+                                    ) : (
+                                        inquiries.map((q) => (
+                                            <tr key={q.qId}>
+                                                    <td
+                                                        className="border p-2 text-blue-600 underline cursor-pointer"
+                                                        onClick={() => {
+                                                            setSelectedInquiry(q);
+                                                            setShowInquiryModal(true);
+                                                        }}
+                                                    >
+                                                        문의 내용 상세보기
+                                                    </td>
+                                                    <td className="border p-2">{q.createdAt}</td>
+                                                    <td className="border p-2">{q.qStatus}</td>
+                                            </tr>
+                                        ))
+                                    )
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
                 </section>
                 <Spacer size="lg" />
                 <GoToReservationButton />
@@ -329,10 +390,31 @@ const MyPage = () => {
                     className="w-full border p-2 rounded"
                     value={newPhone}
                     onChange={(e) => setNewPhone(e.target.value)}
-                /> 
-                        </Modal>
-                    </>
-                );
+                />
+            </Modal>
+
+            {/* 문의 내용 상세보기 모달 */}
+            <Modal
+                isOpen={showInquiryModal}
+                onClose={() => setShowInquiryModal(false)}
+                title="문의 상세 내용"
+                actionLabel="닫기"
+                onAction={() => setShowInquiryModal(false)}
+            >
+                {selectedInquiry && (
+                    <div className="space-y-4 text-sm">
+                        <div>
+                            <strong>문의 내용</strong>
+                            <div className="mt-1 p-2 border rounded bg-gray-50 whitespace-pre-wrap">
+                                {selectedInquiry.qContent}
+                            </div>
+                        </div>
+                        
+                    </div>
+                )}
+            </Modal>
+        </>
+    );
 };
 
 export default MyPage;
