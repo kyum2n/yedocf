@@ -15,6 +15,13 @@ const Header = () => {
         localStorage.removeItem('aId');
 
         logoutUser(null);
+
+        // 소셜 로그아웃 추가 처리 (리디렉션 방식으로 할 수 있는 경우만)
+        if (provider === "google") {
+        // 서버에 토큰 revoke 또는 추가 처리하는 API가 있다면 여기에 axios.post() 가능
+        console.log("Google 사용자 로그아웃 완료 (로컬 정리만 수행)");
+        }
+        
         navigate('/');
     };
 
@@ -23,7 +30,6 @@ const Header = () => {
             case 'eye': return '눈';
             case 'nose': return '코';
             case 'face': return '윤곽';
-            case 'notice': return '공지사항';
             default: return key;
         }
     };
@@ -42,7 +48,7 @@ const Header = () => {
     return (
         <>
             <header className="fixed top-0 left-0 w-full bg-white shadow z-50 h-16">
-                <div className="flex justify-between items-center relative">
+                <div className="flex justify-between items-center">
                     {/* 로고 */}
                     <Link to="/">
                         <h1 className="text-xl font-bold h-16 px-4 flex items-center" title='연세 BT 미래병원'>
@@ -51,26 +57,21 @@ const Header = () => {
                     </Link>
 
                     {/* 네비게이션 */}
-                    <nav className="absolute-center flex-center w-full ">
-                        <div className="flex gap-1 h-16 w-2/5 justify-between max-w-[1100px]" >
-                            <Link to="/?scrollTo=directions" className="h-16 text-lg font-bold flex-center whitespace-nowrap" title='오시는 길'>
-                                오시는 길
+                    <nav className="absolute-center flex gap-1">
+                        <Link to="/?scrollTo=directions" className="h-16 px-14 text-lg font-bold flex-center" title='오시는 길'>
+                            오시는 길
+                        </Link>
+                        {Object.keys(menuItems).map((key) => (
+                            <Link to={`/${key}`} key={key}>
+                                <button
+                                    type="button"
+                                    className="h-16 px-14 text-lg font-bold flex-center"
+                                    onMouseEnter={() => setActiveMenu(key)}
+                                >
+                                    {getMenuLabel(key)}
+                                </button>
                             </Link>
-                            {Object.keys(menuItems).map((key) => (
-                                <Link to={`/${key}`} key={key}>
-                                    <button
-                                        type="button"
-                                        className="h-16  text-lg font-bold flex-center whitespace-nowrap"
-                                        onMouseEnter={() => setActiveMenu(key)}
-                                    >
-                                        {getMenuLabel(key)}
-                                    </button>
-                                </Link>
-                            ))}
-                            <Link to="/?scrollTo=directions" className="h-16 text-lg font-bold flex-center whitespace-nowrap" title='1:1 문의'>
-                                1:1 문의
-                            </Link>
-                        </div>
+                        ))}
                     </nav>
 
                     {/* 로그인 / 예약 */}

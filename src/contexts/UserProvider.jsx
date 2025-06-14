@@ -94,13 +94,27 @@ export const UserProvider = ({ children }) => {
 
   // 로그아웃 함수
   const logoutUser = () => {
+    const provider = localStorage.getItem("loginProvider");
+
     setUser(null);
     setLoading(false);
+    
+    // 로컬 스토리지 정리
     localStorage.removeItem("accessToken");
     localStorage.removeItem("uId");
     localStorage.removeItem("aId");
     localStorage.removeItem("role");
-  };
+    localStorage.removeItem("loginProvider");
+
+    // 로그아웃 후 분기 처리
+  if (provider === "google") {
+    // 팝업 없이 리다이렉트 방식 (Google 로그아웃 후 메인으로 이동)
+    window.location.href = "https://accounts.google.com/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:5173";
+  } else {
+    // 기본 로그아웃 (카카오 제외)
+    window.location.href = "/";
+  }
+};
 
   return (
     <UserContext.Provider
@@ -115,5 +129,4 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
-
 export const useUser = () => useContext(UserContext);
