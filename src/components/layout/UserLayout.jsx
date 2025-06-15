@@ -1,3 +1,12 @@
+/**
+ * packageName    : src.pages
+ * fileName       : App.jsx
+ * author         : lkm
+ * date           : 25.06.15
+ * description    : (수정)1:1 문의 탭 추가
+ * ===========================================================
+ */
+
 import { Routes, Route } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
@@ -13,6 +22,7 @@ import MyPage from '@/pages/user/MyPage';
 import FindAccountPage from '@/pages/user/FindAccountPage';
 import ReservationPage from '@/pages/user/ReservationPage';
 import NoticeEventPage from '@/pages/user/NoticeEventPage';
+import InquiryPage from '@/pages/user/InquiryPage';
 
 const UserLayout = () => {
   const location = useLocation();
@@ -35,6 +45,7 @@ const UserLayout = () => {
         <Route path="/nose" element={<NosePage />} />
         <Route path="/face" element={<FacePage />} />
         <Route path="/notice" element={<NoticeEventPage />} />
+        <Route path="/inquiry" element={<InquiryPage />} />
       </Routes>
       {!shouldHideFooter && <Footer />}
     </>

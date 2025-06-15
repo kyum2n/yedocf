@@ -51,6 +51,15 @@
  * ===========================================================
  */
 
+/**
+ * packageName    : src.pages
+ * fileName       : App.jsx
+ * author         : lkm
+ * date           : 25.06.15
+ * description    : (수정)1:1 문의 관리 탭 추가
+ * ===========================================================
+ */
+
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -66,6 +75,8 @@ import ReservationManagePage from './pages/admin/ReservationManagePage';
 import StaffManagePage from './pages/admin/StaffManagePage';
 
 import NoticeEventPage from './pages/user/NoticeEventPage';
+import InquiryPage from './pages/user/InquiryPage';
+import InquiryManagePage from'./pages/admin/InquiryManagePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -83,6 +94,7 @@ function App() {
           <Route index element={<UserManagePage />} />
           <Route path="reservations" element={<ReservationManagePage />} />
           <Route path="staff" element={<StaffManagePage />} />
+          <Route path='inquiry' element={<InquiryManagePage />} />
         </Route>
 
         {/* 공지사항 / 이벤트 탭 추가 */}

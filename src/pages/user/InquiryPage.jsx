@@ -10,8 +10,9 @@
 import BannerSection from '@/components/common/BannerSection';
 import DirectionsMap from '@/components/features/directions/DirectionsMap';
 import GoToReservationButton from '@/components/common/GoToReservationButton';
+import Spacer from '@/components/common/Spacer';
 import { banner4 } from '@/assets/cdnImages';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const InquiryPage = () => {
@@ -67,7 +68,7 @@ const InquiryPage = () => {
 
         } catch(error) {
             console.error("문의 등록 실패", error);
-            alert("문의 등록 중 오류가 발생했습니다.");
+            alert("로그인이 필요합니다.");
 
         } finally {
             setIsSubmitting(false);
