@@ -1,11 +1,3 @@
-import Sidebar from "@/components/admin/Sidebar";
-import InputField from "@/components/common/InputField";
-import Dropdown from "@/components/common/Dropdown";
-import Button from "@/components/common/Button";
-import Modal from "@/components/common/Modal";
-import { useState, useEffect } from "react";
-import axios from "axios";
-
 /**
  * packageName    : src.api.noticeEvent
  * fileName       : StaffManagePage.jsx
@@ -14,6 +6,15 @@ import axios from "axios";
  * description    : API 연동
  * ===========================================================
  */
+
+import Sidebar from "@/components/admin/Sidebar";
+import InputField from "@/components/common/InputField";
+import Dropdown from "@/components/common/Dropdown";
+import Button from "@/components/common/Button";
+import Modal from "@/components/common/Modal";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 
 const StaffManagePage = () => {
     // 직원 목록 불러오기

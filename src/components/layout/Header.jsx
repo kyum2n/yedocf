@@ -72,6 +72,11 @@ const Header = () => {
                                 </button>
                             </Link>
                         ))}
+
+                        <Link to="/inquiry" className="h-16 px-14 text-lg font-bold flex-center whitespace-nowrap" title='1:1 문의'>
+                            1:1 문의
+                        </Link>
+                        
                     </nav>
 
                     {/* 로그인 / 예약 */}
