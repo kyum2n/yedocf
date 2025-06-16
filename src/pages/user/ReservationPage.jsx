@@ -114,11 +114,13 @@ const ReservationPage = () => {
                     },
                 }
             );
-            alert("예약이 완료되었습니다!");
+            alert("예약이 완료되었습니다. 마이페이지로 이동합니다.");
             console.log("예약 성공:", response.data);
             setSelectedDate(null);
             setSelectedTime("");
             setSelectedItem("");
+
+            navigate("/mypage");
         } catch (error) {
             console.error("예약 실패:", error);
             console.log("error.response:", error.response);
