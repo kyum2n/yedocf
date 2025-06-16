@@ -258,7 +258,7 @@ const ReservationManagePage = () => {
         resetOnClose={true}
         onAction={async () => {
           try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("accessToken");
             const config = {
               headers: {
                 Authorization: `Bearer ${token}`,

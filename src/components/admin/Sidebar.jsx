@@ -29,25 +29,24 @@ const Sidebar = () => {
       </nav>
 
       {/* 하단 버튼 */}
-      <div className="absolute bottom-0 h-16 w-60 border-t border-orange-100 flex-center">
+      <div className="absolute bottom-0 h-32 w-60 border-t border-orange-100 flex-col items-center justify-center gap-2 bg-orange-950">
+        <button
+          onClick={() => {
+            window.location.href = `/`;
+          }}
+          className="h-16 w-60 flex items-center justify-center gap-2 text-lg hover:underline text-white"
+        >
+          사용자 페이지로 이동
+        </button>
         <button
           onClick={() => {
             localStorage.clear();
             window.location.href = '/';
           }}
-          className="h-16 w-60 flex items-center justify-center gap-2 text-xl hover:underline text-white"
+          className="h-16 w-60 flex items-center justify-center gap-2 text-xl hover:underline text-white border-t border-orange-100"
         >
           <ArrowRightStartOnRectangleIcon className="w-5 h-5 text-white" />
           로그아웃
-        </button>
-
-        <button
-          onClick={() => {
-            window.location.href = `/`;
-          }}
-          className="h-16 w-60 flex items-center justify-center gap-2 text-base hover:underline text-white"
-        >
-          사용자 페이지로 이동
         </button>
       </div>
     </aside>

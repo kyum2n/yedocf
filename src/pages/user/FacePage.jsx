@@ -17,11 +17,11 @@ const tabList = [
 
 const renderFaceContent = (tab) => {
   switch (tab) {
-    case '1': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>광대축소술</div>;
+    case '1': return <div className='h-[1500px] w-[1200px] bg-orange-50 text-center font-bold'>광대축소술</div>;
     case '2': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>사각턱 수술</div>;
-    case '3': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>V라인 턱끝 성형</div>;
-    case '4': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>양악수술</div>;
-    case '5': return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>이중턱 지방흡입</div>;
+    case '3': return <div className='h-[1500px] w-[1200px] bg-orange-200 text-center font-bold'>V라인 턱끝 성형</div>;
+    case '4': return <div className='h-[1500px] w-[1200px] bg-orange-300 text-center font-bold'>양악수술</div>;
+    case '5': return <div className='h-[1500px] w-[1200px] bg-orange-400 text-center font-bold'>이중턱 지방흡입</div>;
     default: return <div className='h-[1500px] w-[1200px] bg-orange-100 text-center font-bold'>기본 </div>;
   }
 };

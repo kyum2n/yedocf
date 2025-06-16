@@ -23,6 +23,4 @@ export const menuItems = {
         { title: '양악 수술', tab: '4' },
         { title: '이중턱 지방흡입', tab: '5' },
     ],
-    notice: [
-    ],
 };

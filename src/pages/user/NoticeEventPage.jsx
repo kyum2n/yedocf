@@ -9,6 +9,8 @@
 
 import React, { useEffect, useState } from "react";
 import { getAllNoticeEvents } from "../../api/noticeEvent";
+import BannerSection from "@/components/common/BannerSection";
+import { banner6 } from "@/assets/cdnImages";
 
 const NoticeEventPage = () => {
     const [notices, setNotices] = useState([]);
@@ -22,7 +24,12 @@ const NoticeEventPage = () => {
     }, []);
 
     return (
-        <div>
+        <>
+            <BannerSection
+                title="공지사항 / 이벤트"
+                image={banner6}
+                objectPosition="object-[50%_80%]"
+            />
             <h2>공지사항 / 이벤트</h2>
             {notices.map((item) => (
                 <div key={item.neId} style={{ border: "1px solid gray", margin: "10px", padding: "10px" }}>
@@ -33,7 +40,7 @@ const NoticeEventPage = () => {
                     )}
                 </div>
             ))}
-        </div>
+        </>
     );
 };
 
