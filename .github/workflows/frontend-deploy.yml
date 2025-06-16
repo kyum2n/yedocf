@@ -31,5 +31,10 @@ jobs:
           echo "$PRIVATE_KEY" > key.pem
           chmod 600 key.pem
 
-          # nginx 기본 디렉토리에 배포 (정적 파일로)
-          scp -i key.pem -o StrictHostKeyChecking=no -r dist/* ec2-user@$HOST:/usr/share/nginx/html/
+          scp -i key.pem -o StrictHostKeyChecking=no -r dist ec2-user@$HOST:/home/ec2-user/frontend-dist
+
+          # SSH 접속 후 sudo 권한으로 nginx 경로에 복사
+          ssh -i key.pem -o StrictHostKeyChecking=no ec2-user@$HOST << 'EOF'
+            sudo rm -rf /usr/share/nginx/html/*
+            sudo cp -r /home/ec2-user/frontend-dist/* /usr/share/nginx/html/
+          EOF
