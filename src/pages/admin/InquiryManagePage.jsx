@@ -8,9 +8,8 @@
  */
 
 import Sidebar from "@/components/admin/Sidebar";
-import InputField from "@/components/common/InputField";
-import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
+import { formatDateTime } from "@/constants/dateUtils";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -49,9 +48,9 @@ const InquiryManagePage = () => {
                 qAnswer: qAnswer
             }, {
                 headers: {Authorization: `Bearer ${token}`},
-                params: {status: "답변 완료"}
             });
 
+            console.log("토큰:", token);
             alert("답변이 등록되었습니다.");
             setIsModalOpen(false);
             setQAnswer("");
@@ -90,7 +89,7 @@ const InquiryManagePage = () => {
                                     <td className="px-4 py-2 border">{q.uEmail}</td>
                                     <td className="px-4 py-2 border">{q.visit ? "O" : "X"}</td>
                                     <td className="px-4 py-2 border">{q.qContent}</td>
-                                    <td className="px-4 py-2 border">{q.createdAt}</td>
+                                    <td className="px-4 py-2 border">{formatDateTime(q.createdAt)}</td>
                                     <td className="px-4 py-2 border">{q.status}</td>
                                     <td className="px-4 py-2 border">
                                         <button
