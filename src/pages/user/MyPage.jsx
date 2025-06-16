@@ -7,18 +7,46 @@ import { banner2 } from '@/assets/cdnImages';
 import GoToReservationButton from "@/components/common/GoToReservationButton";
 import axios from "axios";
 import { useUser } from "@/contexts/UserProvider";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
-    const { logoutUser } = useUser();
+    const { user, logoutUser } = useUser();
+    const navigate = useNavigate();
 
-        const handleWithdraw = async () => {
+    // 로그인 안 된 상태면 로그인 페이지로 보내기
+    useEffect(() => {
+        if (!user) {
+            alert("로그인이 필요합니다. 다시 로그인해주세요.");
+            navigate("/login");
+        }
+    }, [user, navigate]);
+
+    if (!user) return null;
+
+    // 관리자 접근 차단 (마이페이지)
+    if (user?.type === "admin") {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-white text-center px-4">
+                <h2 className="text-2xl font-bold mb-4">사용자를 위한 기능입니다</h2>
+                <p className="text-gray-600">이 마이 페이지는 일반 사용자만 이용할 수 있습니다.</p>
+                <button
+                    className="mt-4 px-4 py-2 bg-gray-800 text-white rounded"
+                    onClick={() => window.history.back()}
+                >
+                    이전 페이지로
+                </button>
+            </div>
+        );
+    }
+
+    const handleWithdraw = async () => {
         if (!window.confirm("정말 회원 탈퇴하시겠습니까?")) return;
 
         try {
             const token = localStorage.getItem("accessToken");
             const uId = localStorage.getItem("uId");
 
-            await axios.post(`/api/user/Delete/${uId}`, null , {
+            await axios.post(`/api/user/Delete/${uId}`, null, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -34,7 +62,7 @@ const MyPage = () => {
     };
 
     // 모달 및 상태 관리
-    const [userInfo, setUserInfo] = useState({ uName: "", uId: "", uEmail: "", uPhone: ""}); // 사용자 정보
+    const [userInfo, setUserInfo] = useState({ uName: "", uId: "", uEmail: "", uPhone: "" }); // 사용자 정보
 
     const [showPwdModal, setShowPwdModal] = useState(false); // 비밀번호 변경 모달 표시 여부
     const [oldPwd, setOldPwd] = useState(""); // 기존 비밀번호 입력값
@@ -49,12 +77,15 @@ const MyPage = () => {
     const [inquiries, setInquiries] = useState([]); // 문의 내역
     const [selectedInquiry, setSelectedInquiry] = useState([]); // 선택된 문의
     const [showInquiryModal, setShowInquiryModal] = useState(false); // 문의 내용 상세보기 모달 표시 여부
-    
-    useEffect(() => {
-        const uId = localStorage.getItem("uId");
-        const token = localStorage.getItem("accessToken");
 
-        if (!uId || !token){
+    useEffect(() => {
+
+        const token = localStorage.getItem("accessToken");
+        const aId = localStorage.getItem("aId");
+        const uId = localStorage.getItem("uId");
+        const role = localStorage.getItem("role");
+
+        if (!uId || !token) {
             alert("로그인이 필요합니다. 다시 로그인해주세요.");
             console.error("로그인 정보가 없습니다.");
             return;
@@ -66,12 +97,12 @@ const MyPage = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-        .then((response) => {
-            setReservations(response.data);
-        })
-        .catch((error) => {
-            console.error("예약 내역 조회 실패", error);
-        });
+            .then((response) => {
+                setReservations(response.data);
+            })
+            .catch((error) => {
+                console.error("예약 내역 조회 실패", error);
+            });
 
         // 사용자 정보 불러오기
         axios.get(`/api/user/myinfo`, {
@@ -79,12 +110,12 @@ const MyPage = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-        .then((response) => {
-            setUserInfo(response.data);
-        })
-        .catch((error) => {
-            console.error("사용자 정보 조회 실패", error);
-        });
+            .then((response) => {
+                setUserInfo(response.data);
+            })
+            .catch((error) => {
+                console.error("사용자 정보 조회 실패", error);
+            });
 
         // 문의 내역 불러오기
         axios.get('/api/inquiry', {
@@ -92,12 +123,12 @@ const MyPage = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-        .then((response) => {
-            setInquiries(response.data);
-        })
-        .catch((error) => {
-            console.error("문의 내역 조회 실패", error);
-        });
+            .then((response) => {
+                setInquiries(response.data);
+            })
+            .catch((error) => {
+                console.error("문의 내역 조회 실패", error);
+            });
 
     }, []);
 
@@ -174,49 +205,49 @@ const MyPage = () => {
                                         </tr>
                                     ) : (
                                         reservations.map((r) => (
-                                        <tr key={r.rId}>
-                                            <td className="border p-2">{r.tName}</td>
-                                            <td className="border p-2">{r.consultDate?.slice(0, 10)}</td>
-                                            <td className="border p-2">{r.consultTime}</td>
-                                            <td className="border p-2">
+                                            <tr key={r.rId}>
+                                                <td className="border p-2">{r.tName}</td>
+                                                <td className="border p-2">{r.consultDate?.slice(0, 10)}</td>
+                                                <td className="border p-2">{r.consultTime}</td>
+                                                <td className="border p-2">
                                                     <div className="flex items-center justify-center space-x-2">
-                                                    <span>{r.status}</span>
-                                                {(r.status === "예약됨" || r.status === "대기") && (
-                                                    // 예약 취소 버튼
-                                                    <Button
-                                                        variant="secondary"
-                                                        className="text-sm"
-                                                        onClick={async () => {
-                                                            const token = localStorage.getItem("accessToken");
+                                                        <span>{r.status}</span>
+                                                        {(r.status === "예약됨" || r.status === "대기") && (
+                                                            // 예약 취소 버튼
+                                                            <Button
+                                                                variant="secondary"
+                                                                className="text-sm"
+                                                                onClick={async () => {
+                                                                    const token = localStorage.getItem("accessToken");
 
-                                                            try {
-                                                                await axios.post(`/api/reserve/${r.rId}/cancel`, null, {
-                                                                    headers: {
-                                                                        Authorization: `Bearer ${token}`,
-                                                                    },
-                                                                });
-                                                                alert("예약이 취소되었습니다.");
+                                                                    try {
+                                                                        await axios.post(`/api/reserve/${r.rId}/cancel`, null, {
+                                                                            headers: {
+                                                                                Authorization: `Bearer ${token}`,
+                                                                            },
+                                                                        });
+                                                                        alert("예약이 취소되었습니다.");
 
-                                                                // 예약 목록 갱신
-                                                                setReservations((prev) =>
-                                                                    prev.map((response) =>
-                                                                        response.rId === r.rId ? {...response, status: "취소 완료"} : response
-                                                                    )
-                                                                );
-                                                            } catch (error) {
-                                                                console.error("예약 취소 실패", error);
-                                                                alert("예약 취소에 실패했습니다.");
-                                                            }
-                                                        }}
-                                                    >
-                                                        취소하기
-                                                    </Button>
-                                                )}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                )}
+                                                                        // 예약 목록 갱신
+                                                                        setReservations((prev) =>
+                                                                            prev.map((response) =>
+                                                                                response.rId === r.rId ? { ...response, status: "취소 완료" } : response
+                                                                            )
+                                                                        );
+                                                                    } catch (error) {
+                                                                        console.error("예약 취소 실패", error);
+                                                                        alert("예약 취소에 실패했습니다.");
+                                                                    }
+                                                                }}
+                                                            >
+                                                                취소하기
+                                                            </Button>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
                             </tbody>
                         </table>
                     </div>
@@ -241,17 +272,17 @@ const MyPage = () => {
                                     ) : (
                                         inquiries.map((q) => (
                                             <tr key={q.qId}>
-                                                    <td
-                                                        className="border p-2 text-blue-600 underline cursor-pointer"
-                                                        onClick={() => {
-                                                            setSelectedInquiry(q);
-                                                            setShowInquiryModal(true);
-                                                        }}
-                                                    >
-                                                        문의 내용 상세보기
-                                                    </td>
-                                                    <td className="border p-2">{q.createdAt}</td>
-                                                    <td className="border p-2">{q.qStatus}</td>
+                                                <td
+                                                    className="border p-2 text-blue-600 underline cursor-pointer"
+                                                    onClick={() => {
+                                                        setSelectedInquiry(q);
+                                                        setShowInquiryModal(true);
+                                                    }}
+                                                >
+                                                    문의 내용 상세보기
+                                                </td>
+                                                <td className="border p-2">{q.createdAt}</td>
+                                                <td className="border p-2">{q.qStatus}</td>
                                             </tr>
                                         ))
                                     )
@@ -270,13 +301,13 @@ const MyPage = () => {
                 onClose={() => setShowPwdModal(false)}
                 title="비밀번호 변경"
                 actionLabel="변경"
-                onAction={ async () => {
-                    if (!oldPwd || !newPwd || !confirmPwd){
+                onAction={async () => {
+                    if (!oldPwd || !newPwd || !confirmPwd) {
                         alert("모든 항목을 입력해주세요.");
                         return;
                     }
 
-                    if(newPwd !== confirmPwd){
+                    if (newPwd !== confirmPwd) {
                         alert("새 비밀번호가 일치하지 않습니다.");
                         return;
                     }
@@ -285,7 +316,7 @@ const MyPage = () => {
                         const token = localStorage.getItem("accessToken");
                         const uId = localStorage.getItem("uId");
 
-                        await axios.post("/api/user/password", 
+                        await axios.post("/api/user/password",
                             {
                                 uId: uId,
                                 oldPwd: oldPwd,
@@ -303,9 +334,9 @@ const MyPage = () => {
                         setOldPwd("");
                         setNewPwd("");
                         setConfirmPwd("");
-                    } catch (error){
+                    } catch (error) {
                         console.error("비밀번호 변경 실패", error);
-                        if(error.response && error.response.data){
+                        if (error.response && error.response.data) {
                             alert(`변경 실패: ${error.response.data}`);
                         } else {
                             alert("비밀번호 변경에 실패했습니다.");
@@ -382,7 +413,7 @@ const MyPage = () => {
                         }
                     }
                 }}
-                >
+            >
                 {/* [변경] 전화번호 입력창에 상태(newPhone) 바인딩 추가 (value, onChange) */}
                 <input
                     type="tel"
@@ -409,7 +440,7 @@ const MyPage = () => {
                                 {selectedInquiry.qContent}
                             </div>
                         </div>
-                        
+
                     </div>
                 )}
             </Modal>
