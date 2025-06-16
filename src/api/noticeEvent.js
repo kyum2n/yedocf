@@ -22,14 +22,26 @@ export const createNoticeEvent = async (data) => {
   return response.data;
 };
 
-// 관리자 수정
-export const updateNoticeEvent = async (neId, data) => {
-  const response = await axiosInstance.put(`/api/admin/noticeEvent/${neId}`, data);
-  return response.data;
+
+
+// 25.06.16 추가
+
+//상세 조회
+export const getNoticeEventById = async (neId) => {
+    const response = await axiosInstance.get(`/admin/noticeEvent/${neId}`);
+    return response.data;
 };
 
-// 관리자 삭제
-export const deleteNoticeEvent = async (neId) => {
-  const response = await axiosInstance.delete(`/api/admin/noticeEvent/${neId}`);
-  return response.data;
+// 수정
+export const updateNoticeEvent = async (neId, form, token) => {
+    await axiosInstance.put(`/admin/noticeEvent/${neId}`, form, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+};
+
+// 삭제
+export const deleteNoticeEvent = async (neId, token) => {
+    await axiosInstance.delete(`/admin/noticeEvent/${neId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
 };
