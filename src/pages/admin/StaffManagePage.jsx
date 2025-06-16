@@ -131,10 +131,7 @@ const StaffManagePage = () => {
                             {staffList.map((user) => (
                                 <tr key={user.aId} className="text-center">
                                     <td className="px-4 py-2 border">{user.aId}</td>
-                                    <td className="px-4 py-2 border text-center group">
-                                        <span className="group-hover:hidden text-gray-500">••••••</span>
-                                        <span className="hidden group-hover:inline text-black">{user.aPwd}</span>
-                                    </td>
+                                    <td className="px-4 py-2 border text-center group">••••••</td>
                                     <td className="px-4 py-2 border">{user.aEmail}</td>
                                     <td className="px-4 py-2 border">{user.role}</td>
                                     <td className="px-4 py-2 border">{user.createdBy}</td>

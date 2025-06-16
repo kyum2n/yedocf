@@ -3,6 +3,7 @@ import BannerSection from "@/components/common/BannerSection";
 import Modal from "@/components/common/Modal";
 import Button from "@/components/common/Button";
 import Spacer from "@/components/common/Spacer";
+import { formatDateTime } from "@/constants/dateUtils";
 import { banner2 } from '@/assets/cdnImages';
 import GoToReservationButton from "@/components/common/GoToReservationButton";
 import axios from "axios";
@@ -250,7 +251,7 @@ const MyPage = () => {
                                                     >
                                                         문의 내용 상세보기
                                                     </td>
-                                                    <td className="border p-2">{q.createdAt}</td>
+                                                    <td className="border p-2">{formatDateTime(q.createdAt)}</td>
                                                     <td className="border p-2">{q.qStatus}</td>
                                             </tr>
                                         ))
