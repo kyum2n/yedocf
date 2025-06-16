@@ -88,15 +88,15 @@ const Header = () => {
                         {!loading && (
                             user ? (
                                 <>
-                                    <Link to="/mypage" className="h-16 flex items-center p-4" title='마이페이지'>
+                                    <Link to="/mypage" className="h-16 flex items-center p-3" title='마이페이지'>
                                         {user.id}님 안녕하세요
                                     </Link>
-                                    <button onClick={handleLogout} className="h-16 flex items-center p-4" title='로그아웃'>
+                                    <button onClick={handleLogout} className="h-16 flex items-center p-3" title='로그아웃'>
                                         로그아웃
                                     </button>
                                 </>
                             ) : (
-                                <Link to="/login" className="h-16 flex items-center p-4" title='로그인'>
+                                <Link to="/login" className="h-16 flex items-center p-3" title='로그인'>
                                     로그인
                                 </Link>
                             )
