@@ -73,9 +73,24 @@ const ReservationPage = () => {
         console.log("로컬스토리지 값:", { token, uId });
 
         const itemMap = {
-            eye: "눈 성형",
-            nose: "코 성형",
-            chin: "윤곽"
+            nose1: "콧대 성형",
+            nose2: "매부리코 성형",
+            nose3: "복코 교정",
+            nose4: "코끝 성형",
+            nose5: "콧볼 축소",
+            eye1: "쌍커풀 수술",
+            eye2: "비절개 쌍커풀 수술",
+            eye3: "앞트임 수술",
+            eye4: "뒤트임 수술",
+            eye5: "밑트임 수술",
+            eye6: "눈매 교정 수술",
+            eye7: "지방 재배치 수술",
+            eye8: "다크서클 제거",
+            chin1: "광대축소 수술",
+            chin2: "사각턱 수술",
+            chin3: "V라인 턱끝 성형수술",
+            chin4: "양악수술",
+            chin5: "이중턱 지방흡입",
         };
 
         const data = {
@@ -149,9 +164,27 @@ const ReservationPage = () => {
                             }}
                             options={[
                                 { value: "", label: "항목을 선택해주세요" },
-                                { value: "eye", label: "눈 성형" },
-                                { value: "nose", label: "코 성형" },
-                                { value: "chin", label: "윤곽" },
+                                { value: "", label: "코 수술" },
+                                { value: "nose1", label: "콧대 성형" },
+                                { value: "nose2", label: "매부리코 성형" },
+                                { value: "nose3", label: "복코 교정" },
+                                { value: "nose4", label: "코끝 성형" },
+                                { value: "nose5", label: "콧볼 축소" },
+                                { value: "", label: "눈 수술" },
+                                { value: "eye1", label: "쌍커풀 수술" },
+                                { value: "eye2", label: "비절개 쌍커풀 수술" },
+                                { value: "eye3", label: "앞트임 수술" },
+                                { value: "eye4", label: "뒤트임 수술" },
+                                { value: "eye5", label: "밑트임 수술" },
+                                { value: "eye6", label: "눈매 교정 수술" },
+                                { value: "eye7", label: "지방 재배치 수술" },
+                                { value: "eye8", label: "다크서클 제거" },
+                                { value: "", label: "윤곽 수술" },
+                                { value: "chin1", label: "광대축소 수술" },
+                                { value: "chin2", label: "사각턱 수술" },
+                                { value: "chin3", label: "V라인 턱끝 성형수술" },
+                                { value: "chin4", label: "양악수술" },
+                                { value: "chin5", label: "이중턱 지방흡입" },
                             ]}
                         />
 

@@ -247,207 +247,237 @@ const ReservationManagePage = () => {
             </tbody>
           </table>
 
-      </div> {/* 예약 테이블 끝 */}
+        </div> {/* 예약 테이블 끝 */}
 
-      {/* 예약 추가 모달 */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        title="예약 추가"
-        actionLabel="추가"
-        resetOnClose={true}
-        onAction={async () => {
-          try {
-            const token = localStorage.getItem("accessToken");
-            const config = {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            };
+        {/* 예약 추가 모달 */}
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          title="예약 추가"
+          actionLabel="추가"
+          resetOnClose={true}
+          onAction={async () => {
+            try {
+              const token = localStorage.getItem("accessToken");
+              const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              };
 
-            const response = await axios.post(
-              "/api/admin/reserve",
-              {
-                uId: userId,
-                tName: procedure,
-                consultDate: selectedDate,
-                consultTime: selectedTime,
-                status: status,
-              },
-              config
-            );
+              const response = await axios.post(
+                "/api/admin/reserve",
+                {
+                  uId: userId,
+                  tName: procedure,
+                  consultDate: selectedDate,
+                  consultTime: selectedTime,
+                  status: status,
+                },
+                config
+              );
 
-            // 예약 목록 업데이트
-            const res = await axios.get("/api/admin/reserve/reserves", config);
-            setReservations(res.data);
-            setIsModalOpen(false);
-            resetForm();
-          } catch (err) {
-            console.error("예약 추가 실패:", err);
-          }
-        }}
-      >
-        <InputField
-          name="userId"
-          placeholder="예약자 아이디"
-          variant="admin"
-          className="p-2"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-        />
-        <Dropdown
-          value={procedure}
-          onChange={(e) => setProcedure(e.target.value)}
-          options={[
-            { value: "눈 성형", label: "눈 성형" },
-            { value: "코 성형", label: "코 성형" },
-            { value: "윤곽", label: "윤곽" },
-          ]}
-          className="p-2"
-        />
-        <InputField
-          name="date"
-          type="date"
-          variant="admin"
-          className="p-2"
-          value={selectedDate}
-          onChange={(e) => {
-            setSelectedDate(e.target.value);
-            setSelectedTime("");
+              // 예약 목록 업데이트
+              const res = await axios.get("/api/admin/reserve/reserves", config);
+              setReservations(res.data);
+              setIsModalOpen(false);
+              resetForm();
+            } catch (err) {
+              console.error("예약 추가 실패:", err);
+            }
           }}
-        />
-        <TimeSelectorSelect
-          selectedDate={selectedDate}
-          selectedTime={selectedTime}
-          onSelect={setSelectedTime}
-          className="p-2"
-          labelHidden={true}
-        />
-        <Dropdown
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          options={statusOptions}
-          className="p-2"
-        />
-      </Modal>
+        >
+          <InputField
+            name="userId"
+            placeholder="예약자 아이디"
+            variant="admin"
+            className="p-2"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+          />
+          <Dropdown
+            value={procedure}
+            onChange={(e) => setProcedure(e.target.value)}
+            options={[
+              { value: "콧대 성형", label: "콧대 성형" },
+              { value: "매부리코 성형", label: "매부리코 성형" },
+              { value: "복코 교정", label: "복코 교정" },
+              { value: "코끝 성형", label: "코끝 성형" },
+              { value: "콧볼 축소", label: "콧볼 축소" },
+              { value: "쌍커풀 수술", label: "쌍커풀 수술" },
+              { value: "비절개 쌍커풀 수술", label: "비절개 쌍커풀 수술" },
+              { value: "앞트임 수술", label: "앞트임 수술" },
+              { value: "뒤트임 수술", label: "뒤트임 수술" },
+              { value: "밑트임 수술", label: "밑트임 수술" },
+              { value: "눈매 교정 수술", label: "눈매 교정 수술" },
+              { value: "지방 재배치 수술", label: "지방 재배치 수술" },
+              { value: "다크서클 제거", label: "다크서클 제거" },
+              { value: "광대축소 수술", label: "광대축소 수술" },
+              { value: "사각턱 수술", label: "사각턱 수술" },
+              { value: "V라인 턱끝 성형수술", label: "V라인 턱끝 성형수술" },
+              { value: "양악수술", label: "양악수술" },
+              { value: "이중턱 지방흡입", label: "이중턱 지방흡입" },
+            ]}
+            className="p-2"
+          />
+          <InputField
+            name="date"
+            type="date"
+            variant="admin"
+            className="p-2"
+            value={selectedDate}
+            onChange={(e) => {
+              setSelectedDate(e.target.value);
+              setSelectedTime("");
+            }}
+          />
+          <TimeSelectorSelect
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            onSelect={setSelectedTime}
+            className="p-2"
+            labelHidden={true}
+          />
+          <Dropdown
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            options={statusOptions}
+            className="p-2"
+          />
+        </Modal>
 
-      {/* 예약 삭제 모달 */}
-      <Modal
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        title="예약 삭제"
-        actionLabel="삭제"
-        onAction={handleDeleteReservation}
-      >
-        <p className="text-sm text-gray-700">
-          예약자 <strong>{selectedReservation?.uId}</strong>의 예약을
-          삭제하시겠습니까?
-        </p>
-      </Modal>
+        {/* 예약 삭제 모달 */}
+        <Modal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          title="예약 삭제"
+          actionLabel="삭제"
+          onAction={handleDeleteReservation}
+        >
+          <p className="text-sm text-gray-700">
+            예약자 <strong>{selectedReservation?.uId}</strong>의 예약을
+            삭제하시겠습니까?
+          </p>
+        </Modal>
 
-      {/* 예약 수정 모달 */}
-      <Modal
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        title="예약 변경"
-        actionLabel="변경"
-        resetOnClose={true}
-        onAction={async () => {
-          try {
-            const token = localStorage.getItem("token");
+        {/* 예약 수정 모달 */}
+        <Modal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          title="예약 변경"
+          actionLabel="변경"
+          resetOnClose={true}
+          onAction={async () => {
+            try {
+              const token = localStorage.getItem("token");
 
-            const config = {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            };
-        
-            await axios.post(`/api/admin/reserve/${selectedReservation.rId}`, {
-              rId: selectedReservation.rId,
-              uId: selectedReservation.uId,
-              tName: selectedReservation.tName,
-              consultDate: selectedReservation.consultDate,
-              consultTime: selectedReservation.consultTime,
-              status: selectedReservation.status,
-            }, config);
+              const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              };
 
-            const updatedList = await axios.get("/api/admin/reserve/reserves", config);
-            setReservations(updatedList.data);
-            setIsEditModalOpen(false);
-          } catch (err) {
-            console.error("예약 변경 실패:", err);
-          }
-        }}
-      >
-        <InputField
-          name="userId"
-          placeholder="예약자 아이디"
-          variant="admin"
-          className="p-2"
-          value={selectedReservation?.uId || ""}
-          onChange={(e) =>
-            setSelectedReservation((prev) => ({
-              ...prev,
-              uId: e.target.value,
-            }))
-          }
-        />
-        <Dropdown
-          value={selectedReservation?.tName || ""}
-          onChange={(e) =>
-            setSelectedReservation((prev) => ({
-              ...prev,
-              tName: e.target.value,
-            }))
-          }
-          options={[
-            { value: "눈 성형", label: "눈 성형" },
-            { value: "코 성형", label: "코 성형" },
-            { value: "윤곽", label: "윤곽" },
-          ]}
-          className="p-2"
-        />
-        <InputField
-          name="date"
-          type="date"
-          variant="admin"
-          className="p-2"
-          value={selectedReservation?.consultDate || ""}
-          onChange={(e) =>
-            setSelectedReservation((prev) => ({
-              ...prev,
-              consultDate: e.target.value,
-              consultTime: "",
-            }))
-          }
-        />
-        <TimeSelectorSelect
-          selectedDate={selectedReservation?.consultDate || ""}
-          selectedTime={selectedReservation?.consultTime || ""}
-          onSelect={(newTime) =>
-            setSelectedReservation((prev) => ({
-              ...prev,
-              consultTime: newTime,
-            }))
-          }
-          className="p-2"
-          labelHidden={true}
-        />
-        <Dropdown
-          value={selectedReservation?.status || ""}
-          onChange={(e) =>
-            setSelectedReservation((prev) => ({
-              ...prev,
-              status: e.target.value,
-            }))
-          }
-          options={statusOptions}
-          className="p-2"
-        />
-      </Modal>
-    </main>
-  </div>
-);
+              await axios.post(`/api/admin/reserve/${selectedReservation.rId}`, {
+                rId: selectedReservation.rId,
+                uId: selectedReservation.uId,
+                tName: selectedReservation.tName,
+                consultDate: selectedReservation.consultDate,
+                consultTime: selectedReservation.consultTime,
+                status: selectedReservation.status,
+              }, config);
+
+              const updatedList = await axios.get("/api/admin/reserve/reserves", config);
+              setReservations(updatedList.data);
+              setIsEditModalOpen(false);
+            } catch (err) {
+              console.error("예약 변경 실패:", err);
+            }
+          }}
+        >
+          <InputField
+            name="userId"
+            placeholder="예약자 아이디"
+            variant="admin"
+            className="p-2"
+            value={selectedReservation?.uId || ""}
+            onChange={(e) =>
+              setSelectedReservation((prev) => ({
+                ...prev,
+                uId: e.target.value,
+              }))
+            }
+          />
+          <Dropdown
+            value={selectedReservation?.tName || ""}
+            onChange={(e) =>
+              setSelectedReservation((prev) => ({
+                ...prev,
+                tName: e.target.value,
+              }))
+            }
+            options={[
+              { value: "콧대 성형", label: "콧대 성형" },
+              { value: "매부리코 성형", label: "매부리코 성형" },
+              { value: "복코 교정", label: "복코 교정" },
+              { value: "코끝 성형", label: "코끝 성형" },
+              { value: "콧볼 축소", label: "콧볼 축소" },
+              { value: "쌍커풀 수술", label: "쌍커풀 수술" },
+              { value: "비절개 쌍커풀 수술", label: "비절개 쌍커풀 수술" },
+              { value: "앞트임 수술", label: "앞트임 수술" },
+              { value: "뒤트임 수술", label: "뒤트임 수술" },
+              { value: "밑트임 수술", label: "밑트임 수술" },
+              { value: "눈매 교정 수술", label: "눈매 교정 수술" },
+              { value: "지방 재배치 수술", label: "지방 재배치 수술" },
+              { value: "다크서클 제거", label: "다크서클 제거" },
+              { value: "광대축소 수술", label: "광대축소 수술" },
+              { value: "사각턱 수술", label: "사각턱 수술" },
+              { value: "V라인 턱끝 성형수술", label: "V라인 턱끝 성형수술" },
+              { value: "양악수술", label: "양악수술" },
+              { value: "이중턱 지방흡입", label: "이중턱 지방흡입" },
+            ]}
+            className="p-2"
+          />
+          <InputField
+            name="date"
+            type="date"
+            variant="admin"
+            className="p-2"
+            value={selectedReservation?.consultDate || ""}
+            onChange={(e) =>
+              setSelectedReservation((prev) => ({
+                ...prev,
+                consultDate: e.target.value,
+                consultTime: "",
+              }))
+            }
+          />
+          <TimeSelectorSelect
+            selectedDate={selectedReservation?.consultDate || ""}
+            selectedTime={selectedReservation?.consultTime || ""}
+            onSelect={(newTime) =>
+              setSelectedReservation((prev) => ({
+                ...prev,
+                consultTime: newTime,
+              }))
+            }
+            className="p-2"
+            labelHidden={true}
+          />
+          <Dropdown
+            value={selectedReservation?.status || ""}
+            onChange={(e) =>
+              setSelectedReservation((prev) => ({
+                ...prev,
+                status: e.target.value,
+              }))
+            }
+            options={statusOptions}
+            className="p-2"
+          />
+        </Modal>
+      </main>
+    </div>
+  );
 };
 
 export default ReservationManagePage;

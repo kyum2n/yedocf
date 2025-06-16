@@ -8,9 +8,9 @@ import GoToReservationButton from '@/components/common/GoToReservationButton';
 import ScrollToTopOnTabChange from '@/components/common/ScrollToTopOnTabChange';
 
 const tabList = [
-  { key: '1', label: '광대축소술' },
+  { key: '1', label: '광대축소 수술' },
   { key: '2', label: '사각턱 수술' },
-  { key: '3', label: 'V라인 턱끝 성형' },
+  { key: '3', label: 'V라인 턱끝 성형수술' },
   { key: '4', label: '양악수술' },
   { key: '5', label: '이중턱 지방흡입' },
 ];
