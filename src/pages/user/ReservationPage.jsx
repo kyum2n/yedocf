@@ -8,6 +8,7 @@ import BannerSection from "@/components/common/BannerSection";
 import Spacer from "@/components/common/Spacer";
 import { banner4 } from '@/assets/cdnImages';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "@/contexts/UserProvider";
 
 const ReservationPage = () => {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -16,7 +17,24 @@ const ReservationPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [disabledTimes, setDisabledTimes] = useState([]);
 
+    const { user } = useUser();
     const navigate = useNavigate();
+
+        // 관리자 접근 차단 (예약)
+    if (user?.type === "admin") {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-white text-center px-4">
+                <h2 className="text-2xl font-bold mb-4">사용자를 위한 기능입니다</h2>
+                <p className="text-gray-600">이 예약 페이지는 일반 사용자만 이용할 수 있습니다.</p>
+                <button
+                    className="mt-4 px-4 py-2 bg-gray-800 text-white rounded"
+                    onClick={() => window.history.back()}
+                >
+                    이전 페이지로
+                </button>
+            </div>
+        );
+    }
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
