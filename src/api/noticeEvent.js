@@ -13,6 +13,7 @@ import publicAxios from "./publicAxios";  // 요거 새로 추가
 // 사용자 조회 (공개 API)
 export const getAllNoticeEvents = async () => {
     const response = await publicAxios.get(`/api/noticeEvent`);
+
     return response.data;
 };
 
