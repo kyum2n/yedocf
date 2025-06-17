@@ -9,7 +9,6 @@
 
 import BannerSection from '@/components/common/BannerSection';
 import DirectionsMap from '@/components/features/directions/DirectionsMap';
-import GoToReservationButton from '@/components/common/GoToReservationButton';
 import Spacer from '@/components/common/Spacer';
 import { banner5 } from '@/assets/cdnImages';
 import { useState } from "react";
@@ -160,7 +159,6 @@ const InquiryPage = () => {
                 <Spacer size="lg" />
 
                 <DirectionsMap />
-                <GoToReservationButton />
             </div>
 
         </>

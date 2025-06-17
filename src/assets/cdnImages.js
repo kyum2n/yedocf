@@ -42,6 +42,13 @@ export const study
 export const wonjang3
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/main/wonjang3.webp";
 
+ export const nosecontent
+ = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/procedures/nosecontent.webp";
+ export const eyecontent
+ = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/procedures/eyecontent.webp";
+ export const facecontent
+ = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/procedures/facecontent.webp";
+
 export const eye1
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/procedures/eye1.webp";
 export const eye2

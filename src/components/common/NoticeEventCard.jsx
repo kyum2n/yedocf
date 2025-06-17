@@ -12,7 +12,10 @@ import React from "react";
 const NoticeEventCard = ({ item }) => {
   return (
     <div className="border rounded-lg shadow p-4 mb-4">
-      <h3 className="font-bold text-xl mb-2">{item.neTitle} ({item.neType})</h3>
+      <div className="flex items-baseline justify-between h-10 mb-4">
+        <h3 className="font-bold text-xl mb-2">{item.neTitle} </h3>
+        <span className="text-gray-500">{item.neType}</span>
+      </div>
       <p className="text-gray-700 mb-2">{item.neContent}</p>
       {item.neImageUrl && (
         <img
