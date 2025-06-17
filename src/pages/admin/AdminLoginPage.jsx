@@ -1,6 +1,6 @@
 // src/pages/admin/AdminLoginPage.jsx
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -19,6 +19,17 @@ import Modal from "@/components/common/Modal";
  */
 
 const AdminLoginPage = () => {
+  const navigate = useNavigate();
+
+  // 로그인 상태 자동 리다이렉트 로직 구현
+  useEffect(() => { 
+    const token = sessionStorage.getItem("accessToken");
+    const role = sessionStorage.getItem("role");
+
+    if (token && (role === "ADMIN" || role === "SUPERADMIN")) {
+      navigate("/admin");
+    }
+  }, [navigate]);
 
   // 모달 및 상태 관리
   const [showFindModal, setShowFindModal] = useState(false);
@@ -33,7 +44,6 @@ const AdminLoginPage = () => {
   const [foundPwd, setFoundPwd] = useState("");
   const [message, setMessage] = useState("");
 
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,33 +52,31 @@ const AdminLoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // 로그인
     try {
       const response = await axios.post("/api/admin/login", {
-        // aId : form.username,
-        // aPwd : form.password,
-        aId :"staff1",
-        aPwd : "staff1111",
-      }
+        aId: form.username,
+        aPwd: form.password,
+        }
       );
 
       // 토큰 받기
       const token = response.data.token;
-      if(!token) {
+      if (!token) {
         throw new Error("로그인 실패 : 토큰을 받지 못했습니다.");
       }
 
       // 관리자 권한 확인
       const role = response.data.role || "ADMIN";
-      if (role !== "ADMIN" && role !== "SUPERADMIN"){
+      if (role !== "ADMIN" && role !== "SUPERADMIN") {
         throw new Error("로그인 실패 : 관리자 권한이 없습니다.");
       }
 
-      // LocalStorage에 토큰 저장
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("role", role);
-      localStorage.setItem("aId", form.username);
+      // sessionStorage에 토큰 저장
+      sessionStorage.setItem("accessToken", token);
+      sessionStorage.setItem("role", role);
+      sessionStorage.setItem("aId", form.username);
 
       // 로그인 성공 후 대시보드로 이동
       navigate("/admin");
@@ -85,11 +93,11 @@ const AdminLoginPage = () => {
   const handleFindId = async () => {
     try {
       const response = await axios.post("/api/admin/find_id", null, {
-        params: {aEmail: email},
+        params: { aEmail: email },
       });
       setFoundId(response.data.aId);
       setMessage("아이디는 " + response.data.aId + "입니다.");
-    } catch (error){
+    } catch (error) {
       setMessage("아이디를 찾을 수 없습니다.");
       console.error("아이디 찾기 실패", error);
     }
@@ -99,11 +107,11 @@ const AdminLoginPage = () => {
   const handleFindPwd = async () => {
     try {
       const response = await axios.post("/api/admin/find_password", null, {
-        params: {aId, aEmail: email},
+        params: { aId, aEmail: email },
       });
       setFoundPwd(response.data.aPwd);
       setMessage("비밀번호가 이메일로 전송되었습니다.");
-    } catch (error){
+    } catch (error) {
       setMessage("비밀번호를 찾을 수 없습니다.");
       console.error("비밀번호 찾기 실패", error);
     }
@@ -160,7 +168,7 @@ const AdminLoginPage = () => {
             <button
               type="button"
               className="text-gray-600 hover:underline"
-              onClick={()=>{
+              onClick={() => {
                 setFindMode("password");
                 setShowFindModal(true);
               }}

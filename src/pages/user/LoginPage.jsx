@@ -23,10 +23,10 @@ const LoginPage = () => {
 
     // 로그인 성공 시 처리 함수 (공통 로직)
     const handleLoginSuccess = (userId, token, provider) => {
-        localStorage.setItem("accessToken", token);
-        localStorage.setItem("uId", userId);
-        localStorage.setItem("role", "USER");
-        localStorage.setItem("loginProvider", provider);
+        sessionStorage.setItem("accessToken", token);
+        sessionStorage.setItem("uId", userId);
+        sessionStorage.setItem("role", "USER");
+        sessionStorage.setItem("loginProvider", provider);
 
         loginUser({
             id: userId,

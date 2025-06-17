@@ -37,8 +37,8 @@ const ReservationPage = () => {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        const uId = localStorage.getItem('uId');
+        const token = sessionStorage.getItem('accessToken');
+        const uId = sessionStorage.getItem('uId');
 
         if (!token || !uId || token === "null") {
             alert("로그인이 필요합니다. 다시 로그인해주세요.");
@@ -83,8 +83,8 @@ const ReservationPage = () => {
             return;
         }
 
-        const token = localStorage.getItem('accessToken');
-        const uId = localStorage.getItem('uId');
+        const token = sessionStorage.getItem('accessToken');
+        const uId = sessionStorage.getItem('uId');
 
         console.log("accessToken:\n" + token);
 

@@ -23,7 +23,7 @@ const InquiryManagePage = () => {
     // 문의 목록 조회
     const fetchInquiries = async () => {
         try {
-            const token = localStorage.getItem("accessToken");
+            const token = sessionStorage.getItem("accessToken");
             const response = await axios.get("/api/admin/inquiry", {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const InquiryManagePage = () => {
     // 문의 답변 핸들러
     const handleAnswerSubmit = async () => {
         try {
-            const token = localStorage.getItem("accessToken");
+            const token = sessionStorage.getItem("accessToken");
             await axios.post(`/api/admin/inquiry/${selectedInquiry.qId}/answer`, {
                 qAnswer: qAnswer
             }, {
