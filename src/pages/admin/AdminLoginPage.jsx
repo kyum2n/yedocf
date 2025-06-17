@@ -46,8 +46,10 @@ const AdminLoginPage = () => {
     // 로그인
     try {
       const response = await axios.post("/api/admin/login", {
-        aId : form.username,
-        aPwd : form.password,
+        // aId : form.username,
+        // aPwd : form.password,
+        aId :"staff1",
+        aPwd : "staff1111",
       }
       );
 

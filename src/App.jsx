@@ -72,6 +72,7 @@ import AdminLayout from './pages/admin/AdminLayout';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import UserManagePage from './pages/admin/UserManagePage';
 import ReservationManagePage from './pages/admin/ReservationManagePage';
+import NoticeEventManagePage from './pages/admin/NoticeEventManagePage';
 import StaffManagePage from './pages/admin/StaffManagePage';
 
 import NoticeEventPage from './pages/user/NoticeEventPage';
@@ -95,6 +96,7 @@ function App() {
           <Route path="reservations" element={<ReservationManagePage />} />
           <Route path="staff" element={<StaffManagePage />} />
           <Route path='inquiry' element={<InquiryManagePage />} />
+          <Route path='noticeManage' element={<NoticeEventManagePage />} />
         </Route>
 
         {/* 공지사항 / 이벤트 탭 추가 */}

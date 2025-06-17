@@ -21,11 +21,13 @@ const Sidebar = () => {
 
       {/* 사이드바 메뉴 */}
       <nav className="flex flex-col">
+
         {isSuperAdmin && (
           <SidebarLink to="/admin/staff" label="직원 관리" icon={UserIcon} />
         )}
         <SidebarLink to="/admin" label="사용자 관리" icon={UsersIcon} />
         <SidebarLink to="/admin/reservations" label="예약 관리" icon={BookmarkSquareIcon} />
+        <SidebarLink to="/admin/noticeManage" label="공지사항/이벤트 관리" icon={BookmarkSquareIcon} />
         <SidebarLink to="/admin/inquiry" label="문의 관리" icon={BookmarkSquareIcon} />
       </nav>
 
