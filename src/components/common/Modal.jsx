@@ -44,9 +44,11 @@ const Modal = ({
                             {cancelLabel}
                         </Button>
                     )}
-                    <Button variant="success" onClick={onAction} className="mr-2">
-                        {actionLabel}
-                    </Button>
+                    {actionLabel && (
+                        <Button variant="success" onClick={onAction} className="mr-2">
+                            {actionLabel}
+                        </Button>
+                    )}
                 </div>
 
                 <button

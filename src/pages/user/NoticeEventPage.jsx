@@ -48,9 +48,11 @@ import BannerSection from "@/components/common/BannerSection";
 import { banner7 } from '@/assets/cdnImages'; // 배너 이미지 경로
 import NoticeEventCard from "@/components/common/NoticeEventCard";
 import Modal from "@/components/common/Modal";
+
 // import { formatDate } from "@/constants/dateUtils";
 import DirectionsMap from "@/components/features/directions/DirectionsMap";
 import Spacer from "@/components/common/Spacer";
+
 
 const NoticeEventPage = () => {
   const [noticeEvents, setNoticeEvents] = useState([]);
@@ -93,6 +95,7 @@ const NoticeEventPage = () => {
   };
 
   return (
+
     <>
        <BannerSection
         title="공지사항 / 이벤트"
@@ -140,6 +143,7 @@ const NoticeEventPage = () => {
 
 
     </>
+
   );
 
 };
