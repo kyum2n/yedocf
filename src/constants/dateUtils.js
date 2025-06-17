@@ -22,3 +22,23 @@ export const formatDateTime = (isoString) => {
 
     return `${yyyy}-${MM}-${dd} ${hh}:${mm}:${ss}`;
 };
+
+export const formatToISODateTime = (dateStr) => {
+    if (!dateStr) return "";
+    if (dateStr.includes("T")) return dateStr;
+    return `${dateStr}T00:00:00`;
+};
+
+
+export const formatDate = (dateStr) => {
+    // 문자열을 "YYYY-MM-DD" 형식으로 변환
+    if (!dateStr) return "";
+
+    const date = new Date(dateStr);
+
+    const yyyy = date.getFullYear();
+    const MM = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+
+    return `${yyyy}-${MM}-${dd}`;
+};
