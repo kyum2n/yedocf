@@ -12,6 +12,8 @@ import InputField from "@/components/common/InputField";
 import Dropdown from "@/components/common/Dropdown";
 import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
+import { formatDate, formatDateTime, formatToISODateTime } from "@/constants/dateUtils";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import axiosInstance from "@/api/axiosInstance";
@@ -53,21 +55,21 @@ const NoticeEventManagePage = () => {
   }, []);
 
   const fetchNotices = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     const config = { headers: { Authorization: `Bearer ${token}` } };
-    const res = await axios.get("/api/admin/noticeevent", config);
+    const res = await axios.get("/api/admin/noticeEvent", config);
     setNotices(res.data);
   };
 
   const handleCreateNotice = async () => {
-    const token = localStorage.getItem("token");
-    await axiosInstance.post("/api/admin/noticeevent", {
+    const token = localStorage.getItem("accessToken");
+    await axiosInstance.post("/api/admin/noticeEvent", {
       neTitle: title,
       neContent: content,
       neImageUrl: imageUrl,
       neType: type,
-      neStartDate: startDate,
-      neEndDate: endDate,
+      neStartDate: formatToISODateTime(startDate),
+      neEndDate: formatToISODateTime(endDate),
     }, { headers: { Authorization: `Bearer ${token}` } });
 
     await fetchNotices();
@@ -76,17 +78,21 @@ const NoticeEventManagePage = () => {
   };
 
   const handleUpdateNotice = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     const config = { headers: { Authorization: `Bearer ${token}` } };
-    await axios.put(`/api/admin/noticeevent/${selectedNotice.neId}`, selectedNotice, config);
+    await axios.put(`/api/admin/noticeEvent/${selectedNotice.neId}`, {
+      ...selectedNotice,
+      neStartDate: formatToISODateTime(selectedNotice.neStartDate),
+      neEndDate: formatToISODateTime(selectedNotice.neEndDate),
+    },config);
     await fetchNotices();
     setIsEditModalOpen(false);
   };
 
   const handleDeleteNotice = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     const config = { headers: { Authorization: `Bearer ${token}` } };
-    await axios.delete(`/api/admin/noticeevent/${selectedNotice.neId}`, config);
+    await axios.delete(`/api/admin/noticeEvent/${selectedNotice.neId}`, config);
     await fetchNotices();
     setIsDeleteModalOpen(false);
   };
@@ -132,13 +138,13 @@ const NoticeEventManagePage = () => {
               </tr>
             </thead>
             <tbody>
-              {notices.map((n) => (
+              {notices.map((n, index) => (
                 <tr className="text-center" key={n.neId}>
-                  <td className="px-4 py-2 border">{n.neId}</td>
+                  <td className="px-4 py-2 border">{index + 1}</td>
                   <td className="px-4 py-2 border">{n.neTitle}</td>
                   <td className="px-4 py-2 border">{n.neContent}</td>
                   <td className="px-4 py-2 border">{n.neImageUrl}</td>
-                  <td className="px-4 py-2 border">{n.neStartDate} ~ {n.neEndDate}</td>
+                  <td className="px-4 py-2 border">{formatDateTime(n.neStartDate)} ~ {formatDateTime(n.neEndDate)}</td>
                   <td className="px-4 py-2 border">{n.neType}</td>
                   <td className="py-2 border flex justify-center gap-2">
                     <Button variant="secondary" onClick={() => { setSelectedNotice(n); setIsEditModalOpen(true); }}>변경</Button>
