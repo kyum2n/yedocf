@@ -22,7 +22,7 @@ const StaffManagePage = () => {
     
     const fetchStaff = async () => {
         try {
-            const token = localStorage.getItem("accessToken");
+            const token = sessionStorage.getItem("accessToken");
             const response = await axios.get("/api/admin/staff", {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -161,7 +161,7 @@ const StaffManagePage = () => {
                     resetOnClose={true}
                     onAction={async () => {
                         try {
-                            const token = localStorage.getItem("accessToken");
+                            const token = sessionStorage.getItem("accessToken");
                             await axios.post("/api/admin/staff", {
                                 aId: form.aId,
                                 aPwd: form.aPwd,
@@ -238,7 +238,7 @@ const StaffManagePage = () => {
                     actionLabel="삭제"
                     onAction={ async () => {
                         try {
-                            const token = localStorage.getItem("accessToken");
+                            const token = sessionStorage.getItem("accessToken");
                             await axios.delete(`/api/admin/staff/${selectedUser.aId}`, {
                                 headers: {
                                     Authorization: `Bearer ${token}`,

@@ -8,10 +8,10 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const uId = localStorage.getItem("uId");
-    const aId = localStorage.getItem("aId");
-    const role = localStorage.getItem("role");
+    const token = sessionStorage.getItem("accessToken");
+    const uId = sessionStorage.getItem("uId");
+    const aId = sessionStorage.getItem("aId");
+    const role = sessionStorage.getItem("role");
 
     console.log("[UserProvider] 복원 시도: ", { token, uId, aId, role });
 
@@ -57,9 +57,9 @@ export const UserProvider = ({ children }) => {
         })
         .catch((err) => {
           console.error("[UserProvider] 사용자 정보 불러오기 실패:", err.response?.data || err.message);
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("uId");
-          localStorage.removeItem("role");
+          sessionStorage.removeItem("accessToken");
+          sessionStorage.removeItem("uId");
+          sessionStorage.removeItem("role");
         })
         .finally(() => {
           setLoading(false);
@@ -80,13 +80,13 @@ export const UserProvider = ({ children }) => {
     });
 
     // 로컬 스토리지에 저장
-    localStorage.setItem("accessToken", token);
-    localStorage.setItem("role", role);
+    sessionStorage.setItem("accessToken", token);
+    sessionStorage.setItem("role", role);
 
     if ( type === "admin") {
-      localStorage.setItem("aId", id);
+      sessionStorage.setItem("aId", id);
     } else {
-      localStorage.setItem("uId", id);
+      sessionStorage.setItem("uId", id);
     }
 
     setLoading(false);
@@ -94,17 +94,17 @@ export const UserProvider = ({ children }) => {
 
   // 로그아웃 함수
   const logoutUser = () => {
-    const provider = localStorage.getItem("loginProvider");
+    const provider = sessionStorage.getItem("loginProvider");
 
     setUser(null);
     setLoading(false);
     
     // 로컬 스토리지 정리
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("uId");
-    localStorage.removeItem("aId");
-    localStorage.removeItem("role");
-    localStorage.removeItem("loginProvider");
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("uId");
+    sessionStorage.removeItem("aId");
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("loginProvider");
 
     // 로그아웃 후 분기 처리
   if (provider === "google") {

@@ -22,8 +22,6 @@ const MyPage = () => {
         }
     }, [user, navigate]);
 
-    if (!user) return null;
-
     // 관리자 접근 차단 (마이페이지)
     if (user?.type === "admin") {
         return (
@@ -44,8 +42,8 @@ const MyPage = () => {
         if (!window.confirm("정말 회원 탈퇴하시겠습니까?")) return;
 
         try {
-            const token = localStorage.getItem("accessToken");
-            const uId = localStorage.getItem("uId");
+            const token = sessionStorage.getItem("accessToken");
+            const uId = sessionStorage.getItem("uId");
 
             await axios.post(`/api/user/Delete/${uId}`, null, {
                 headers: {
@@ -81,10 +79,10 @@ const MyPage = () => {
 
     useEffect(() => {
 
-        const token = localStorage.getItem("accessToken");
-        const aId = localStorage.getItem("aId");
-        const uId = localStorage.getItem("uId");
-        const role = localStorage.getItem("role");
+        const token = sessionStorage.getItem("accessToken");
+        const aId = sessionStorage.getItem("aId");
+        const uId = sessionStorage.getItem("uId");
+        const role = sessionStorage.getItem("role");
 
         if (!uId || !token) {
             alert("로그인이 필요합니다. 다시 로그인해주세요.");
@@ -219,7 +217,7 @@ const MyPage = () => {
                                                                 variant="secondary"
                                                                 className="text-sm"
                                                                 onClick={async () => {
-                                                                    const token = localStorage.getItem("accessToken");
+                                                                    const token = sessionStorage.getItem("accessToken");
 
                                                                     try {
                                                                         await axios.post(`/api/reserve/${r.rId}/cancel`, null, {
@@ -316,8 +314,8 @@ const MyPage = () => {
                     }
 
                     try {
-                        const token = localStorage.getItem("accessToken");
-                        const uId = localStorage.getItem("uId");
+                        const token = sessionStorage.getItem("accessToken");
+                        const uId = sessionStorage.getItem("uId");
 
                         await axios.post("/api/user/password",
                             {
@@ -378,8 +376,8 @@ const MyPage = () => {
                 actionLabel="변경"
                 onAction={async () => {
                     try {
-                        const uId = localStorage.getItem("uId");
-                        const token = localStorage.getItem("accessToken");
+                        const uId = sessionStorage.getItem("uId");
+                        const token = sessionStorage.getItem("accessToken");
 
                         const response = await axios.post(
                             "/api/user/phone",

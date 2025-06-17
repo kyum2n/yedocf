@@ -7,8 +7,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 const Sidebar = () => {
-  const adminName = localStorage.getItem("aId") || "";
-  const role = localStorage.getItem("role");
+  const adminName = sessionStorage.getItem("aId") || "";
+  const role = sessionStorage.getItem("role");
   const isSuperAdmin = role === "SUPERADMIN";
 
   return (
@@ -43,7 +43,7 @@ const Sidebar = () => {
         </button>
         <button
           onClick={() => {
-            localStorage.clear();
+            sessionStorage.clear();
             window.location.href = '/';
           }}
           className="h-16 w-60 flex items-center justify-center gap-2 text-xl hover:underline text-white border-t border-orange-100"

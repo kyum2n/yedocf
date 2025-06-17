@@ -31,14 +31,14 @@ const NoticeEventEditPage = () => {
     };
 
     const handleUpdate = async () => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         await updateNoticeEvent(neId, form, token);
         alert("수정 완료");
         navigate("/admin/noticeevent");
     };
 
     const handleDelete = async () => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         await deleteNoticeEvent(neId, token);
         alert("삭제 완료");
         navigate("/admin/noticeevent");
