@@ -76,9 +76,9 @@ const procedureItems = [
 
                 {/* 2단계 리스트 (해당 탭의 세부 시술 목록) */}
                 <div className="mt-6 text-xl">
-                    {currentItems.map((item, idx, navi) => (
+                    {currentItems.map((item, idx) => (
                         <Link
-                            to={`${navi}`}
+                            to={item.navi}
                             key={idx}
                             className="ml-4 px-8 py-3 transition-all hover:ml-6 cursor-pointer flex gap-4"
                             onMouseEnter={() => {

@@ -62,7 +62,7 @@ const MainPage = () => {
         <PopupNotice />  {/* 추가 - 팝업 컴포넌트 */}
       </div>
 
-      <div className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+      <div className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth bg-white">
 
         {/* 기존 팝업 모달 유지 */}
         {showPopup && popupList.length > 0 && (

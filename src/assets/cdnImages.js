@@ -7,7 +7,7 @@ export const banner3 //아이디/비밀번호 찾기 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner3.webp";
 export const banner4 //예약 페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner4.webp";
-export const banner5
+export const banner5 //1:1 문의페이지
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner5.webp";
 export const banner6
  = "https://cdn.jsdelivr.net/gh/Ecol0810/yedocimg@main/banners/banner6.webp";

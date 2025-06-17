@@ -20,14 +20,14 @@ const tabList = [
 
 const renderEyeContent = (tab) => {
   switch (tab) {
-    case '1': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>쌍커풀</div>;
+    case '1': return <div className='h-[1500px] w-[1200px] bg-pink-50 text-center font-bold'>쌍커풀</div>;
     case '2': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>비절개 쌍커풀</div>;
-    case '3': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>앞트임</div>;
-    case '4': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>뒤트임</div>;
-    case '5': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>밑트임</div>;
-    case '6': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>눈매 교정</div>;
-    case '7': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>지방 재배치</div>;
-    case '8': return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>다크서클 제거</div>;
+    case '3': return <div className='h-[1500px] w-[1200px] bg-pink-200 text-center font-bold'>앞트임</div>;
+    case '4': return <div className='h-[1500px] w-[1200px] bg-pink-300 text-center font-bold'>뒤트임</div>;
+    case '5': return <div className='h-[1500px] w-[1200px] bg-pink-400 text-center font-bold'>밑트임</div>;
+    case '6': return <div className='h-[1500px] w-[1200px] bg-pink-500 text-center font-bold'>눈매 교정</div>;
+    case '7': return <div className='h-[1500px] w-[1200px] bg-pink-600 text-center font-bold'>지방 재배치</div>;
+    case '8': return <div className='h-[1500px] w-[1200px] bg-pink-700 text-center font-bold'>다크서클 제거</div>;
     default: return <div className='h-[1500px] w-[1200px] bg-pink-100 text-center font-bold'>기본</div>;
   }
 };

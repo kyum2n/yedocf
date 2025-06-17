@@ -146,7 +146,7 @@ const AdminLoginPage = () => {
             로그인
           </Button>
 
-          <div className="text-sm w-full flex flex-col gap-0.5 mt-4 mb-0">
+          <div className="text-sm w-full flex mt-4 justify-between">
             <button
               type="button"
               className="text-gray-600 hover:underline"
@@ -157,7 +157,6 @@ const AdminLoginPage = () => {
             >
               아이디 찾기
             </button>
-            <br />
             <button
               type="button"
               className="text-gray-600 hover:underline"
@@ -188,7 +187,7 @@ const AdminLoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="이메일을 입력하세요"
-            className="mb -4"
+            className="mb-4 h-12"
           />
 
           {findMode === "password" && (
@@ -198,11 +197,11 @@ const AdminLoginPage = () => {
               value={aId}
               onChange={(e) => setAId(e.target.value)}
               placeholder="아이디를 입력하세요"
-              className="mb-4"
+              className="h-12"
             />
           )}
 
-          {message && <p className="mt-4 text-sm test-gray-700">{message}</p>}
+          {message && <p className="mt-4 text-sm text-red-500 test-gray-700">{message}</p>}
         </Modal>
       )}
     </div>

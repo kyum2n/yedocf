@@ -41,6 +41,7 @@
 
 
 import React, { useEffect, useState } from "react";
+
 import { getAllNoticeEvents } from "@/api/noticeEvent";
 import BannerSection from "@/components/common/BannerSection";
 import { banner4 } from '@/assets/cdnImages'; // 배너 이미지 경로
@@ -76,6 +77,7 @@ const NoticeEventPage = () => {
       </div>
     </div>
   );
+
 };
 
 export default NoticeEventPage;

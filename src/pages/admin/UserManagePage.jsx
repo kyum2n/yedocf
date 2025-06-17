@@ -132,14 +132,7 @@ const UserManagePage = () => {
                 <tr className="text-center" key={user.uId}>
                   <td className="px-4 py-2 border">{user.uName}</td>
                   <td className="px-4 py-2 border">{user.uId}</td>
-                  <td className="px-4 py-2 border group">
-                    <span className="group-hover:hidden text-gray-500">
-                      ••••••
-                    </span>
-                    <span className="hidden group-hover:inline text-black">
-                      {user.uPwd}
-                    </span>
-                  </td>
+                  <td className="px-4 py-2 border group">••••••</td>
                   <td className="px-4 py-2 border">{user.uEmail}</td>
                   <td className="px-4 py-2 border">{user.uPhone}</td>
                   <td className="py-2 border">
