@@ -5,7 +5,6 @@ import Button from "@/components/common/Button";
 import Spacer from "@/components/common/Spacer";
 import { formatDateTime } from "@/constants/dateUtils";
 import { banner2 } from '@/assets/cdnImages';
-import GoToReservationButton from "@/components/common/GoToReservationButton";
 import axios from "axios";
 import { useUser } from "@/contexts/UserProvider";
 import { useNavigate } from "react-router-dom";
@@ -294,7 +293,6 @@ const MyPage = () => {
 
                 </section>
                 <Spacer size="lg" />
-                <GoToReservationButton />
             </div>
             {/* 비밀번호 변경 모달 */}
             <Modal

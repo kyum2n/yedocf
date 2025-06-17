@@ -57,10 +57,7 @@ const MainPage = () => {
 
   return (
     <>
-      <div>
-        <h1>메인페이지</h1>
-        <PopupNotice />  {/* 추가 - 팝업 컴포넌트 */}
-      </div>
+      <PopupNotice />  {/* 추가 - 팝업 컴포넌트 */}
 
       <div className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth bg-white">
 
@@ -130,8 +127,8 @@ const MainPage = () => {
 
         <Spacer size='lg' />
         <Footer />
+        <GoToReservationButton />
       </div>
-      <GoToReservationButton />
     </>
   );
 };

@@ -80,6 +80,13 @@ const Header = () => {
                             <Link to="/inquiry" className="h-16 text-lg font-bold flex-center whitespace-nowrap" title='1:1 문의'>
                                 1:1 문의
                             </Link>
+                        <button
+                            onClick={handleReservationClick}
+                            type="button"
+                            className="h-16 text-lg font-bold flex-center whitespace-nowrap" title='예약하기'
+                        >
+                            예약하기
+                        </button>
                         </div>
                     </nav>
 
@@ -91,23 +98,16 @@ const Header = () => {
                                     <Link to="/mypage" className="h-16 flex items-center p-3" title='마이페이지'>
                                         {user.id}님 안녕하세요
                                     </Link>
-                                    <button onClick={handleLogout} className="h-16 flex items-center p-3" title='로그아웃'>
+                                    <button onClick={handleLogout} className="h-12 flex items-center px-8 mr-3 border border-black hover:bg-pink-50" title='로그아웃'>
                                         로그아웃
                                     </button>
                                 </>
                             ) : (
-                                <Link to="/login" className="h-16 flex items-center p-3" title='로그인'>
+                                <Link to="/login" className="h-12 flex items-center px-8 mr-3 border border-black hover:bg-pink-50" title='로그인'>
                                     로그인
                                 </Link>
                             )
                         )}
-                        <button
-                            onClick={handleReservationClick}
-                            type="button"
-                            className="h-12 flex items-center px-8 mr-3 border border-black hover:bg-pink-50" title='예약하기'
-                        >
-                            예약하기
-                        </button>
                     </div>
                 </div >
             </header >
