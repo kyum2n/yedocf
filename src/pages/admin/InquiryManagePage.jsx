@@ -90,7 +90,7 @@ const InquiryManagePage = () => {
                                     <td className="px-4 py-2 border">{q.visit ? "O" : "X"}</td>
                                     <td className="px-4 py-2 border">{q.qContent}</td>
                                     <td className="px-4 py-2 border">{formatDateTime(q.createdAt)}</td>
-                                    <td className="px-4 py-2 border">{q.status}</td>
+                                    <td className="px-4 py-2 border">{q.qStatus}</td>
                                     <td className="px-4 py-2 border">
                                         <button
                                             variant="primary"

@@ -154,7 +154,7 @@ const AdminLoginPage = () => {
             로그인
           </Button>
 
-          <div className="text-sm w-full flex mt-4 justify-between">
+          <div className="text-sm w-full flex flex-col items-center gap-2 mt-4">
             <button
               type="button"
               className="text-gray-600 hover:underline"

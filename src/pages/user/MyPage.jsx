@@ -84,7 +84,7 @@ const MyPage = () => {
         const role = sessionStorage.getItem("role");
 
         if (!uId || !token) {
-            alert("로그인이 필요합니다. 다시 로그인해주세요.");
+            // alert("로그인이 필요합니다. 다시 로그인해주세요.");
             console.error("로그인 정보가 없습니다.");
             return;
         }
