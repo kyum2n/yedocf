@@ -4,6 +4,8 @@ import {
   UserIcon,
   UsersIcon,
   BookmarkSquareIcon,
+  InformationCircleIcon,
+  QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 
 const Sidebar = () => {
@@ -27,8 +29,8 @@ const Sidebar = () => {
         )}
         <SidebarLink to="/admin" label="사용자 관리" icon={UsersIcon} />
         <SidebarLink to="/admin/reservations" label="예약 관리" icon={BookmarkSquareIcon} />
-        <SidebarLink to="/admin/noticeManage" label="공지사항/이벤트 관리" icon={BookmarkSquareIcon} />
-        <SidebarLink to="/admin/inquiry" label="문의 관리" icon={BookmarkSquareIcon} />
+        <SidebarLink to="/admin/noticeManage" label="공지사항/이벤트 관리" icon={InformationCircleIcon} />
+        <SidebarLink to="/admin/inquiry" label="문의 관리" icon={QuestionMarkCircleIcon} />
       </nav>
 
       {/* 하단 버튼 */}
@@ -65,7 +67,7 @@ const SidebarLink = ({ to, label, icon: Icon }) => (
       `h-14 text-m font-medium transition-all border-orange-100 border-b-2 
         w-full gap-2 flex items-center
        ${isActive
-        ? 'pl-20 text-lg font-bold bg-white/10 hover:bg-white/30'
+        ? ' text-lg font-bold bg-white/10 hover:bg-white/30'
         : 'font-bold hover:bg-white/30'
       }`
     }
