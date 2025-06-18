@@ -27,12 +27,8 @@ const Footer = () => {
             </div>
 
             <div className="mt-8 border-t pt-4">
-                <div className="max-w-6xl mx-auto px-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-                    <Link to="/mypage" className="hover:underline">마이페이지</Link>
-                    <span className="text-gray-300">|</span>
-                    <Link to="/adminlogin" className="hover:underline">관리자 페이지</Link>
-                    <span className="text-gray-300">|</span>
-                    <Link to="/reservation" className="hover:underline">예약페이지</Link>
+                <div className="max-w-6xl mx-auto px-4 flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+                    <Link to="/adminlogin" className="hover:underline">관리자 페이지로 가기</Link>
                 </div>
             </div>
 
