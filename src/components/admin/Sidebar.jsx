@@ -29,13 +29,9 @@ const Sidebar = () => {
         )}
         <SidebarLink to="/admin" label="사용자 관리" icon={UsersIcon} />
         <SidebarLink to="/admin/reservations" label="예약 관리" icon={BookmarkSquareIcon} />
-<<<<<<< ruj
-        <SidebarLink to="/admin/noticeManage" label="공지사항/이벤트 관리" icon={InformationCircleIcon} />
+        <SidebarLink to="/admin/noticeManage" label={<>공지사항/<br />이벤트 관리</>} icon={InformationCircleIcon} />
         <SidebarLink to="/admin/inquiry" label="문의 관리" icon={QuestionMarkCircleIcon} />
-=======
-        <SidebarLink to="/admin/noticeManage" label={<>공지사항/<br />이벤트 관리</>} icon={BookmarkSquareIcon} />
-        <SidebarLink to="/admin/inquiry" label="문의 관리" icon={BookmarkSquareIcon} />
->>>>>>> main
+
       </nav>
 
       {/* 하단 버튼 */}
