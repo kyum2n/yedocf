@@ -15,9 +15,16 @@ const MyPage = () => {
 
     // 로그인 안 된 상태면 로그인 페이지로 보내기
     useEffect(() => {
+        const justLoggedOut = sessionStorage.getItem("justLoggedOut");
+
         if (!user) {
-            alert("로그인이 필요합니다. 다시 로그인해주세요.");
-            navigate("/login");
+            if (justLoggedOut === "true") {
+                sessionStorage.removeItem("justLoggedOut");
+                navigate("/");
+            } else {
+                alert("로그인이 필요합니다. 다시 로그인해주세요.");
+                navigate("/login");
+            }
         }
     }, [user, navigate]);
 
@@ -271,17 +278,17 @@ const MyPage = () => {
                                         inquiries.map((q) => (
                                             <tr key={q.qId}>
 
-                                                    <td
-                                                        className="border p-2 text-blue-600 underline cursor-pointer"
-                                                        onClick={() => {
-                                                            setSelectedInquiry(q);
-                                                            setShowInquiryModal(true);
-                                                        }}
-                                                    >
-                                                        문의 내용 상세보기
-                                                    </td>
-                                                    <td className="border p-2">{formatDateTime(q.createdAt)}</td>
-                                                    <td className="border p-2">{q.qStatus}</td>
+                                                <td
+                                                    className="border p-2 text-blue-600 underline cursor-pointer"
+                                                    onClick={() => {
+                                                        setSelectedInquiry(q);
+                                                        setShowInquiryModal(true);
+                                                    }}
+                                                >
+                                                    문의 내용 상세보기
+                                                </td>
+                                                <td className="border p-2">{formatDateTime(q.createdAt)}</td>
+                                                <td className="border p-2">{q.qStatus}</td>
 
                                             </tr>
                                         ))
