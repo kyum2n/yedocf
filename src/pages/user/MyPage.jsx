@@ -15,13 +15,18 @@ const MyPage = () => {
 
     // 로그인 안 된 상태면 로그인 페이지로 보내기
     useEffect(() => {
+        const justLoggedOut = sessionStorage.getItem("justLoggedOut");
+
         if (!user) {
-            alert("로그인이 필요합니다. 다시 로그인해주세요.");
-            navigate("/login");
+            if (justLoggedOut === "true") {
+                sessionStorage.removeItem("justLoggedOut");
+                navigate("/");
+            } else {
+                alert("로그인이 필요합니다. 다시 로그인해주세요.");
+                navigate("/login");
+            }
         }
     }, [user, navigate]);
-
-    if (!user) return null;
 
     // 관리자 접근 차단 (마이페이지)
     if (user?.type === "admin") {
@@ -43,8 +48,8 @@ const MyPage = () => {
         if (!window.confirm("정말 회원 탈퇴하시겠습니까?")) return;
 
         try {
-            const token = localStorage.getItem("accessToken");
-            const uId = localStorage.getItem("uId");
+            const token = sessionStorage.getItem("accessToken");
+            const uId = sessionStorage.getItem("uId");
 
             await axios.post(`/api/user/Delete/${uId}`, null, {
                 headers: {
@@ -80,13 +85,13 @@ const MyPage = () => {
 
     useEffect(() => {
 
-        const token = localStorage.getItem("accessToken");
-        const aId = localStorage.getItem("aId");
-        const uId = localStorage.getItem("uId");
-        const role = localStorage.getItem("role");
+        const token = sessionStorage.getItem("accessToken");
+        const aId = sessionStorage.getItem("aId");
+        const uId = sessionStorage.getItem("uId");
+        const role = sessionStorage.getItem("role");
 
         if (!uId || !token) {
-            alert("로그인이 필요합니다. 다시 로그인해주세요.");
+            // alert("로그인이 필요합니다. 다시 로그인해주세요.");
             console.error("로그인 정보가 없습니다.");
             return;
         }
@@ -218,7 +223,7 @@ const MyPage = () => {
                                                                 variant="secondary"
                                                                 className="text-sm"
                                                                 onClick={async () => {
-                                                                    const token = localStorage.getItem("accessToken");
+                                                                    const token = sessionStorage.getItem("accessToken");
 
                                                                     try {
                                                                         await axios.post(`/api/reserve/${r.rId}/cancel`, null, {
@@ -273,17 +278,17 @@ const MyPage = () => {
                                         inquiries.map((q) => (
                                             <tr key={q.qId}>
 
-                                                    <td
-                                                        className="border p-2 text-blue-600 underline cursor-pointer"
-                                                        onClick={() => {
-                                                            setSelectedInquiry(q);
-                                                            setShowInquiryModal(true);
-                                                        }}
-                                                    >
-                                                        문의 내용 상세보기
-                                                    </td>
-                                                    <td className="border p-2">{formatDateTime(q.createdAt)}</td>
-                                                    <td className="border p-2">{q.qStatus}</td>
+                                                <td
+                                                    className="border p-2 text-blue-600 underline cursor-pointer"
+                                                    onClick={() => {
+                                                        setSelectedInquiry(q);
+                                                        setShowInquiryModal(true);
+                                                    }}
+                                                >
+                                                    문의 내용 상세보기
+                                                </td>
+                                                <td className="border p-2">{formatDateTime(q.createdAt)}</td>
+                                                <td className="border p-2">{q.qStatus}</td>
 
                                             </tr>
                                         ))
@@ -314,8 +319,8 @@ const MyPage = () => {
                     }
 
                     try {
-                        const token = localStorage.getItem("accessToken");
-                        const uId = localStorage.getItem("uId");
+                        const token = sessionStorage.getItem("accessToken");
+                        const uId = sessionStorage.getItem("uId");
 
                         await axios.post("/api/user/password",
                             {
@@ -376,8 +381,8 @@ const MyPage = () => {
                 actionLabel="변경"
                 onAction={async () => {
                     try {
-                        const uId = localStorage.getItem("uId");
-                        const token = localStorage.getItem("accessToken");
+                        const uId = sessionStorage.getItem("uId");
+                        const token = sessionStorage.getItem("accessToken");
 
                         const response = await axios.post(
                             "/api/user/phone",

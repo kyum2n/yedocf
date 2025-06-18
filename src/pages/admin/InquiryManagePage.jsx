@@ -23,7 +23,7 @@ const InquiryManagePage = () => {
     // 문의 목록 조회
     const fetchInquiries = async () => {
         try {
-            const token = localStorage.getItem("accessToken");
+            const token = sessionStorage.getItem("accessToken");
             const response = await axios.get("/api/admin/inquiry", {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const InquiryManagePage = () => {
     // 문의 답변 핸들러
     const handleAnswerSubmit = async () => {
         try {
-            const token = localStorage.getItem("accessToken");
+            const token = sessionStorage.getItem("accessToken");
             await axios.post(`/api/admin/inquiry/${selectedInquiry.qId}/answer`, {
                 qAnswer: qAnswer
             }, {
@@ -90,7 +90,7 @@ const InquiryManagePage = () => {
                                     <td className="px-4 py-2 border">{q.visit ? "O" : "X"}</td>
                                     <td className="px-4 py-2 border">{q.qContent}</td>
                                     <td className="px-4 py-2 border">{formatDateTime(q.createdAt)}</td>
-                                    <td className="px-4 py-2 border">{q.status}</td>
+                                    <td className="px-4 py-2 border">{q.qStatus}</td>
                                     <td className="px-4 py-2 border">
                                         <button
                                             variant="primary"

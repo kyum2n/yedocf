@@ -8,10 +8,10 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const uId = localStorage.getItem("uId");
-    const aId = localStorage.getItem("aId");
-    const role = localStorage.getItem("role");
+    const token = sessionStorage.getItem("accessToken");
+    const uId = sessionStorage.getItem("uId");
+    const aId = sessionStorage.getItem("aId");
+    const role = sessionStorage.getItem("role");
 
     console.log("[UserProvider] 복원 시도: ", { token, uId, aId, role });
 
@@ -57,9 +57,9 @@ export const UserProvider = ({ children }) => {
         })
         .catch((err) => {
           console.error("[UserProvider] 사용자 정보 불러오기 실패:", err.response?.data || err.message);
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("uId");
-          localStorage.removeItem("role");
+          sessionStorage.removeItem("accessToken");
+          sessionStorage.removeItem("uId");
+          sessionStorage.removeItem("role");
         })
         .finally(() => {
           setLoading(false);
@@ -80,13 +80,13 @@ export const UserProvider = ({ children }) => {
     });
 
     // 로컬 스토리지에 저장
-    localStorage.setItem("accessToken", token);
-    localStorage.setItem("role", role);
+    sessionStorage.setItem("accessToken", token);
+    sessionStorage.setItem("role", role);
 
-    if ( type === "admin") {
-      localStorage.setItem("aId", id);
+    if (type === "admin") {
+      sessionStorage.setItem("aId", id);
     } else {
-      localStorage.setItem("uId", id);
+      sessionStorage.setItem("uId", id);
     }
 
     setLoading(false);
@@ -94,27 +94,36 @@ export const UserProvider = ({ children }) => {
 
   // 로그아웃 함수
   const logoutUser = () => {
-    const provider = localStorage.getItem("loginProvider");
+    const provider = sessionStorage.getItem("loginProvider");
 
     setUser(null);
     setLoading(false);
-    
-    // 로컬 스토리지 정리
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("uId");
-    localStorage.removeItem("aId");
-    localStorage.removeItem("role");
-    localStorage.removeItem("loginProvider");
+
+    // 세션 스토리지 정리
+    sessionStorage.setItem("justLoggedOut", "true");
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("uId");
+    sessionStorage.removeItem("aId");
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("loginProvider");
+
+    const googleRedirect = import.meta.env.VITE_GOOGLE_LOGOUT_REDIRECT_URI;
+    const kakaoRedirect = import.meta.env.VITE_KAKAO_LOGOUT_REDIRECT_URI;
 
     // 로그아웃 후 분기 처리
-  if (provider === "google") {
-    // 팝업 없이 리다이렉트 방식 (Google 로그아웃 후 메인으로 이동)
-    window.location.href = "https://accounts.google.com/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:5173";
-  } else {
-    // 기본 로그아웃 (카카오 제외)
-    window.location.href = "/";
-  }
-};
+    if (provider === "google") {
+      // Google 로그아웃 (2단계 리다이렉션)
+      const url = `https://accounts.google.com/Logout?continue=https://appengine.google.com/_ah/logout?continue=${encodeURIComponent(googleRedirect)}`;
+      window.location.href = url;
+    } else if (provider === "kakao") {
+      // Kakao 로그아웃
+      const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
+      const url = `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_CLIENT_ID}&logout_redirect_uri=${encodeURIComponent(kakaoRedirect)}`;
+      window.location.href = url;
+    } else {
+      window.location.href = "/";
+    }
+  };
 
   return (
     <UserContext.Provider

@@ -9,11 +9,10 @@ const Header = () => {
     const { user, loading, logoutUser } = useUser();
 
     const handleLogout = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('uId');
-        localStorage.removeItem('role');
-        localStorage.removeItem('aId');
-
+        sessionStorage.removeItem("accessToken");
+        sessionStorage.removeItem("uId");
+        sessionStorage.removeItem("role");
+        sessionStorage.removeItem("aId");
         logoutUser(null);
 
         // 소셜 로그아웃 추가 처리 (리디렉션 방식으로 할 수 있는 경우만)
@@ -30,7 +29,7 @@ const Header = () => {
             case 'eye': return '눈';
             case 'nose': return '코';
             case 'face': return '윤곽';
-            case 'notice' : return '공지사항';
+            case 'notice': return '공지사항';
             default: return key;
         }
     };
@@ -60,7 +59,7 @@ const Header = () => {
                     {/* 네비게이션 */}
                     <nav className="absolute-center flex-center w-full">
                         <div className="flex gap-1 h-16 w-2/5 justify-between max-w-[1100px]">
-                            <Link to="/?scrollTo=directions" className="h-16 text-lg font-bold flex-center whitespace-nowrap"  title='오시는 길'>
+                            <Link to="/?scrollTo=directions" className="h-16 text-lg font-bold flex-center whitespace-nowrap" title='오시는 길'>
                                 오시는 길
                             </Link>
                             {Object.keys(menuItems).map((key) => (

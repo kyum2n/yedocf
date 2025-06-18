@@ -9,8 +9,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 const Sidebar = () => {
-  const adminName = localStorage.getItem("aId") || "";
-  const role = localStorage.getItem("role");
+  const adminName = sessionStorage.getItem("aId") || "";
+  const role = sessionStorage.getItem("role");
   const isSuperAdmin = role === "SUPERADMIN";
 
   return (
@@ -29,8 +29,13 @@ const Sidebar = () => {
         )}
         <SidebarLink to="/admin" label="사용자 관리" icon={UsersIcon} />
         <SidebarLink to="/admin/reservations" label="예약 관리" icon={BookmarkSquareIcon} />
+<<<<<<< ruj
         <SidebarLink to="/admin/noticeManage" label="공지사항/이벤트 관리" icon={InformationCircleIcon} />
         <SidebarLink to="/admin/inquiry" label="문의 관리" icon={QuestionMarkCircleIcon} />
+=======
+        <SidebarLink to="/admin/noticeManage" label={<>공지사항/<br />이벤트 관리</>} icon={BookmarkSquareIcon} />
+        <SidebarLink to="/admin/inquiry" label="문의 관리" icon={BookmarkSquareIcon} />
+>>>>>>> main
       </nav>
 
       {/* 하단 버튼 */}
@@ -45,7 +50,7 @@ const Sidebar = () => {
         </button>
         <button
           onClick={() => {
-            localStorage.clear();
+            sessionStorage.clear();
             window.location.href = '/';
           }}
           className="h-16 w-60 flex items-center justify-center gap-2 text-xl hover:underline text-white border-t border-orange-100"

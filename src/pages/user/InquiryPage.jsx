@@ -40,8 +40,8 @@ const InquiryPage = () => {
         e.preventDefault();
 
         // 토큰 저장
-        const token = localStorage.getItem("accessToken");
-        const uId = localStorage.getItem("uId");
+        const token = sessionStorage.getItem("accessToken");
+        const uId = sessionStorage.getItem("uId");
 
         if (!form.uName || !form.uEmail || !form.qContent) {
             alert("모든 항목을 입력해주세요.");

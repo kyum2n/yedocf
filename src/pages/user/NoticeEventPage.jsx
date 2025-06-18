@@ -7,40 +7,6 @@
  * ===========================================================
  */
 
-// import React, { useEffect, useState } from "react";
-// import { getAllNoticeEvents } from "../../api/noticeEvent";
-
-// const NoticeEventPage = () => {
-//     const [notices, setNotices] = useState([]);
-
-//     useEffect(() => {
-//         const fetchData = async () => {
-//             const data = await getAllNoticeEvents();
-//             setNotices(data);
-//         };
-//         fetchData();
-//     }, []);
-
-//     return (
-//         <div>
-//             <h2>공지사항 / 이벤트</h2>
-//             {notices.map((item) => (
-//                 <div key={item.neId} style={{ border: "1px solid gray", margin: "10px", padding: "10px" }}>
-//                     <h3>{item.neTitle} ({item.neType})</h3>
-//                     <p>{item.neContent}</p>
-//                     {item.neImageUrl && (
-//                         <img src={item.neImageUrl} alt={item.neTitle} width="300px" />
-//                     )}
-//                 </div>
-//             ))}
-//         </div>
-//     );
-// };
-
-// export default NoticeEventPage;
-
-
-
 import React, { useEffect, useState } from "react";
 
 import { getAllNoticeEvents, getNoticeEventByIdUser } from "@/api/noticeEvent";
@@ -108,7 +74,9 @@ const NoticeEventPage = () => {
 
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {noticeEvents.map(item => (
-            <NoticeEventCard key={item.neId} item={item} />
+            <div key={item.neId} onClick={() => setSelectedId(item.neId)} className="cursor-pointer">
+              <NoticeEventCard item={item} />
+          </div>
           ))}
         </div>
         <DirectionsMap />

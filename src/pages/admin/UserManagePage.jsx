@@ -33,7 +33,7 @@ const UserManagePage = () => {
   // 사용자 목록 API 호출
   useEffect(() => {
     // 토큰 가져오기
-    const token = localStorage.getItem("accessToken");
+    const token = sessionStorage.getItem("accessToken");
 
     axios.get("/api/admin/user/users", {
       headers: {
@@ -174,7 +174,7 @@ const UserManagePage = () => {
               const phone = document.querySelector("input[name='phone']").value;
 
               // 토큰 가져오기
-              const token = localStorage.getItem("accessToken");
+              const token = sessionStorage.getItem("accessToken");
 
               const response = await axios.post("/api/admin/user", {
                 uName: name,
@@ -236,7 +236,7 @@ const UserManagePage = () => {
           actionLabel="삭제"
           onAction={() => {
             // 토큰 가져오기
-            const token = localStorage.getItem("accessToken");
+            const token = sessionStorage.getItem("accessToken");
 
             axios.post(`/api/admin/user/${selectedUser?.id}`, null, {
               headers: {

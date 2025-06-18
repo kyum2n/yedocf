@@ -55,14 +55,14 @@ const NoticeEventManagePage = () => {
   }, []);
 
   const fetchNotices = async () => {
-    const token = localStorage.getItem("accessToken");
+    const token = sessionStorage.getItem("accessToken");
     const config = { headers: { Authorization: `Bearer ${token}` } };
     const res = await axios.get("/api/admin/noticeEvent", config);
     setNotices(res.data);
   };
 
   const handleCreateNotice = async () => {
-    const token = localStorage.getItem("accessToken");
+    const token = sessionStorage.getItem("accessToken");
     await axiosInstance.post("/api/admin/noticeEvent", {
       neTitle: title,
       neContent: content,
@@ -78,7 +78,9 @@ const NoticeEventManagePage = () => {
   };
 
   const handleUpdateNotice = async () => {
-    const token = localStorage.getItem("accessToken");
+
+    const token = sessionStorage.getItem("accessToken");
+
     const config = { headers: { Authorization: `Bearer ${token}` } };
     await axios.put(`/api/admin/noticeEvent/${selectedNotice.neId}`, {
       ...selectedNotice,
@@ -90,7 +92,8 @@ const NoticeEventManagePage = () => {
   };
 
   const handleDeleteNotice = async () => {
-    const token = localStorage.getItem("accessToken");
+
+    const token = sessionStorage.getItem("accessToken");
     const config = { headers: { Authorization: `Bearer ${token}` } };
     await axios.delete(`/api/admin/noticeEvent/${selectedNotice.neId}`, config);
     await fetchNotices();
