@@ -66,7 +66,7 @@ const ReservationManagePage = () => {
 
   useEffect(() => {
     // 토큰 가져오기
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("accessToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -86,7 +86,7 @@ const ReservationManagePage = () => {
 
   const handleStatusChange = (rId, status) => {
     // 토큰 가져오기
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("accessToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -105,7 +105,7 @@ const ReservationManagePage = () => {
 
   const handleDeleteReservation = () => {
     // 토큰 가져오기
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("accessToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -369,7 +369,7 @@ const ReservationManagePage = () => {
           resetOnClose={true}
           onAction={async () => {
             try {
-              const token = sessionStorage.getItem("token");
+              const token = sessionStorage.getItem("accessToken");
 
               const config = {
                 headers: {
