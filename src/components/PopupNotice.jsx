@@ -87,7 +87,9 @@ const PopupNotice = () => {
               background: 'white',
               padding: '20px',
               boxShadow: '0 0 10px rgba(0,0,0,0.2)',
-              maxWidth: '400px'
+              Width: '400px',
+              minWidth: '400px',
+              maxWidth: '400px',
             }}
           >
             <img 
