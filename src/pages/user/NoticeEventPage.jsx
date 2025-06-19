@@ -93,7 +93,7 @@ const NoticeEventPage = () => {
             {selectedItem.neImageUrl && (
               <img
                 src={selectedItem.neImageUrl}
-                alt={selectedItem.neTitle}
+                alt={selectedItem.neTitle} 
                 className="w-full max-w-md mx-auto my-4"
               />
             )}
