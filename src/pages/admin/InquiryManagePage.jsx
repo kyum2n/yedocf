@@ -70,7 +70,7 @@ const InquiryManagePage = () => {
                 <div className="overflow-x-auto">
                     <table className="min-w-full bg-white border border-gray-300">
                         <thead>
-                            <tr>
+                            <tr className="bg-gray-100 text-center text-sm font-semibold">
                                 <th className="px-4 py-3 border">아이디</th>
                                 <th className="px-4 py-3 border">이름</th>
                                 <th className="px-4 py-3 border">이메일</th>
@@ -81,17 +81,17 @@ const InquiryManagePage = () => {
                                 <th className="px-4 border">답변</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody> 
                             {inquiries.map((q) => (
                                 <tr key={q.qId} className="text-center">
-                                    <td className="px-4 py-2 border">{q.uId}</td>
-                                    <td className="px-4 py-2 border">{q.uName}</td>
-                                    <td className="px-4 py-2 border">{q.uEmail}</td>
-                                    <td className="px-4 py-2 border">{q.visit ? "O" : "X"}</td>
-                                    <td className="px-4 py-2 border">{q.qContent}</td>
-                                    <td className="px-4 py-2 border">{formatDateTime(q.createdAt)}</td>
-                                    <td className="px-4 py-2 border">{q.qStatus}</td>
-                                    <td className="px-4 py-2 border">
+                                    <td className="px-4 py-4 border">{q.uId}</td>
+                                    <td className="px-4 py-4 border">{q.uName}</td>
+                                    <td className="px-4 py-4 border">{q.uEmail}</td>
+                                    <td className="px-4 py-4 border">{q.visit ? "O" : "X"}</td>
+                                    <td className="px-4 py-4 border">{q.qContent}</td>
+                                    <td className="px-4 py-4 border">{formatDateTime(q.createdAt)}</td>
+                                    <td className="px-4 py-4 border">{q.qStatus}</td>
+                                    <td className="px-4 py-4 border">
                                         <button
                                             variant="primary"
                                             className="text-blue-500 hover:underline"
