@@ -28,7 +28,7 @@ const FindAccountPage = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/user/find_id', { uEmail: email });
+            const response = await axios.post('/api/user/find_id', { uEmail: email });
             console.log("아이디 찾기 응답:", response.data);
             setFoundId(response.data);
             setShowModal(true);
@@ -45,7 +45,7 @@ const FindAccountPage = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/user/find_password', {
+            const response = await axios.post('/api/user/find_password', {
                 uId: id
             });
 

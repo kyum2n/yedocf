@@ -277,6 +277,8 @@ const ReservationManagePage = () => {
                 config
               );
 
+              console.log("예약 추가 성공: ", response.data);
+
               // 예약 목록 업데이트
               const res = await axios.get("/api/admin/reserve/reserves", config);
               setReservations(res.data);
