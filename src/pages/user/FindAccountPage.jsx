@@ -10,6 +10,8 @@ import Modal from "@/components/common/Modal"; // Modal import 추가
 import axios from "axios"; // axios import
 
 const FindAccountPage = () => {
+    // API 기본 URL
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
     // 아이디 찾기용 state
     const [email, setEmail] = useState(""); // 아이디 찾기용 이메일 입력값
@@ -28,7 +30,7 @@ const FindAccountPage = () => {
         }
 
         try {
-            const response = await axios.post('/api/user/find_id', { uEmail: email });
+            const response = await axios.post(`${baseUrl}/api/user/find_id`, { uEmail: email });
             console.log("아이디 찾기 응답:", response.data);
             setFoundId(response.data);
             setShowModal(true);
@@ -45,7 +47,7 @@ const FindAccountPage = () => {
         }
 
         try {
-            const response = await axios.post('/api/user/find_password', {
+            const response = await axios.post(`${baseUrl}/user/find_password`, {
                 uId: id
             });
 

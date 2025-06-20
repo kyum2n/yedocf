@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignupPage = () => {
+    
+    // API 기본 URL
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    
     const navigate = useNavigate();
 
     // 사용자 입력값 상태 정의
@@ -171,7 +175,7 @@ const SignupPage = () => {
         if (Object.keys(errors).length > 0) return;
 
         try {
-            await axios.post("/api/user/register", {
+            await axios.post(`${baseUrl}/api/user/register`, {
                 uId: form.userId,
                 uPwd: form.password,
                 uEmail: form.email,

@@ -31,7 +31,7 @@ const InquiryPage = () => {
         const { name, value } = e.target;
         setForm((prev) => ({
             ...prev,
-            [name]: value,
+            [name]: name === "visit" ? value === "true" : value, // visit이면 문자열을 boolean으로 변환
         }));
     };
 
