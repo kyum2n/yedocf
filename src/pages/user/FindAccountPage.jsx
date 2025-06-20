@@ -47,7 +47,7 @@ const FindAccountPage = () => {
         }
 
         try {
-            const response = await axios.post(`${baseUrl}/user/find_password`, {
+            const response = await axios.post(`${baseUrl}/api/user/find_password`, {
                 uId: id
             });
 
