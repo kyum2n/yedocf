@@ -171,7 +171,7 @@ const SignupPage = () => {
         if (Object.keys(errors).length > 0) return;
 
         try {
-            await axios.post("http://localhost:8080/api/user/register", {
+            await axios.post("/api/user/register", {
                 uId: form.userId,
                 uPwd: form.password,
                 uEmail: form.email,
