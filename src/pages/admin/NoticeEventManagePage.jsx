@@ -115,15 +115,17 @@ const NoticeEventManagePage = () => {
       <main className="w-full min-h-screen p-8 bg-gray-50">
         <h1 className="text-2xl font-bold mb-6">공지사항/이벤트 관리</h1>
 
-        <div className="flex mb-4 justify-between items-center gap-4">
-          <div className="flex gap-2">
+        {/* <div className="flex mb-4 justify-between items-center gap-4"> */}
+        <div className="flex mb-4 justify-end gap-4">
+
+          {/* <div className="flex gap-2">
             <Dropdown value={searchCategory} onChange={(e) => setSearchCategory(e.target.value)} options={searchOptions} className="h-10" />
             <div className="w-1/2">
               <InputField name="searchText" value={searchText} onChange={(e) => setSearchText(e.target.value)}
                 placeholder={searchCategory ? `${selectedLabel}을 입력하세요` : "검색할 항목 선택"} variant="admin" className="h-10" labelHidden={true} />
             </div>
             <Button variant="primary" className="h-10">검색</Button>
-          </div>
+          </div> */}
           <Button variant="primary" className="h-10 bg-green-600" onClick={() => setIsModalOpen(true)}>새 게시물</Button>
         </div>
 

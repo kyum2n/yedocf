@@ -77,8 +77,9 @@ const StaffManagePage = () => {
 
             <main className="w-full min-h-screen p-8 bg-gray-50">
                 <h1 className="text-2xl font-bold mb-6">직원 관리</h1>
+                <div className="flex mb-4 justify-end gap-4">
 
-                {/* 검색 & 추가 버튼 */}
+                {/* 검색 & 추가 버튼
                 <div className="flex mb-4 justify-between items-center gap-4">
                     <div className="flex gap-2">
                         <Dropdown
@@ -103,7 +104,7 @@ const StaffManagePage = () => {
                             />
                         </div>
                         <Button variant="primary" className="h-10">검색</Button>
-                    </div>
+                    </div> */}
 
                     <Button
                         variant="primary"

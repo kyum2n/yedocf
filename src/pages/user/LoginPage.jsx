@@ -152,7 +152,7 @@ const LoginPage = () => {
                     {/* 링크 */}
                     <div className="text-sm w-full flex justify-between mb-4">
                         <a href="/idpwfind" className="text-gray-600 hover:underline">
-                            아이디/회원번호 찾기
+                            아이디/비밀번호 찾기
                         </a>
                         <a href="/signup" className="text-gray-600 hover:underline">
                             회원가입
@@ -167,7 +167,7 @@ const LoginPage = () => {
                 {/* 소셜 로그인 버튼 */}
                 <div className="flex justify-around mt-5 flex-col gap-2 w-[90%] max-w-sm">
                     <SocialButton platform="kakao" onClick={handleKakaoLogin} />
-                    <SocialButton platform="google" onClick={handleGoogleLogin} />
+                    {/* <SocialButton platform="google" onClick={handleGoogleLogin} /> */}
                 </div>
             </div>
         </div>
