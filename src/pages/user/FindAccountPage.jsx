@@ -117,9 +117,9 @@ const FindAccountPage = () => {
                     title={foundId ? "아이디 찾기 결과" : "비밀번호 찾기 결과"}
                 >
                     <div className="p-6">
-                        {foundId && (
+                        {foundId && !foundPassword &&(
                             <>
-                                <h3 className="text-lg font-bold mb-4">비밀번호 찾기 결과</h3>
+                                <h3 className="text-lg font-bold mb-4">아이디 찾기 결과</h3>
                                 <p className="text-center text-xl">{foundId}</p>
                             </>
                         )}
