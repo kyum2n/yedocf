@@ -147,8 +147,10 @@ const ReservationManagePage = () => {
         <h1 className="text-2xl font-bold mb-6">예약 관리</h1>
 
         {/* 검색 영역 */}
-        <div className="flex mb-4 justify-between items-center gap-4">
-          <div className="flex gap-2">
+        {/* <div className="flex mb-4 justify-between items-center gap-4"> */}
+        <div className="flex mb-4 justify-end gap-4">
+
+          {/* <div className="flex gap-2">
             <Dropdown
               value={searchCategory}
               onChange={(e) => setSearchCategory(e.target.value)}
@@ -173,7 +175,7 @@ const ReservationManagePage = () => {
             <Button variant="primary" className="h-10">
               검색
             </Button>
-          </div>
+          </div> */}
 
           <Button
             variant="primary"

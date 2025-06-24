@@ -35,7 +35,7 @@ const Footer = () => {
             <div className="mt-4 text-center text-xs text-gray-500">
                 © 2025 BT CLINIC. All Rights Reserved.
             </div>
-            <div className="text-center"><Link to="/adminlogin" className="text-gray-400 text-xs hover:underline">관리자페이지로 가기</Link></div>
+            {/* <div className="text-center"><Link to="/adminlogin" className="text-gray-400 text-xs hover:underline">관리자페이지로 가기</Link></div> */}
         </footer>
 
     )
